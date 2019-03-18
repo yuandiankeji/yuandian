@@ -11,6 +11,7 @@
     <modules>
         <module>yuandian-core</module>
         <module>yuandian-service</module>
+        <module>yuandian-netty</module>
     </modules>
 
 
