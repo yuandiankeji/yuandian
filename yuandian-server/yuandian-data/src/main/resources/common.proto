@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+option java_package = "com.yuandian.data.common";
+option java_multiple_files = true;
+
+message PUserInfo {
+    optional int32 uid = 1;
+    optional string name = 2;
+}
