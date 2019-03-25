@@ -1,5 +1,8 @@
 package com.yuandian.server.core.factory;
 
+import com.yuandian.server.core.net.IoClient;
+import com.yuandian.server.core.net.TcpMessageProcessor;
+import com.yuandian.server.core.net.TcpServerHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
@@ -53,8 +56,12 @@ public class MessageCoderFactory {
         int leng = buff.readInt();
         byte[] bytes = new byte[leng];
         buff.readBytes(bytes);
+        IoClient client = channel.attr(TcpServerHandler.SESSION_CLIENT).get();
+        if (client == null) {
+            return;
+        }
         //TODO check--net package executor
-
+        TcpMessageProcessor.getSingleton().putMessage(client, (short) cmd, bytes);
 
     }
 }

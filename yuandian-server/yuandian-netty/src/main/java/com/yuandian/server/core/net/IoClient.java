@@ -9,13 +9,17 @@ import io.netty.channel.ChannelFutureListener;
 /**
  * @author twjitm 2019/3/24/22:51
  */
-public abstract class IoClient {
+public  class IoClient {
 
     private final int OK_STATUS = 0;
 
     private Channel channel;
 
     public IoClient(Channel channel) {
+        this.channel = channel;
+    }
+
+    public void setChannel(Channel channel) {
         this.channel = channel;
     }
 
