@@ -43,7 +43,10 @@ public class ServerConfig {
         this.rpcPort = rpcPort;
     }
 
-    public void load(Properties properties){
-
+    public void load(Properties properties) {
+        this.ip = properties.getProperty("server.ip");
+        this.number = properties.getProperty("sever.id");
+        this.port = Integer.parseInt(properties.getProperty("server.port"));
+        this.rpcPort = Integer.parseInt(properties.getProperty("server.rpc.port"));
     }
 }
