@@ -1,5 +1,6 @@
 package com.yuandian.service;
 
+import org.redisson.Redisson;
 import org.redisson.api.*;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class RedisService {
 
     @Autowired
-    private RedissonClient redissonClient;
+    private Redisson redissonClient;
 
     public void getRedissonClient() {
         Config config = redissonClient.getConfig();
@@ -151,5 +152,8 @@ public class RedisService {
     public <M> RTopic<M> getRTopic(String objectName) {
         RTopic<M> rTopic = redissonClient.getTopic(objectName);
         return rTopic;
+    }
+
+    public void deleteKey(String objectName) {
     }
 }
