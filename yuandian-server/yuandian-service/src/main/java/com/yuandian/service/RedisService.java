@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class RedisService {
 
     @Autowired
-    private Redisson redissonClient;
+    private RedissonClient redissonClient;
 
     public void getRedissonClient() {
         Config config = redissonClient.getConfig();

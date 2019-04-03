@@ -30,6 +30,20 @@
         </dependency>
         <dependency>
             <artifactId>yuandian-core</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>netty-all</artifactId>
+                    <groupId>io.netty</groupId>
+                </exclusion>
+            </exclusions>
             <groupId>com.yuandian</groupId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
