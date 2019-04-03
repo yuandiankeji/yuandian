@@ -1,5 +1,6 @@
 package com.yuandian.service;
 
+import com.yuandian.common.Constants;
 import com.yuandian.entity.Token;
 import org.redisson.api.RBucket;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class TokenService {
         Token model = new Token(userId, deviceId, token);
         //存储到redis并设置过期时间
         RBucket<String> tokenString = redisService.getRBucket(String.valueOf(userId));
-        tokenString.set();
-        redis.boundValueOps(userId).set(token, Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
+//        tokenString.set();
+//        redis.boundValueOps(userId).set(token, Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
         return model;
     }
 
@@ -39,24 +40,24 @@ public class TokenService {
         //使用userId和源token简单拼接成的token，可以增加加密措施
         long userId = Long.parseLong(param[0]);
         String token = param[1];
-        return new Token(userId, token);
+        return new Token(userId,token, token);
     }
 
     public boolean checkToken(Token model) {
         if (model == null) {
             return false;
         }
-        String token = redisService.getRBucket();
-        if (token == null || !token.equals(model.getToken())) {
-            return false;
-        }
+//        String token = redisService.getRBucket("test");
+//        if (token == null || !token.equals(model.getToken())) {
+//            return false;
+//        }
         //如果验证成功，说明此用户进行了一次有效操作，延长token的过期时间
-        redis.boundValueOps(model.getUid()).expire(Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
+//        redis.boundValueOps(model.getUid()).expire(Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
         return true;
     }
 
     public void deleteToken(long userId) {
-        redisService.
+//        redisService.
     }
 
 }
