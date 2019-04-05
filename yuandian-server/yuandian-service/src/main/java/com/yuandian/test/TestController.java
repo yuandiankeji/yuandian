@@ -1,5 +1,6 @@
 package com.yuandian.test;
 
+import com.robert.vesta.service.intf.IdService;
 import com.yuandian.service.RedisService;
 import org.redisson.api.RList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class TestController {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private IdService idService;
+
     @GetMapping(value = "/success")
     public Object success() {
         RList<String> list = redisService.getRList("testList");
@@ -25,5 +29,10 @@ public class TestController {
         list.add("bb");
         list.add("ccc");
         return "success";
+    }
+
+    @GetMapping("/getId")
+    public long getId() {
+        return idService.genId();
     }
 }

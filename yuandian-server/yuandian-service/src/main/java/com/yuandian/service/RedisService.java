@@ -1,6 +1,5 @@
 package com.yuandian.service;
 
-import org.redisson.Redisson;
 import org.redisson.api.*;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
