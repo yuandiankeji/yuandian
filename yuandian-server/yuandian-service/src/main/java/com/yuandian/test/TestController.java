@@ -1,6 +1,7 @@
 package com.yuandian.test;
 
 import com.robert.vesta.service.intf.IdService;
+import com.yuandian.annotation.Authorization;
 import com.yuandian.service.RedisService;
 import org.redisson.api.RList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,11 @@ public class TestController {
     @GetMapping("/getId")
     public long getId() {
         return idService.genId();
+    }
+
+    @Authorization
+    @GetMapping("/auth")
+    public String testAuth() {
+        return "";
     }
 }
