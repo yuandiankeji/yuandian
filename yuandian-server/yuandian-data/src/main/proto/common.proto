@@ -6,4 +6,5 @@ option java_multiple_files = true;
 message PUserInfo {
     optional int32 uid = 1;
     optional string name = 2;
+    optional string openid = 3;
 }
