@@ -8,6 +8,7 @@ message PItem {
     optional int32 sdId = 1;
 }
 
+//cmd=1 return PUserInfo;
 message PGetUserInfo {
     optional int64 userId = 1;
     optional string name = 2;

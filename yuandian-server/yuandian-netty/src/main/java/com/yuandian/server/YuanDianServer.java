@@ -3,6 +3,7 @@ package com.yuandian.server;
 import com.yuandian.core.utils.CollectionUtil;
 import com.yuandian.server.config.ServerConfig;
 import com.yuandian.server.config.ServerConfigManager;
+import com.yuandian.server.core.factory.ThreadPoolFactory;
 import com.yuandian.server.core.net.IoServer;
 import com.yuandian.server.core.net.TcpMessageProcessor;
 import org.slf4j.Logger;
@@ -14,8 +15,8 @@ import org.slf4j.LoggerFactory;
 public class YuanDianServer {
     private static Logger logger = LoggerFactory.getLogger(YuanDianServer.class);
 
-    public static void main(String[] args) {
-        logger.debug("[main] | sever start");
+    public static void run(String[] args) {
+        logger.debug("[run] | sever start");
         String config = "server.properties";
         if (!CollectionUtil.isEmpty(args)) {
             config = args[0];
@@ -26,11 +27,10 @@ public class YuanDianServer {
     private static void start(String args) {
         initConfig(args);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            logger.debug("[main]| run hook");
+            logger.debug("[run]| run hook");
             //TODO db
             //executor
             //server
-            IoServer.getSingleton().stopServer();
         }));
     }
 
@@ -42,7 +42,7 @@ public class YuanDianServer {
 
     private static void initConnection(ServerConfig config) {
         try {
-            IoServer.getSingleton().startServer(config);
+            ThreadPoolFactory.getInstance().executeGeneral(new IoServer(config));
         } catch (Exception e) {
             e.printStackTrace();
         }

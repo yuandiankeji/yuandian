@@ -7,5 +7,5 @@ import com.yuandian.server.core.net.IoClient;
  */
 public abstract class AbstractTcpHandler {
 
-    public abstract void handler(IoClient client, byte[] bytes);
+    public abstract void handler(IoClient client, short cmd,byte[] bytes);
 }

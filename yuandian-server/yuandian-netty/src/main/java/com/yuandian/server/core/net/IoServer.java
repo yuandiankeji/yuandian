@@ -18,20 +18,20 @@ import org.slf4j.LoggerFactory;
 /**
  * @author by twjitm on 2019/3/25/14:04
  */
-public class IoServer {
+public class IoServer implements Runnable {
 
-    private static final IoServer SINGLETON = new IoServer();
     private static Logger logger = LoggerFactory.getLogger(IoServer.class);
 
     NioEventLoopGroup bossGroup;
     NioEventLoopGroup workerGroup;
     ChannelFuture future;
+    ServerConfig config;
 
-    public static IoServer getSingleton() {
-        return SINGLETON;
+    public IoServer(ServerConfig config) {
+        this.config = config;
     }
 
-    public void startServer(ServerConfig config) throws Exception {
+    public void startServer() throws Exception {
 
         bossGroup = new NioEventLoopGroup(Constant.NETTY_BOSS_THREAD_NUM);
         workerGroup = new NioEventLoopGroup(Constant.NETTY_WORK_THREAD_NUM);
@@ -79,4 +79,12 @@ public class IoServer {
         logger.debug("[IoServer] stop world");
     }
 
+    @Override
+    public void run() {
+        try {
+            startServer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
