@@ -14,6 +14,7 @@
         <module>yuandian-netty</module>
         <module>yuandian-data</module>
         <module>yuandian-id-generator</module>
+        <module>yuandian-client</module>
     </modules>
 
     <parent>

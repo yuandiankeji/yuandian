@@ -26,7 +26,13 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf byteBuf = (ByteBuf) msg;
-        MessageCoderFactory.getSingleton().decode(ctx, byteBuf);
+        IoMessage ioMessage = MessageCoderFactory.getSingleton().decode(ctx, byteBuf);
+        IoClient client = ctx.channel().attr(TcpServerHandler.SESSION_CLIENT).get();
+        if (client == null) {
+            return;
+        }
+        //TODO thread do
+        TcpMessageProcessor.getSingleton().putMessage(client, (short) ioMessage.getCmd(), ioMessage.getBytes());
     }
 
     @Override

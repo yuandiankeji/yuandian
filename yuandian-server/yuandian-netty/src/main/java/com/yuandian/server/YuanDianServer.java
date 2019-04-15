@@ -15,6 +15,10 @@ import org.slf4j.LoggerFactory;
 public class YuanDianServer {
     private static Logger logger = LoggerFactory.getLogger(YuanDianServer.class);
 
+    public static void main(String[] args) {
+        run(args);
+    }
+
     public static void run(String[] args) {
         logger.debug("[run] | sever start");
         String config = "server.properties";

@@ -1,11 +1,8 @@
 package com.yuandian.server.core.factory;
 
-import com.yuandian.server.core.net.IoClient;
-import com.yuandian.server.core.net.TcpMessageProcessor;
-import com.yuandian.server.core.net.TcpServerHandler;
+import com.yuandian.server.core.net.IoMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -46,22 +43,21 @@ public class MessageCoderFactory {
     /**
      * 解码
      */
-    public void decode(final ChannelHandlerContext ctx, final ByteBuf buff) {
-        Channel channel = ctx.channel();
-
+    public IoMessage decode(final ChannelHandlerContext ctx, final ByteBuf buff) {
+        IoMessage ioMessage = new IoMessage();
         int head = buff.readShort() & 0x0000FFFF;
         int version = buff.readByte() & 0x000000FF;
         int cmd = buff.readShort() & 0x0000FFFF;
         int status = buff.readInt();
-        int leng = buff.readInt();
-        byte[] bytes = new byte[leng];
+        int length = buff.readInt();
+        byte[] bytes = new byte[length];
         buff.readBytes(bytes);
-        IoClient client = channel.attr(TcpServerHandler.SESSION_CLIENT).get();
-        if (client == null) {
-            return;
-        }
-        //TODO check--net package executor
-        TcpMessageProcessor.getSingleton().putMessage(client, (short) cmd, bytes);
-
+        ioMessage.setHead(head);
+        ioMessage.setCmd(cmd);
+        ioMessage.setStatus(status);
+        ioMessage.setVersion(version);
+        ioMessage.setBytes(bytes);
+        ioMessage.setLength(length);
+        return ioMessage;
     }
 }
