@@ -7,6 +7,7 @@ import com.yuandian.data.message.PLogin;
 import com.yuandian.data.message.PSendChat;
 import com.yuandian.server.core.factory.MessageCoderFactory;
 import com.yuandian.server.core.net.IoMessage;
+import com.yuandian.server.core.net.MessageCmd;
 import io.netty.buffer.ByteBuf;
 
 /**
