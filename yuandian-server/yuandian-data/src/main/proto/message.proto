@@ -13,3 +13,16 @@ message PGetUserInfo {
     optional int64 userId = 1;
     optional string name = 2;
 }
+
+//cmd=3 return PuserInfo
+message PLogin {
+    optional int64 uid = 1;
+    optional string openId = 2;
+}
+
+//cmd=4 return none
+message PSendChat {
+    optional int64 uid = 1;
+    optional int64 toUid = 2;
+    optional string context = 3;
+}

@@ -19,6 +19,10 @@ public  class IoClient {
         this.channel = channel;
     }
 
+    public Channel getChannel() {
+        return channel;
+    }
+
     public void setChannel(Channel channel) {
         this.channel = channel;
     }
