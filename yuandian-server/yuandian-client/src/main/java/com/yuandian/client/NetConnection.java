@@ -31,7 +31,7 @@ public class NetConnection implements Runnable {
         bootstrap.option(ChannelOption.TCP_NODELAY, true);
         bootstrap.handler(new ChannelInitializer<SocketChannel>() {
             @Override
-            protected void initChannel(SocketChannel ch) throws Exception {
+            protected void initChannel(SocketChannel ch) {
                 ChannelPipeline p = ch.pipeline();
                 p.addLast(new IdleStateHandler(0, 0, 30),
                         new LengthFieldBasedFrameDecoder(128 * 1024, 9, 4, 0, 0, true),

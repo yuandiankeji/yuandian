@@ -1,26 +1,23 @@
 package com.yuandian.client;
 
 
-import io.netty.channel.Channel;
-
 /**
  * @author twjitm 2019/4/15/22:52
  */
 public class SessionManager {
-    private Channel channel;
+    private NetClient client;
     //TODO other;
-    static final SessionManager signtion = new SessionManager();
+    static final SessionManager singleton = new SessionManager();
 
-    public static SessionManager getSigntion() {
-        return signtion;
+    public static SessionManager getSingleton() {
+        return singleton;
     }
 
-    public Channel getChannel() {
-        return channel;
+    public void setClient(NetClient client) {
+        this.client = client;
     }
 
-    public void setChannel(Channel channel) {
-        this.channel = channel;
+    public NetClient getClient() {
+        return client;
     }
-
 }

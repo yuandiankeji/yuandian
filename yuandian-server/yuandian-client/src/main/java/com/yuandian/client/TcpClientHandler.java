@@ -23,7 +23,7 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
         System.out.println("初始化网络连接");
-        SessionManager.getSigntion().setChannel(ctx.channel());
+        SessionManager.getSingleton().setClient(new NetClient(ctx.channel()));
     }
 
 

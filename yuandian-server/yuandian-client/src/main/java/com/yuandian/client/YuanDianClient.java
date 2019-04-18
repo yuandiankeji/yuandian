@@ -5,7 +5,7 @@ import com.yuandian.client.config.ClientConfig;
 /**
  * @author twjitm 2019/4/15/22:45
  */
-public class YuandianClient {
+public class YuanDianClient {
     public static void main(String[] args) {
         MessageRegister.register();
         ClientConfig.getSingleton().init();

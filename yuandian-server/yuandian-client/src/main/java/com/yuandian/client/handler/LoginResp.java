@@ -7,7 +7,6 @@ import com.yuandian.data.message.PLogin;
 import com.yuandian.data.message.PSendChat;
 import com.yuandian.server.core.factory.MessageCoderFactory;
 import com.yuandian.server.core.net.IoMessage;
-import com.yuandian.server.core.net.MessageCmd;
 import io.netty.buffer.ByteBuf;
 
 /**
@@ -35,8 +34,7 @@ public class LoginResp extends AbstractRespHandler {
                 builder.setUid(uid);
                 builder.setContext("你好呀，" + toUId + "小老弟, 我是" + uid + "第" + i + "条消息");
                 i++;
-                ByteBuf byteBuf = MessageCoderFactory.getSingleton().encode((short) 4, 0, builder.build().toByteArray());
-                SessionManager.getSigntion().getChannel().writeAndFlush(byteBuf);
+                SessionManager.getSingleton().getClient().writeData((short)4,builder.build().toByteArray());
                 Thread.sleep(1000);
             }
         } catch (InvalidProtocolBufferException | InterruptedException e) {
