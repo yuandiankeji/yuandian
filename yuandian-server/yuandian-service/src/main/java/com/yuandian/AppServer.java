@@ -18,6 +18,5 @@ public class AppServer {
     public static void main(String[] args) {
         SpringApplication.run(AppServer.class, args);
         YuanDianServer.run(args);
-
     }
 }

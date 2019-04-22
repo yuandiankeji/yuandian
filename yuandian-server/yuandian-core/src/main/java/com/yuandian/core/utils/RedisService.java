@@ -1,4 +1,4 @@
-package com.yuandian.service;
+package com.yuandian.core.utils;
 
 import org.redisson.api.*;
 import org.redisson.config.Config;
@@ -154,5 +154,9 @@ public class RedisService {
     }
 
     public void deleteKey(String objectName) {
+    }
+
+    public RSemaphore getSemaphore(String objectName) {
+        return redissonClient.getSemaphore(objectName);
     }
 }

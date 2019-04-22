@@ -49,6 +49,11 @@
             <artifactId>yuandian-id-generator</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.yuandian</groupId>
+            <artifactId>yuandian-netty</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

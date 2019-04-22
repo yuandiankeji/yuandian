@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author: luyufeng
  * @Date: 2019/4/5
@@ -20,4 +22,7 @@ public interface LoginMapper {
 
     @Select("SELECT * FROM login WHERE uid = #{uid}")
     LoginPO selectByUid(long uid);
+
+    @Select("SELECT * FROM login")
+    List<LoginPO> selectAllUser();
 }

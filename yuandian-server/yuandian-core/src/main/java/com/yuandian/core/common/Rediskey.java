@@ -7,4 +7,8 @@ package com.yuandian.core.common;
 
 public interface Rediskey {
     String TOKEN = "token#";
+    //测试
+    String LOGIN_USER = "login_user";
+    String ALLUSER = "alluser";
+    //测试
 }
