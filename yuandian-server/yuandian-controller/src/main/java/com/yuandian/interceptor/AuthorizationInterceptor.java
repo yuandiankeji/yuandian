@@ -1,6 +1,6 @@
 package com.yuandian.interceptor;
 
-import com.yuandian.annotation.Authorization;
+import com.yuandian.core.annotation.Authorization;
 import com.yuandian.core.common.Constants;
 import com.yuandian.entity.Token;
 import com.yuandian.service.TokenService;

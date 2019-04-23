@@ -1,4 +1,4 @@
-package com.yuandian.controller;
+package com.yuandian.login;
 
 import com.yuandian.core.common.ResultModel;
 import com.yuandian.core.common.ResultStatus;

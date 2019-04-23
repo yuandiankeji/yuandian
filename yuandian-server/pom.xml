@@ -15,6 +15,7 @@
         <module>yuandian-data</module>
         <module>yuandian-id-generator</module>
         <module>yuandian-client</module>
+        <module>yuandian-controller</module>
     </modules>
 
     <parent>

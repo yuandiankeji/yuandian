@@ -1,4 +1,4 @@
-package com.yuandian.annotation;
+package com.yuandian.core.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
