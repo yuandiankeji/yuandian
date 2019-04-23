@@ -16,6 +16,7 @@
         <module>yuandian-id-generator</module>
         <module>yuandian-client</module>
         <module>yuandian-controller</module>
+        <module>yuandian-scheduler</module>
     </modules>
 
     <parent>
