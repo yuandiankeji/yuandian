@@ -20,6 +20,13 @@ message PLogin {
     optional string openId = 2;
 }
 
+//cmd=4 return
+message PAuth {
+    optional int64 uid = 1;
+    optional string deviceId = 2;
+    optional string token = 3;
+}
+
 //cmd=4 return none
 message PSendChat {
     optional int64 uid = 1;

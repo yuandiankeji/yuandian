@@ -1,6 +1,7 @@
 package com.yuandian.server.core.net;
 
-import com.yuandian.server.core.factory.MessageCoderFactory;
+import com.yuandian.core.net.IoMessage;
+import com.yuandian.core.net.MessageCoderFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

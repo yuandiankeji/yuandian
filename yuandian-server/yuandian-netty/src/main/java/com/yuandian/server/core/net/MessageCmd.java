@@ -17,8 +17,17 @@ public final class MessageCmd {
     /**
      * 推送消息号
      */
-    interface PUSH_CMD {
+    interface PUSH_MESSAGE_CMD {
         static final int PUSH_BASE = 9999;
         public static final int PUSH_CHAT = PUSH_BASE + 1;
+    }
+
+    /**
+     * rpc 消息号
+     */
+    interface RCP_MESSAGE_CMD {
+        static final int RPC_BASE = 19999;
+
+
     }
 }

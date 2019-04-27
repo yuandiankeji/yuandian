@@ -1,6 +1,5 @@
-package com.yuandian.server.core.factory;
+package com.yuandian.core.net;
 
-import com.yuandian.server.core.net.IoMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;

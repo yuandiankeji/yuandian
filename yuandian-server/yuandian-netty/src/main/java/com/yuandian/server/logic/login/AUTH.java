@@ -2,6 +2,7 @@ package com.yuandian.server.logic.login;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.yuandian.data.common.PUserInfo;
+import com.yuandian.data.message.PAuth;
 import com.yuandian.data.message.PLogin;
 import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.net.IoClient;
@@ -19,8 +20,10 @@ public class AUTH extends AbstractTcpHandler {
     @Override
     public void handler(IoClient client, short cmd, byte[] bytes) {
         try {
-            PLogin pLogin = PLogin.parseFrom(bytes);
+            PAuth pLogin = PAuth.parseFrom(bytes);
             UserInfo user = new UserInfo(client.getChannel());
+            pLogin.getToken();
+
             user.setUid(pLogin.getUid());
             IoClientManager.put(user);
             PUserInfo.Builder puserInfo = PUserInfo.newBuilder();
