@@ -2,11 +2,9 @@ package com.yuandian.service.impl;
 
 import com.yuandian.core.annotation.RedisCacheable;
 import com.yuandian.core.annotation.RedisInsertable;
-import com.yuandian.core.annotation.RedisUpdateable;
 import com.yuandian.core.common.Rediskey;
-import com.yuandian.core.entity.login.LoginPO;
-import com.yuandian.core.enums.RedisDataType;
-import com.yuandian.mapper.LoginMapper;
+import com.yuandian.domain.LoginPO;
+import com.yuandian.mapper.LoginPOMapper;
 import com.yuandian.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,29 +20,25 @@ import java.util.List;
 public class LoginServiceImpl implements LoginService {
 
     @Autowired
-    private LoginMapper loginMapper;
+    private LoginPOMapper loginPOMapper;
 
     @RedisInsertable(key = Rediskey.LOGIN_USER, field = "#loginPO.uid")
     @Override
     public LoginPO insert(LoginPO loginPO) {
-        loginMapper.insert(loginPO);
+        loginPOMapper.insert(loginPO);
         return loginPO;
     }
 
     @RedisCacheable(key = Rediskey.LOGIN_USER, field = "#uid")
     @Override
     public LoginPO selectByUid(long uid) {
-        return loginMapper.selectByUid(uid);
+        return loginPOMapper.selectByPrimaryKey(uid);
     }
 
-    @RedisCacheable(key = Rediskey.ALLUSER, type = RedisDataType.LIST)
     @Override
-    public List<LoginPO> selectAllUser() {
-        return loginMapper.selectAllUser();
+    public void update(LoginPO loginPO) {
+        loginPOMapper.updateByPrimaryKeySelective(loginPO);
     }
 
-    @RedisUpdateable
-    public void updateUser() {
 
-    }
 }

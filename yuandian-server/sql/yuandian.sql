@@ -52,7 +52,7 @@ CREATE TABLE `friends` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `uid` int(11) NOT NULL,
+  `uid` bigint(20) NOT NULL,
   `account` varchar(100) DEFAULT NULL,
   `phone_num` varchar(20) DEFAULT NULL,
   `mail` varchar(50) DEFAULT NULL,
@@ -65,7 +65,10 @@ CREATE TABLE `user` (
   `wechat` varchar(50) DEFAULT NULL,
   `alipay` varchar(100) DEFAULT NULL,
   `ip` varchar(100) DEFAULT NULL,
-  `registration` date DEFAULT NULL COMMENT '注册时间',
+  `registration` datetime DEFAULT NULL COMMENT '注册时间',
   `h_address` varchar(200) DEFAULT NULL COMMENT '家庭地址',
+  `birthday` datetime DEFAULT NULL,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SET FOREIGN_KEY_CHECKS = 1;
