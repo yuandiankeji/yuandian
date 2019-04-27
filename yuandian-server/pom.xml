@@ -12,7 +12,6 @@
         <module>yuandian-core</module>
         <module>yuandian-service</module>
         <module>yuandian-netty</module>
-        <module>yuandian-data</module>
         <module>yuandian-id-generator</module>
         <module>yuandian-client</module>
         <module>yuandian-controller</module>

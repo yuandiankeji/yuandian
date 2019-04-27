@@ -1,0 +1,3 @@
+[submodule "yuandian-server/yuandian-data"]
+	path = yuandian-server/yuandian-data
+	url = /Users/toufumie/twjitm/yuandian-data
