@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>com.yuandian</groupId>
-            <artifactId>yuandian-server</artifactId>
+            <artifactId>yuandian-core</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
