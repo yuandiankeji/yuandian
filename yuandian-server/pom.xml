@@ -16,6 +16,7 @@
         <module>yuandian-client</module>
         <module>yuandian-controller</module>
         <module>yuandian-scheduler</module>
+        <module>yuandian-data</module>
     </modules>
 
     <parent>
