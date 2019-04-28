@@ -16,11 +16,8 @@
         <module>yuandian-client</module>
         <module>yuandian-controller</module>
         <module>yuandian-scheduler</module>
-<<<<<<< HEAD
         <module>yuandian-data</module>
-=======
         <module>yuandian-domain</module>
->>>>>>> 5a0621f3a880c863c5bf462d768e3ff17e414910
     </modules>
 
     <parent>
