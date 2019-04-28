@@ -1,6 +1,9 @@
 package com.yuandian.service.impl;
 
+import com.yuandian.domain.UserPO;
+import com.yuandian.mapper.UserPOMapper;
 import com.yuandian.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,4 +12,24 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserPOMapper userPOMapper;
+
+    @Override
+    public UserPO selectUserById(long uid) {
+        return userPOMapper.selectByPrimaryKey(uid);
+    }
+
+    @Override
+    public void updateUser(UserPO userPO) {
+        userPOMapper.updateByPrimaryKeySelective(userPO);
+    }
+
+    @Override
+    public void insertUser(UserPO userPO) {
+        userPOMapper.insertSelective(userPO);
+    }
+
+
 }

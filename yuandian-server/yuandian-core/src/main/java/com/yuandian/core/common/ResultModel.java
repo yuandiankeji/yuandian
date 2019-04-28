@@ -24,7 +24,7 @@ public class ResultModel {
     /**
      * 返回内容
      */
-    private Object content;
+    private Object content = "";
 
     public ResultModel(int code, String message) {
         this.code = code;

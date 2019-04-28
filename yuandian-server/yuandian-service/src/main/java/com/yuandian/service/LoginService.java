@@ -1,8 +1,7 @@
 package com.yuandian.service;
 
-import com.yuandian.core.entity.login.LoginPO;
+import com.yuandian.domain.LoginPO;
 
-import java.util.List;
 
 /**
  * @author: luyufeng
@@ -15,5 +14,5 @@ public interface LoginService {
 
     LoginPO selectByUid(long uid);
 
-    List<LoginPO> selectAllUser();
+    void update(LoginPO loginPO);
 }
