@@ -156,7 +156,7 @@ local.properties
 # Annotation Processing
 .apt_generated
 
-
+.gitmodules
 # End of https://www.gitignore.io/api/eclipse
 
 /yuandian-server/yuandian-data/src/main/java/
