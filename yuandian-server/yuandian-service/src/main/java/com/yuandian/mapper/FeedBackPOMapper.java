@@ -3,7 +3,9 @@ package com.yuandian.mapper;
 import com.yuandian.entity.FeedBackPO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface FeedBackPOMapper {
     @Insert({
         "insert into feed_back (id, uid, feed_back)",
