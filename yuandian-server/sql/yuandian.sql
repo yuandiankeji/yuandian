@@ -72,3 +72,21 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+/*反馈*/
+DROP TABLE IF EXISTS `feed_back`;
+CREATE TABLE `feed_back` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `uid` bigint(20) NOT NULL COMMENT 'uid',
+  `feed_back` text COMMENT '反馈'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*举报*/
+DROP TABLE IF EXISTS `report`;
+CREATE TABLE `report` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `report_uid` bigint(20) NOT NULL COMMENT '举报者uid',
+  `reported_uid` bigint(20) NOT NULL COMMENT '被举报者uid',
+  `reason` text COMMENT '举报理由',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
