@@ -47,6 +47,9 @@ CREATE TABLE `friends` (
   `group_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `yuandian`.`friends` ;
+ADD PRIMARY KEY (`uid`, `friend_id`);
+
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
@@ -72,6 +75,14 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+/*好友关系*/
+DROP TABLE IF EXISTS `relation`;
+CREATE TABLE `relation` (
+  `uid` bigint(20) NOT NULL,
+  `fuid` text NOT NULL,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*反馈*/
 DROP TABLE IF EXISTS `feed_back`;
