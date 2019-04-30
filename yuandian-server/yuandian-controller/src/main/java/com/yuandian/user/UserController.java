@@ -4,8 +4,11 @@ import com.robert.vesta.service.intf.IdService;
 import com.yuandian.core.common.ResultModel;
 import com.yuandian.entity.UserPO;
 import com.yuandian.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Date;
 
@@ -16,6 +19,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping(value = "user")
+@EnableSwagger2 // 让swagger生成接口文档
 public class UserController {
 
     @Autowired
@@ -24,22 +28,25 @@ public class UserController {
     @Autowired
     private IdService idService;
 
+    @ApiOperation(value = "获取用户信息")
     @GetMapping("/info/{uid}")
-    public ResultModel getUserInfo(@PathVariable long uid) {
+    public ResultModel getUserInfo(@ApiParam("用户id") @PathVariable long uid) {
         UserPO userPO = userService.selectUserById(uid);
         ResultModel result = ResultModel.ok();
         result.setContent(userPO);
         return result;
     }
 
-    @GetMapping("/resiger")
-    public ResultModel resiger(@RequestBody UserPO userPO) {
+    @ApiOperation(value = "注册用户")
+    @PostMapping("/resiger")
+    public ResultModel resiger(@ApiParam(value = "用户或用户各个属性") @RequestBody UserPO userPO) {
         userService.insertUser(userPO);
         return ResultModel.ok();
     }
 
+    @ApiOperation(value = "修改用户信息")
     @PostMapping("/update")
-    public ResultModel update(@RequestBody UserPO userPO) {
+    public ResultModel update(@ApiParam(value = "用户各个属性") @RequestBody UserPO userPO) {
         userService.updateUser(userPO);
         return ResultModel.ok();
     }
