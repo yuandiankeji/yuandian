@@ -61,7 +61,6 @@ CREATE TABLE `user` (
   `mail` varchar(50) DEFAULT NULL,
   `sex` int(2) DEFAULT NULL,
   `head_url` varchar(200) DEFAULT NULL,
-  `pass_word` varchar(200) DEFAULT NULL,
   `nick_name` varchar(100) DEFAULT NULL,
   `signature` varchar(200) DEFAULT NULL COMMENT '个性签名',
   `qq` varchar(20) DEFAULT NULL,
@@ -101,3 +100,12 @@ CREATE TABLE `report` (
   `reason` text COMMENT '举报理由',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `login`;
+CREATE TABLE `login` (
+  `uid` bigint(20) NOT NULL,
+  `token` varchar(300) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  PRIMARY KEY (`uid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
