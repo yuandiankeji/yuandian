@@ -1,8 +1,14 @@
 package com.yuandian.mapper;
 
-import com.yuandian.domain.LoginPO;
+import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
+import static org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO;
+import static org.apache.ibatis.jdbc.SqlBuilder.SET;
+import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
+import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
+import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
+import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
 
-import static org.apache.ibatis.jdbc.SqlBuilder.*;
+import com.yuandian.entity.LoginPO;
 
 public class LoginPOSqlProvider {
 
@@ -18,6 +24,10 @@ public class LoginPOSqlProvider {
             VALUES("token", "#{token,jdbcType=VARCHAR}");
         }
         
+        if (record.getPassword() != null) {
+            VALUES("password", "#{password,jdbcType=VARCHAR}");
+        }
+        
         return SQL();
     }
 
@@ -27,6 +37,10 @@ public class LoginPOSqlProvider {
         
         if (record.getToken() != null) {
             SET("token = #{token,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getPassword() != null) {
+            SET("password = #{password,jdbcType=VARCHAR}");
         }
         
         WHERE("uid = #{uid,jdbcType=BIGINT}");

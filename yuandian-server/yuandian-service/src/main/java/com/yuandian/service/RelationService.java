@@ -1,7 +1,7 @@
 package com.yuandian.service;
 
-import com.yuandian.domain.UserPO;
 import com.yuandian.entity.RelationPO;
+import com.yuandian.entity.UserPO;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.yuandian.service.impl;
 
-import com.yuandian.domain.UserPO;
+import com.yuandian.entity.UserPO;
 import com.yuandian.mapper.UserPOMapper;
 import com.yuandian.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

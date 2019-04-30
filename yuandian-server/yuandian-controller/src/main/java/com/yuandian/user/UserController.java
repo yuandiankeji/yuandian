@@ -2,7 +2,7 @@ package com.yuandian.user;
 
 import com.robert.vesta.service.intf.IdService;
 import com.yuandian.core.common.ResultModel;
-import com.yuandian.domain.UserPO;
+import com.yuandian.entity.UserPO;
 import com.yuandian.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

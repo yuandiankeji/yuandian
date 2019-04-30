@@ -1,7 +1,14 @@
 package com.yuandian.mapper;
 
-import com.yuandian.domain.LoginPO;
-import org.apache.ibatis.annotations.*;
+import com.yuandian.entity.LoginPO;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +21,10 @@ public interface LoginPOMapper {
     int deleteByPrimaryKey(Long uid);
 
     @Insert({
-        "insert into login (uid, token)",
-        "values (#{uid,jdbcType=BIGINT}, #{token,jdbcType=VARCHAR})"
+        "insert into login (uid, token, ",
+        "password)",
+        "values (#{uid,jdbcType=BIGINT}, #{token,jdbcType=VARCHAR}, ",
+        "#{password,jdbcType=VARCHAR})"
     })
     int insert(LoginPO record);
 
@@ -24,13 +33,14 @@ public interface LoginPOMapper {
 
     @Select({
         "select",
-        "uid, token",
+        "uid, token, password",
         "from login",
         "where uid = #{uid,jdbcType=BIGINT}"
     })
     @Results({
         @Result(column="uid", property="uid", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="token", property="token", jdbcType=JdbcType.VARCHAR)
+        @Result(column="token", property="token", jdbcType=JdbcType.VARCHAR),
+        @Result(column="password", property="password", jdbcType=JdbcType.VARCHAR)
     })
     LoginPO selectByPrimaryKey(Long uid);
 
@@ -39,7 +49,8 @@ public interface LoginPOMapper {
 
     @Update({
         "update login",
-        "set token = #{token,jdbcType=VARCHAR}",
+        "set token = #{token,jdbcType=VARCHAR},",
+          "password = #{password,jdbcType=VARCHAR}",
         "where uid = #{uid,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(LoginPO record);

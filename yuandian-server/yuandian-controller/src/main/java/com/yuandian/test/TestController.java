@@ -2,7 +2,7 @@ package com.yuandian.test;
 
 import com.robert.vesta.service.intf.IdService;
 import com.yuandian.core.annotation.Authorization;
-import com.yuandian.domain.LoginPO;
+import com.yuandian.entity.LoginPO;
 import com.yuandian.service.LoginService;
 import com.yuandian.core.utils.RedisService;
 import com.yuandian.service.TokenService;

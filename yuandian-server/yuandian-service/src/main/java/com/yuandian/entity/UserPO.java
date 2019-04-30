@@ -1,4 +1,4 @@
-package com.yuandian.domain;
+package com.yuandian.entity;
 
 import java.util.Date;
 
@@ -14,8 +14,6 @@ public class UserPO {
     private Integer sex;
 
     private String headUrl;
-
-    private String passWord;
 
     private String nickName;
 
@@ -81,14 +79,6 @@ public class UserPO {
 
     public void setHeadUrl(String headUrl) {
         this.headUrl = headUrl == null ? null : headUrl.trim();
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord == null ? null : passWord.trim();
     }
 
     public String getNickName() {

@@ -1,9 +1,11 @@
-package com.yuandian.domain;
+package com.yuandian.entity;
 
 public class LoginPO {
     private Long uid;
 
     private String token;
+
+    private String password;
 
     public Long getUid() {
         return uid;
@@ -19,5 +21,13 @@ public class LoginPO {
 
     public void setToken(String token) {
         this.token = token == null ? null : token.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 }

@@ -1,8 +1,8 @@
 package com.yuandian.relation;
 
 import com.yuandian.core.common.ResultModel;
-import com.yuandian.domain.UserPO;
 import com.yuandian.entity.RelationPO;
+import com.yuandian.entity.UserPO;
 import com.yuandian.service.RelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +39,7 @@ public class RelationController {
      * @param relationPO
      * @return
      */
-    @PostMapping("/update/{uid}")
+    @PostMapping("/update")
     public ResultModel updateRelation(@RequestBody RelationPO relationPO) {
         relationService.updateRelation(relationPO);
         return ResultModel.ok();

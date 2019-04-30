@@ -3,13 +3,12 @@ package com.yuandian.service.impl;
 import com.yuandian.core.annotation.RedisCacheable;
 import com.yuandian.core.annotation.RedisInsertable;
 import com.yuandian.core.common.Rediskey;
-import com.yuandian.domain.LoginPO;
+import com.yuandian.entity.LoginPO;
 import com.yuandian.mapper.LoginPOMapper;
 import com.yuandian.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 /**
  * @author: luyufeng

@@ -1,8 +1,8 @@
 package com.yuandian.service.impl;
 
 import com.yuandian.core.common.Constants;
-import com.yuandian.domain.UserPO;
 import com.yuandian.entity.RelationPO;
+import com.yuandian.entity.UserPO;
 import com.yuandian.mapper.RelationPOMapper;
 import com.yuandian.service.RelationService;
 import com.yuandian.service.UserService;

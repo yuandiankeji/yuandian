@@ -1,6 +1,6 @@
 package com.yuandian.service;
 
-import com.yuandian.domain.UserPO;
+import com.yuandian.entity.UserPO;
 
 /**
  * @author: luyufeng
