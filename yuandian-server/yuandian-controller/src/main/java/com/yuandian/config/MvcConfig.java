@@ -20,7 +20,7 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authorizationInterceptor).addPathPatterns("/**").excludePathPatterns("/swagger-ui.html*");
+        registry.addInterceptor(authorizationInterceptor).addPathPatterns("/**");
     }
 
     @Override
