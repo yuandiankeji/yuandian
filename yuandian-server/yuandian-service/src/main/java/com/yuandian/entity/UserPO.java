@@ -33,6 +33,10 @@ public class UserPO {
 
     private Date birthday;
 
+    private Integer status;
+
+    private String age;
+
     public Long getUid() {
         return uid;
     }
@@ -151,5 +155,21 @@ public class UserPO {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age == null ? null : age.trim();
     }
 }

@@ -30,13 +30,15 @@ public interface UserPOMapper {
         "sex, head_url, nick_name, ",
         "signature, qq, wechat, ",
         "alipay, ip, registration, ",
-        "h_address, birthday)",
+        "h_address, birthday, ",
+        "status, age)",
         "values (#{uid,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, ",
         "#{phoneNum,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, ",
         "#{sex,jdbcType=INTEGER}, #{headUrl,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, ",
         "#{signature,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, ",
         "#{alipay,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{registration,jdbcType=TIMESTAMP}, ",
-        "#{hAddress,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP})"
+        "#{hAddress,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, ",
+        "#{status,jdbcType=INTEGER}, #{age,jdbcType=VARCHAR})"
     })
     int insert(UserPO record);
 
@@ -59,14 +61,16 @@ public interface UserPOMapper {
         @Result(column="ip", property="ip", jdbcType=JdbcType.VARCHAR),
         @Result(column="registration", property="registration", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="h_address", property="hAddress", jdbcType=JdbcType.VARCHAR),
-        @Result(column="birthday", property="birthday", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="birthday", property="birthday", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
+        @Result(column="age", property="age", jdbcType=JdbcType.VARCHAR)
     })
     List<UserPO> selectByExample(UserPOExample example);
 
     @Select({
         "select",
         "uid, account, phone_num, mail, sex, head_url, nick_name, signature, qq, wechat, ",
-        "alipay, ip, registration, h_address, birthday",
+        "alipay, ip, registration, h_address, birthday, status, age",
         "from user",
         "where uid = #{uid,jdbcType=BIGINT}"
     })
@@ -85,7 +89,9 @@ public interface UserPOMapper {
         @Result(column="ip", property="ip", jdbcType=JdbcType.VARCHAR),
         @Result(column="registration", property="registration", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="h_address", property="hAddress", jdbcType=JdbcType.VARCHAR),
-        @Result(column="birthday", property="birthday", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="birthday", property="birthday", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
+        @Result(column="age", property="age", jdbcType=JdbcType.VARCHAR)
     })
     UserPO selectByPrimaryKey(Long uid);
 
@@ -113,7 +119,9 @@ public interface UserPOMapper {
           "ip = #{ip,jdbcType=VARCHAR},",
           "registration = #{registration,jdbcType=TIMESTAMP},",
           "h_address = #{hAddress,jdbcType=VARCHAR},",
-          "birthday = #{birthday,jdbcType=TIMESTAMP}",
+          "birthday = #{birthday,jdbcType=TIMESTAMP},",
+          "status = #{status,jdbcType=INTEGER},",
+          "age = #{age,jdbcType=VARCHAR}",
         "where uid = #{uid,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(UserPO record);

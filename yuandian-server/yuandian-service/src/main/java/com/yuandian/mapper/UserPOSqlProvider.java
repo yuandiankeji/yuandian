@@ -85,6 +85,14 @@ public class UserPOSqlProvider {
             VALUES("birthday", "#{birthday,jdbcType=TIMESTAMP}");
         }
         
+        if (record.getStatus() != null) {
+            VALUES("status", "#{status,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAge() != null) {
+            VALUES("age", "#{age,jdbcType=VARCHAR}");
+        }
+        
         return SQL();
     }
 
@@ -109,6 +117,8 @@ public class UserPOSqlProvider {
         SELECT("registration");
         SELECT("h_address");
         SELECT("birthday");
+        SELECT("status");
+        SELECT("age");
         FROM("user");
         applyWhere(example, false);
         
@@ -186,6 +196,14 @@ public class UserPOSqlProvider {
             SET("birthday = #{record.birthday,jdbcType=TIMESTAMP}");
         }
         
+        if (record.getStatus() != null) {
+            SET("status = #{record.status,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAge() != null) {
+            SET("age = #{record.age,jdbcType=VARCHAR}");
+        }
+        
         applyWhere(example, true);
         return SQL();
     }
@@ -209,6 +227,8 @@ public class UserPOSqlProvider {
         SET("registration = #{record.registration,jdbcType=TIMESTAMP}");
         SET("h_address = #{record.hAddress,jdbcType=VARCHAR}");
         SET("birthday = #{record.birthday,jdbcType=TIMESTAMP}");
+        SET("status = #{record.status,jdbcType=INTEGER}");
+        SET("age = #{record.age,jdbcType=VARCHAR}");
         
         UserPOExample example = (UserPOExample) parameter.get("example");
         applyWhere(example, true);
@@ -273,6 +293,14 @@ public class UserPOSqlProvider {
         
         if (record.getBirthday() != null) {
             SET("birthday = #{birthday,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getStatus() != null) {
+            SET("status = #{status,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAge() != null) {
+            SET("age = #{age,jdbcType=VARCHAR}");
         }
         
         WHERE("uid = #{uid,jdbcType=BIGINT}");
