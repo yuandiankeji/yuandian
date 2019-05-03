@@ -29,7 +29,7 @@ public class LoginController {
     private LoginService loginService;
 
     @ApiOperation("登录接口")
-    @PostMapping(value = "/login")
+    @RequestMapping(value = "/login", method = {RequestMethod.POST,RequestMethod.GET})
     public ResultModel login(@ApiParam("用户id") @RequestParam long uid, @ApiParam("密码") @RequestParam String password, @ApiParam("设备id") @RequestParam String deviceId) {
         LoginPO loginPO = loginService.selectByUid(uid);
         ResultModel resultModel;
@@ -43,16 +43,16 @@ public class LoginController {
         return resultModel;
     }
 
-    @PostMapping("/logout/{uid}")
+    @RequestMapping(value = "/logout", method = {RequestMethod.POST,RequestMethod.GET})
     @ApiOperation("注销")
-    public ResultModel logout(@ApiParam("用户id") @PathVariable long uid) {
+    public ResultModel logout(@ApiParam("用户id") @RequestParam long uid) {
         tokenService.deleteToken(uid);
         ResultModel resultModel = new ResultModel(ResultStatus.SUCCESS);
         return resultModel;
     }
 
     @ApiOperation("修改密码")
-    @PostMapping("/password")
+    @RequestMapping(value = "/password", method = {RequestMethod.POST,RequestMethod.GET})
     public ResultModel updatePassword(@ApiParam("用户id") @RequestParam long uid,@ApiParam("密码") @RequestParam String password) {
         LoginPO loginPO = loginService.selectByUid(uid);
         if (loginPO != null) {

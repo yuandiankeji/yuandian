@@ -1,6 +1,5 @@
 package com.yuandian.user;
 
-import com.robert.vesta.service.intf.IdService;
 import com.yuandian.core.common.ResultModel;
 import com.yuandian.entity.UserPO;
 import com.yuandian.service.UserService;
@@ -25,9 +24,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private IdService idService;
-
     @ApiOperation(value = "获取用户信息")
     @RequestMapping(value = "/info", method = {RequestMethod.POST,RequestMethod.GET})
     public ResultModel getUserInfo(@ApiParam("用户id") @RequestParam long uid) {
@@ -40,6 +36,7 @@ public class UserController {
     @ApiOperation(value = "注册用户")
     @RequestMapping(value = "/resiger", method = {RequestMethod.POST,RequestMethod.GET})
     public ResultModel resiger(@ApiParam(value = "用户或用户各个属性") @RequestBody UserPO userPO) {
+        userPO.setBirthday(new Date());
         userService.insertUser(userPO);
         return ResultModel.ok();
     }
@@ -51,22 +48,4 @@ public class UserController {
         return ResultModel.ok();
     }
 
-
-    public UserPO getOneMockUser() {
-        UserPO userPO = new UserPO();
-        userPO.setUid(idService.genId());
-        userPO.setNickName("rick");
-        userPO.setAccount("178323wefw");
-        userPO.setBirthday(new Date());
-        userPO.setRegistration(new Date());
-        userPO.setHeadUrl("/user/1234566.jpg");
-        userPO.setMail("179979304@qq.com");
-        userPO.setPhoneNum("18910430596");
-        userPO.setQq("179979304");
-        userPO.setSex(1);
-        userPO.setSignature("在这里大家真诚交流");
-        userPO.setWechat("luyufeng_24");
-        userPO.sethAddress("我的地址");
-        return userPO;
-    }
 }

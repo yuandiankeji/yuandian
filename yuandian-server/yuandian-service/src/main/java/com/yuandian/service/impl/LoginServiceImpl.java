@@ -21,14 +21,12 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private LoginPOMapper loginPOMapper;
 
-    @RedisInsertable(key = Rediskey.LOGIN_USER, field = "#loginPO.uid")
     @Override
     public LoginPO insert(LoginPO loginPO) {
         loginPOMapper.insert(loginPO);
         return loginPO;
     }
 
-    @RedisCacheable(key = Rediskey.LOGIN_USER, field = "#uid")
     @Override
     public LoginPO selectByUid(long uid) {
         return loginPOMapper.selectByPrimaryKey(uid);

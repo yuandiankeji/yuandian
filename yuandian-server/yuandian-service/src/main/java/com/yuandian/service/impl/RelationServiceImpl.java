@@ -38,7 +38,7 @@ public class RelationServiceImpl implements RelationService {
     public List<UserPO> selectFriends(long uid) {
         RelationPO relationPO = relationPOMapper.selectByPrimaryKey(uid);
         String fuid = relationPO.getFuid();
-        List<UserPO> results = new ArrayList<>();
+        List<UserPO> results = new ArrayList<UserPO>();
         List<String> fuids = Arrays.asList(StringUtils.split(fuid, Constants.comma));
         for (String id : fuids) {
             UserPO userPO = userService.selectUserById(Long.valueOf(id));

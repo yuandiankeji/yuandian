@@ -1,5 +1,6 @@
 package com.yuandian.service.impl;
 
+import com.robert.vesta.service.intf.IdService;
 import com.yuandian.entity.UserPO;
 import com.yuandian.mapper.UserPOMapper;
 import com.yuandian.service.UserService;
@@ -16,6 +17,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserPOMapper userPOMapper;
 
+    @Autowired
+    private IdService idService;
+
     @Override
     public UserPO selectUserById(long uid) {
         return userPOMapper.selectByPrimaryKey(uid);
@@ -28,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void insertUser(UserPO userPO) {
+        userPO.setUid(idService.genId());
         userPOMapper.insertSelective(userPO);
     }
 
