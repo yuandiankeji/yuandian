@@ -29,8 +29,8 @@ public class UserController {
     private IdService idService;
 
     @ApiOperation(value = "获取用户信息")
-    @GetMapping("/info/{uid}")
-    public ResultModel getUserInfo(@ApiParam("用户id") @PathVariable long uid) {
+    @RequestMapping(value = "/info", method = {RequestMethod.POST,RequestMethod.GET})
+    public ResultModel getUserInfo(@ApiParam("用户id") @RequestParam long uid) {
         UserPO userPO = userService.selectUserById(uid);
         ResultModel result = ResultModel.ok();
         result.setContent(userPO);
@@ -38,14 +38,14 @@ public class UserController {
     }
 
     @ApiOperation(value = "注册用户")
-    @PostMapping("/resiger")
+    @RequestMapping(value = "/resiger", method = {RequestMethod.POST,RequestMethod.GET})
     public ResultModel resiger(@ApiParam(value = "用户或用户各个属性") @RequestBody UserPO userPO) {
         userService.insertUser(userPO);
         return ResultModel.ok();
     }
 
     @ApiOperation(value = "修改用户信息")
-    @PostMapping("/update")
+    @RequestMapping(value = "/update", method = {RequestMethod.POST,RequestMethod.GET})
     public ResultModel update(@ApiParam(value = "用户各个属性") @RequestBody UserPO userPO) {
         userService.updateUser(userPO);
         return ResultModel.ok();
