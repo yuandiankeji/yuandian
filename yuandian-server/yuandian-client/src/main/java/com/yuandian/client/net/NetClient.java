@@ -25,4 +25,9 @@ public class NetClient {
     private boolean isConnection() {
         return channel != null;
     }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
 }
