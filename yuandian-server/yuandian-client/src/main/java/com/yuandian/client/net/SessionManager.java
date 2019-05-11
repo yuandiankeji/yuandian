@@ -1,4 +1,4 @@
-package com.yuandian.client;
+package com.yuandian.client.net;
 
 
 /**

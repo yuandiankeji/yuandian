@@ -1,6 +1,5 @@
-package com.yuandian.client;
+package com.yuandian.client.net;
 
-import com.yuandian.core.net.MessageCoderFactory;
 import io.netty.channel.Channel;
 
 

@@ -1,9 +1,7 @@
-package com.yuandian.client;
+package com.yuandian.client.net;
 
 import com.yuandian.client.config.ClientConfig;
 import com.yuandian.client.handler.AbstractRespHandler;
-import com.yuandian.core.net.IoMessage;
-import com.yuandian.core.net.MessageCoderFactory;
 import com.yuandian.data.message.PLogin;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

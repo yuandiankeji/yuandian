@@ -13,7 +13,6 @@
         <module>yuandian-service</module>
         <module>yuandian-netty</module>
         <module>yuandian-id-generator</module>
-        <module>yuandian-client</module>
         <module>yuandian-controller</module>
         <module>yuandian-scheduler</module>
         <module>yuandian-data</module>

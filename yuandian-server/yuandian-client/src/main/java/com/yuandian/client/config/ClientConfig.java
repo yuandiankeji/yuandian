@@ -1,6 +1,6 @@
 package com.yuandian.client.config;
 
-import com.yuandian.server.utils.PropertiesUtils;
+
 
 import java.io.File;
 import java.io.FileReader;

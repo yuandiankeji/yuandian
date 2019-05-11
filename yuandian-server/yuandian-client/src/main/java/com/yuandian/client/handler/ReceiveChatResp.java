@@ -1,6 +1,7 @@
 package com.yuandian.client.handler;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.yuandian.client.net.IoMessage;
 import com.yuandian.data.push.PushChatMessage;
 
 /**
