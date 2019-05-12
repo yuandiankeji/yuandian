@@ -7,6 +7,7 @@ import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.consts.ErrorCode;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
+import com.yuandian.server.core.net.MessageCmd;
 import com.yuandian.server.logic.AbstractTcpHandler;
 import com.yuandian.server.logic.user.UserInfo;
 import com.yuandian.server.logic.user.UserService;
@@ -16,7 +17,7 @@ import com.yuandian.server.logic.user.UserService;
  *
  * @author twjitm 2019/4/9/15:57
  */
-@MessageAnnotation(cmd = 3)
+@MessageAnnotation(cmd = MessageCmd.AUTH_ACCOUNT)
 public class AUTH extends AbstractTcpHandler {
     @Override
     public void handler(IoClient client, short cmd, byte[] bytes) {
