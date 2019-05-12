@@ -54,7 +54,7 @@ public class IoServer implements Runnable {
                         }
                     });
             future = b.bind(config.getIp(), (int) config.getPort()).sync();
-            logger.debug("[IoServer] | start world success");
+            logger.debug("[IoServer] | start world success,ip={},port={}",config.getIp(), (int) config.getPort());
             future.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
