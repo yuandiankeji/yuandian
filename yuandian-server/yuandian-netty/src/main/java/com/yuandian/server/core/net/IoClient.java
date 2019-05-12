@@ -1,6 +1,7 @@
 package com.yuandian.server.core.net;
 
 import com.yuandian.core.net.MessageCoderFactory;
+import com.yuandian.data.common.PErrorInfo;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -31,12 +32,20 @@ public  class IoClient {
         return _writeData(cmd, OK_STATUS, data);
     }
 
+    public final ChannelFuture writeErrorData(short cmd, short code) {
+        PErrorInfo.Builder builder = PErrorInfo.newBuilder();
+        builder.setCmd(cmd);
+        builder.setCode(code);
+        return _writeData(cmd, code, builder.build().toByteArray());
+    }
+
     public final ChannelFuture writeData(short cmd, int status, byte[] data) {
         return _writeData(cmd, status, data);
     }
 
     private ChannelFuture _writeData(short cmd, int status, byte[] data) {
         ByteBuf byteBuf = MessageCoderFactory.getSingleton().encode(cmd, status, data);
+        //TODo   暂时不考虑分布式
         ChannelFuture channelFuture = null;
         if (channel != null) {
             channelFuture = channel.writeAndFlush(byteBuf);
@@ -52,4 +61,5 @@ public  class IoClient {
             }
         });
     }
+
 }

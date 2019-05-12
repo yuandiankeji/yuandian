@@ -64,6 +64,7 @@ public class TcpMessageProcessor {
             Class clazz = handlerMap.get(cmd);
             try {
                 AbstractTcpHandler handler = (AbstractTcpHandler) clazz.newInstance();
+
                 handler.handler(client, cmd, data);
             } catch (InstantiationException ignored) {
             } catch (IllegalAccessException e) {

@@ -14,7 +14,6 @@ import io.netty.util.AttributeKey;
 public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 
     public static final AttributeKey<IoClient> SESSION_CLIENT = AttributeKey.valueOf("CLIENT");
-    public static final AttributeKey<Long> SESSION_CLIENT_ID = AttributeKey.valueOf("SESSION_CLIENT_ID");
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {

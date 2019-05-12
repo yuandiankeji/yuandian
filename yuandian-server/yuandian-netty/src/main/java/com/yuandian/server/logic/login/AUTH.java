@@ -3,12 +3,13 @@ package com.yuandian.server.logic.login;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.yuandian.data.common.PUserInfo;
 import com.yuandian.data.message.PAuth;
-import com.yuandian.data.message.PLogin;
 import com.yuandian.server.core.annotation.MessageAnnotation;
+import com.yuandian.server.core.consts.ErrorCode;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.server.logic.AbstractTcpHandler;
 import com.yuandian.server.logic.user.UserInfo;
+import com.yuandian.server.logic.user.UserService;
 
 /**
  * 认证
@@ -22,13 +23,19 @@ public class AUTH extends AbstractTcpHandler {
         try {
             PAuth pLogin = PAuth.parseFrom(bytes);
             UserInfo user = new UserInfo(client.getChannel());
-            pLogin.getToken();
-
+            String token=pLogin.getToken();
+            long uid=pLogin.getUid();
+            String deviceId=pLogin.getDeviceId();
+            boolean result = UserService.checkUserToken(uid, deviceId, token);
+            if (!result) {
+                client.writeErrorData(cmd, ErrorCode.AUTH_ID_ERROR);
+                return;
+            }
             user.setUid(pLogin.getUid());
             IoClientManager.put(user);
             PUserInfo.Builder puserInfo = PUserInfo.newBuilder();
             puserInfo.setUid((int) user.getUid());
-            client.writeData(cmd, puserInfo.build().toByteArray());
+            user.writeData(cmd, puserInfo.build().toByteArray());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
         }
