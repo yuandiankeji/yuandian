@@ -19,7 +19,7 @@ public class ReceiveChatResp extends AbstractRespHandler {
     public void handler(IoMessage message) {
         try {
             PushChatMessage chat = PushChatMessage.parseFrom(message.getBytes());
-            System.out.println("收到消息：" + chat.getContext());
+           // System.out.println("收到消息：" + chat.getContext());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
         }

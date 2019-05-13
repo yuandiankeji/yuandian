@@ -1,8 +1,7 @@
 package com.yuandian.client.net;
 
-import com.yuandian.client.config.ClientConfig;
 import com.yuandian.client.handler.AbstractRespHandler;
-import com.yuandian.data.message.PLogin;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -27,13 +26,7 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        long uid = ClientConfig.getSingleton().getUid();
-        String openId = ClientConfig.getSingleton().getOpenId();
-        PLogin.Builder login = PLogin.newBuilder();
-        login.setUid(uid);
-        login.setOpenId(openId);
-        ByteBuf b = MessageCoderFactory.getSingleton().encode((short) 3, 0, login.build().toByteArray());
-        ctx.channel().writeAndFlush(b);
+
     }
 
     /**

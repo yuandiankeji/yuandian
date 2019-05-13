@@ -65,7 +65,7 @@ public class MessageRegister {
         String path = pk.replace('.', '/');
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource(path);
-        return getClasses(new File(url.getFile()), pk);
+        return getClasses(cls, new File(url.getFile()), pk);
     }
 
     /**
@@ -76,18 +76,22 @@ public class MessageRegister {
      * @return
      * @throws ClassNotFoundException
      */
-    private static List<Class<?>> getClasses(File dir, String pk) throws ClassNotFoundException {
+    private static List<Class<?>> getClasses(Class<?> cls, File dir, String pk) throws ClassNotFoundException {
         List<Class<?>> classes = new ArrayList<Class<?>>();
         if (!dir.exists()) {
             return classes;
         }
         for (File f : dir.listFiles()) {
             if (f.isDirectory()) {
-                classes.addAll(getClasses(f, pk + "." + f.getName()));
+                classes.addAll(getClasses(cls, f, pk + "." + f.getName()));
             }
             String name = f.getName();
             if (name.endsWith(".class")) {
-                classes.add(Class.forName(pk + "." + name.substring(0, name.length() - 6)));
+                Class<?> temp = Class.forName(pk + "." + name.substring(0, name.length() - 6));
+                if (temp.getName() != cls.getName()) {
+                    classes.add(temp);
+                }
+
             }
         }
         return classes;
