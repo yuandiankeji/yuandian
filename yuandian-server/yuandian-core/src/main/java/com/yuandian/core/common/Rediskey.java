@@ -11,4 +11,7 @@ public interface Rediskey {
     String LOGIN_USER = "login_user";
     String ALLUSER = "alluser";
     //测试
+
+    //聊天信息保存
+    String CHAT_MESSAGE_INFO_LIST="h:chat:message:%s";
 }

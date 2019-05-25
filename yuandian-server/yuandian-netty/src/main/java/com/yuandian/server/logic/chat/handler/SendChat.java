@@ -32,6 +32,7 @@ public class SendChat extends AbstractTcpHandler {
                 PushChatMessage.Builder pushChatMessage = PushChatMessage.newBuilder();
                 pushChatMessage.setChatInfo(pChat);
                 //往别的客户端推送消息,暂时不考虑分布式
+
                 targetUser.writeData(MessageCmd.PUSH_MESSAGE_CMD.PUSH_CHAT, pushChatMessage.build().toByteArray());
             }
             //保存消息
