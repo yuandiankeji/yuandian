@@ -4,6 +4,7 @@ import com.yuandian.core.utils.CollectionUtil;
 import com.yuandian.server.config.RedisFactory;
 import com.yuandian.server.config.ServerConfig;
 import com.yuandian.server.config.ServerConfigManager;
+import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.factory.ThreadPoolFactory;
 import com.yuandian.server.core.net.IoServer;
 import com.yuandian.server.core.net.TcpMessageProcessor;
@@ -40,6 +41,8 @@ public class YuanDianServer {
     }
 
     private static void initConfig(String args) {
+        SpringBeanFactory.init();
+        SpringBeanFactory.getInstance().getChatService().test();
         ServerConfig serverConfig = ServerConfigManager.getInstance().init(args).getServerConfig();
         RedisFactory.getInstance().init();
         TcpMessageProcessor.getSingleton().init();

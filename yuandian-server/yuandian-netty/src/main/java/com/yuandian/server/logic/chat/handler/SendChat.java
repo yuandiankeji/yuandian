@@ -1,14 +1,19 @@
 package com.yuandian.server.logic.chat.handler;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.yuandian.core.utils.ZDateUtils;
+import com.yuandian.core.utils.ZStringUtil;
 import com.yuandian.data.common.PChatInfo;
 import com.yuandian.data.message.PSendChat;
 import com.yuandian.data.push.PushChatMessage;
 import com.yuandian.server.core.annotation.MessageAnnotation;
+import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.server.core.net.MessageCmd;
 import com.yuandian.server.logic.AbstractTcpHandler;
+import com.yuandian.server.logic.chat.entity.ChatPo;
+import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.server.logic.user.UserInfo;
 
 /**
@@ -32,7 +37,15 @@ public class SendChat extends AbstractTcpHandler {
                 PushChatMessage.Builder pushChatMessage = PushChatMessage.newBuilder();
                 pushChatMessage.setChatInfo(pChat);
                 //往别的客户端推送消息,暂时不考虑分布式
-
+                ChatService chatService = SpringBeanFactory.getInstance().getChatService();
+                ChatPo chatPo = new ChatPo();
+                chatPo.setUid(uid);
+                chatPo.setTargetId(targetUser.getUid());
+                chatPo.setIsread(0);
+                chatPo.setCtime(ZDateUtils.getSeconds());
+                chatPo.setContext(pChat.getContext());
+                chatPo.setType(chatType);
+                chatService.saveChat(chatPo);
                 targetUser.writeData(MessageCmd.PUSH_MESSAGE_CMD.PUSH_CHAT, pushChatMessage.build().toByteArray());
             }
             //保存消息

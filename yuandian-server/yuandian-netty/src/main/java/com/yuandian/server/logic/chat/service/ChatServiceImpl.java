@@ -45,6 +45,12 @@ public class ChatServiceImpl implements ChatService {
 
     }
 
+    @Override
+    public String test() {
+        System.out.println(11111);
+        return "11111";
+    }
+
     private String getChatMainKey(long uid, long targetId) {
         String token;
 

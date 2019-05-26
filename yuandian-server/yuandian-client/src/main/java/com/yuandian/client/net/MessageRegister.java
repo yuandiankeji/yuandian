@@ -157,6 +157,7 @@ public class MessageRegister {
                         - (ext.length()));
                 Class<?> messageClass = Class.forName(realClass);
                 if (clazz.isAssignableFrom(messageClass)) {
+                    System.out.println("scan message class :"+messageClass);
                     list.add(messageClass);
                 }
 
