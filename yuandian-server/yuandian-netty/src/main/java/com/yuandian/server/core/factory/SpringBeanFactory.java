@@ -1,6 +1,7 @@
 package com.yuandian.server.core.factory;
 
 import com.yuandian.server.logic.chat.service.ChatService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.annotation.Resource;
@@ -8,11 +9,11 @@ import javax.annotation.Resource;
 
 public class SpringBeanFactory {
     private static SpringBeanFactory factory;
-    @Resource
+    @Autowired
     private ChatService chatService;
 
     public static void init() {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-spring.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext-spring.xml");
         factory = (SpringBeanFactory) context.getBean("springBeanFactory");
     }
 

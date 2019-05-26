@@ -37,6 +37,7 @@ public class ServerConfigManager {
         global.setId(properties.getProperty("global.ip"));
         global.setPort(properties.getProperty("global.port"));
         global.setName("global");
+        redisConfigs.put("global",global);
         RedisConfig chat = new RedisConfig();
         chat.setId(properties.getProperty("chat.ip"));
         chat.setPort(properties.getProperty("chat.port"));
