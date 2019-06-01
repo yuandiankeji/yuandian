@@ -36,13 +36,16 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void delete(long uid, long chatId) {
-
+    public void delete(long uid, long targetId, long mid) {
+        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
+        String key = String.format(Rediskey.CHAT_MESSAGE_INFO_LIST, getChatMainKey(uid, targetId));
+        chatRedis.hdel(key, mid + "");
     }
 
     @Override
-    public void recall(long uid, long targetId, long mid) {
+    public long read(long uid, long targetId) {
 
+        return 0;
     }
 
     @Override

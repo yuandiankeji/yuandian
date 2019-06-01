@@ -1,8 +1,6 @@
 package com.yuandian.server.core.net;
 
-import com.fasterxml.jackson.core.io.IOContext;
 import com.yuandian.server.logic.user.UserInfo;
-import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 
 import java.util.Map;

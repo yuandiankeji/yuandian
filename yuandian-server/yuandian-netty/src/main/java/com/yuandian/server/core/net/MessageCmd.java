@@ -12,7 +12,8 @@ public final class MessageCmd {
     public static final int AUTH_ACCOUNT = REQUEST_BASE + 2;
     public static final int LOGIN = REQUEST_BASE + 3;
     public static final int SEND_CHAT = REQUEST_BASE + 4;
-    public static int GET_CHAT_RECORD = REQUEST_BASE + 5;
+    public static final int GET_CHAT_RECORD = REQUEST_BASE + 5;
+    public static final int DELETE_CHAT_RECORD = REQUEST_BASE + 6;
 
 
     /**

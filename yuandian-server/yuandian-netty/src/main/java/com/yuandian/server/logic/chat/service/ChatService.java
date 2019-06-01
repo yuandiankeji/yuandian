@@ -10,9 +10,9 @@ public interface ChatService {
 
     public List<ChatPo> getChatInfo(long uid, long targetId, int limit);
 
-    public void delete(long uid, long chatId);
+    public void delete(long uid, long targetId,long mid);
 
-    public void recall(long uid,long targetId,long mid);
+    public long read(long uid,long targetId);
     public String test();
 
 
