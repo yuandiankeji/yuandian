@@ -18,7 +18,8 @@ public enum ResultStatus {
     MSG_CODE_ERROR(-1006, "验证码错误"),
     USER_NOT_REGSTION(-1008, "用户未注册"),
     USER_EXIST(-1007, "已经存在此手机号的用户"),
-    OLD_PWD_ERROR(-1009, "老密码输入错误");
+    OLD_PWD_ERROR(-1009, "老密码输入错误"),
+    CANNOT_NULL(-1010, "内容不能为空");
 
     /**
      * 返回码
