@@ -20,6 +20,10 @@ public interface Constants {
      * 存放Authorization的header字段
      */
     String AUTHORIZATION = "authorization";
+    /**
+     * 存放uid的header字段
+     */
+    String UID = "uid";
 
     /**
      * 分号

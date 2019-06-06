@@ -4,6 +4,7 @@ import com.yuandian.core.annotation.Authorization;
 import com.yuandian.core.common.Constants;
 import com.yuandian.entity.Token;
 import com.yuandian.service.TokenService;
+import com.yuandian.utils.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -30,6 +31,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
+        RequestUtil.setRequest(request);
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         //从header中得到token
