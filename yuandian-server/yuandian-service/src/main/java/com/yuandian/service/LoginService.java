@@ -15,4 +15,7 @@ public interface LoginService {
     LoginPO selectByUid(long uid);
 
     void update(LoginPO loginPO);
+
+    LoginPO selectByPhone(String phone);
+
 }

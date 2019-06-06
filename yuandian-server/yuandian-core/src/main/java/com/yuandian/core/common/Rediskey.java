@@ -12,6 +12,8 @@ public interface Rediskey {
     String ALLUSER = "alluser";
     //测试
 
+    //短信验证码
+    String MSG_CODE = "phone_msg#";
     //聊天信息保存
     String CHAT_MESSAGE_INFO_LIST="h:chat:message:%s";
 }

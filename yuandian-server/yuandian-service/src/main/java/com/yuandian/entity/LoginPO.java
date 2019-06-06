@@ -3,6 +3,8 @@ package com.yuandian.entity;
 public class LoginPO {
     private Long uid;
 
+    private String phone;
+
     private String token;
 
     private String password;
@@ -13,6 +15,14 @@ public class LoginPO {
 
     public void setUid(Long uid) {
         this.uid = uid;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getToken() {

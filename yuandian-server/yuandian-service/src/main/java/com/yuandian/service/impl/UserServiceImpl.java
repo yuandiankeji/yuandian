@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void insertUser(UserPO userPO) {
-        userPO.setUid(idService.genId());
         userPOMapper.insertSelective(userPO);
     }
 

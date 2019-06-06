@@ -1,13 +1,13 @@
 package com.yuandian.service.impl;
 
-import com.yuandian.core.annotation.RedisCacheable;
-import com.yuandian.core.annotation.RedisInsertable;
-import com.yuandian.core.common.Rediskey;
 import com.yuandian.entity.LoginPO;
+import com.yuandian.entity.LoginPOExample;
 import com.yuandian.mapper.LoginPOMapper;
 import com.yuandian.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginServiceImpl implements LoginService {
+
 
     @Autowired
     private LoginPOMapper loginPOMapper;
@@ -35,6 +36,18 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public void update(LoginPO loginPO) {
         loginPOMapper.updateByPrimaryKeySelective(loginPO);
+    }
+
+    @Override
+    public LoginPO selectByPhone(String phone) {
+        LoginPOExample example = new LoginPOExample();
+        LoginPOExample.Criteria criteria = example.createCriteria();
+        criteria.andPhoneEqualTo(phone);
+        List<LoginPO> list = loginPOMapper.selectByExample(example);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return loginPOMapper.selectByExample(example).get(0);
     }
 
 
