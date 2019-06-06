@@ -1,0 +1,29 @@
+syntax = "proto2";
+
+option java_package = "com.yuandian.data.common";
+option java_multiple_files = true;
+
+message PUserInfo {
+    optional int32 uid = 1;
+    optional string name = 2;
+    optional string openid = 3;
+}
+
+message PErrorInfo {
+    optional int64 cmd = 1;
+    optional int64 code = 2;
+}
+
+// 聊天消息体
+message PChatInfo {
+    optional int64 uid=1;
+    optional int64 targetUid=2;
+    optional int64 mid=3;
+    optional int32 type=4;//1文字，2表情，3图片，。。。。后面再添加
+    optional string context=5;
+    optional int64 isRead=6;
+    optional int64 cTime=7;
+}
+message PChatInfos {
+    required PChatInfo chatInfo = 1;
+}
