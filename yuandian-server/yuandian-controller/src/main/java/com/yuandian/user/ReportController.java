@@ -24,6 +24,7 @@ public class ReportController {
 
     @ApiOperation("举报用户")
     @PostMapping("/report")
+    @RequestMapping(value = "/report", method = {RequestMethod.POST,RequestMethod.GET})
     public ResultModel reportUser(@ApiParam("举报信息") @RequestBody ReportPO reportPO) {
         reportService.insertReport(reportPO);
         return ResultModel.ok();
