@@ -3,14 +3,11 @@ package com.yuandian.client.net;
 import com.yuandian.client.handler.AbstractRespHandler;
 import sun.net.www.protocol.file.FileURLConnection;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -19,29 +16,35 @@ import java.util.jar.JarFile;
  * @author twjitm 2019/4/15/23:24
  */
 public class MessageRegister {
-    private static ConcurrentHashMap<Integer, AbstractRespHandler> handlerMap = new ConcurrentHashMap<>();
+    protected static ConcurrentHashMap<Integer, AbstractRespHandler> handlerMap = new ConcurrentHashMap<>();
 
-    public static void register(String scanPath) {
+    public static void register(int cmd, Class<? extends AbstractRespHandler> clazz) {
 
-        List<Class<?>> classList = null;
+//        List<Class<?>> classList = null;
+//        try {
+//
+//            //classList = MessageRegister.scanRpcService(scanPath, ".class", AbstractRespHandler.class);
+//
+////            for (Class clazz : classList) {
+////                try {
+////                    AbstractRespHandler handler = (AbstractRespHandler) clazz.newInstance();
+////                    handlerMap.put(handler.getCmd(), handler);
+////                } catch (InstantiationException | IllegalAccessException e) {
+////                    e.printStackTrace();
+////                }
+////
+////            }
+//
+//          //  scanRpcService(scanPath);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         try {
-
-            classList = MessageRegister.scanRpcService(scanPath, ".class", AbstractRespHandler.class);
-
-            for (Class clazz : classList) {
-                try {
-                    AbstractRespHandler handler = (AbstractRespHandler) clazz.newInstance();
-                    handlerMap.put(handler.getCmd(), handler);
-                } catch (InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+            handlerMap.put(cmd, clazz.newInstance());
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
+
     }
 
     public static AbstractRespHandler getHandlerMap(int cmd) {
@@ -57,9 +60,11 @@ public class MessageRegister {
         try {
             URL url;
             if (!respath.startsWith("/"))
-                url = MessageRegister.class.getResource("/" + respath);
+                url = Thread.currentThread().getContextClassLoader().getClass().getResource("/" + respath);
+                //url = MessageRegister.class.getResource("/" + respath);
             else
-                url = MessageRegister.class.getResource(respath);
+                url = Thread.currentThread().getContextClassLoader().getClass().getResource(respath);
+            // url = MessageRegister.class.getResource(respath);
 
             URLConnection tmpURLConnection = url.openConnection();
             String tmpItemName;
@@ -157,7 +162,7 @@ public class MessageRegister {
                         - (ext.length()));
                 Class<?> messageClass = Class.forName(realClass);
                 if (clazz.isAssignableFrom(messageClass)) {
-                    System.out.println("scan message class :"+messageClass);
+                    System.out.println("scan message class :" + messageClass);
                     list.add(messageClass);
                 }
 

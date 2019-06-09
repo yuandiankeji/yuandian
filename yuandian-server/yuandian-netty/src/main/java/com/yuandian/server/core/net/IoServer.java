@@ -38,7 +38,7 @@ public class IoServer implements Runnable {
 
         ServerBootstrap b = new ServerBootstrap();
         try {
-
+            //ch.pipeline().addLast("frame", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 2, 4, 0, 0));
 
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
@@ -52,9 +52,9 @@ public class IoServer implements Runnable {
                                     new LengthFieldBasedFrameDecoder(128 * 1024, 9, 4, 0, 0, true),
                                     new TcpServerHandler());
                         }
-                    });
+                    }).childOption(ChannelOption.AUTO_READ, true);
             future = b.bind(config.getIp(), (int) config.getPort()).sync();
-            logger.debug("[IoServer] | start world success,ip={},port={}",config.getIp(), (int) config.getPort());
+            logger.debug("[IoServer] | start world success,ip={},port={}", config.getIp(), (int) config.getPort());
             future.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();

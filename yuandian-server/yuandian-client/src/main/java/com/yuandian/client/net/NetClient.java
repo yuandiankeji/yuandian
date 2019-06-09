@@ -1,5 +1,6 @@
 package com.yuandian.client.net;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 
 
@@ -14,7 +15,8 @@ public class NetClient {
         if (!isConnection()) {
             return;
         }
-        MessageCoderFactory.getSingleton().encode(cmd, status, data);
+        ByteBuf buff = MessageCoderFactory.getSingleton().encode(cmd, status, data);
+        this.channel.writeAndFlush(buff);
 
     }
 
