@@ -1,6 +1,7 @@
 package com.yuandian.server.core.net;
 
 import com.yuandian.server.logic.user.UserInfo;
+import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 
 import java.util.Map;
@@ -35,6 +36,11 @@ public class IoClientManager {
             //db
         }
         return userInfo;
+    }
+
+    public static void remove(Channel channel) {
+        long uid = channel.attr(SESSION_CLIENT_ID).get();
+        onLineSession.remove(uid);
     }
 
 

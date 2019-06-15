@@ -41,6 +41,7 @@ public class ServerConfigManager {
         RedisConfig chat = new RedisConfig();
         chat.setId(properties.getProperty("chat.ip"));
         chat.setPort(properties.getProperty("chat.port"));
+        chat.setName("chat");
         redisConfigs.put("chat", chat);
     }
 

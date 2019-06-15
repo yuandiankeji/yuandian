@@ -36,3 +36,5 @@ message PReadChat {
 message PApplyFriend {
     optional int64 targetId = 1;
 }
+
+//

@@ -1,6 +1,5 @@
 package com.yuandian.client;
 
-import com.yuandian.client.config.ClientConfig;
 import com.yuandian.client.handler.TestHandler;
 import com.yuandian.client.net.MessageRegister;
 import com.yuandian.client.net.NetConnection;
