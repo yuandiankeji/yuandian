@@ -13,7 +13,6 @@ public interface ChatService {
     public void delete(long uid, long targetId,long mid);
 
     public long read(long uid,long targetId);
-    public String test();
 
 
 
