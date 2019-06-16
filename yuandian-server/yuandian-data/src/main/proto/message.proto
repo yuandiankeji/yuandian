@@ -20,6 +20,7 @@ message PSendChat {
 message PGetChatRecord {
     optional int64 targetId = 1;
     optional int64 limit = 2;
+    optional int64 footMId = 3; //上一次末尾消息id
 }
 //cmd=1006  删除聊天
 message PDeleteChat {
