@@ -2,6 +2,7 @@ package com.yuandian.server.core.net;
 
 import com.yuandian.core.net.MessageCoderFactory;
 import com.yuandian.data.common.PErrorInfo;
+import com.yuandian.data.common.PSuccessInfo;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -30,6 +31,11 @@ public  class IoClient {
 
     public final ChannelFuture writeData(short cmd, byte[] data) {
         return _writeData(cmd, OK_STATUS, data);
+    }
+
+    public final ChannelFuture writeData(short cmd) {
+        PSuccessInfo.Builder successInfo = PSuccessInfo.newBuilder();
+        return writeData(cmd, successInfo.build().toByteArray());
     }
 
     public final ChannelFuture writeErrorData(short cmd, short code) {

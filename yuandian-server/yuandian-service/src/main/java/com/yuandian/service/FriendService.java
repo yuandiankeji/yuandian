@@ -16,4 +16,11 @@ public interface FriendService {
     public FriendPo getFriend(long uid, long fuid);
 
 
+    public int apply(long uid, long targetId);
+
+    public boolean applyOption(long uid, long targetId);
+
+    public List<Long> getApplyList(long uid);
+
+
 }

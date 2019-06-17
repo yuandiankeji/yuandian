@@ -2,9 +2,9 @@ package com.yuandian.server.core.factory;
 
 import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.service.FriendService;
+import com.yuandian.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 
 
 public class SpringBeanFactory {
@@ -13,6 +13,8 @@ public class SpringBeanFactory {
     private ChatService chatService;
     @Autowired
     private FriendService friendService;
+    @Autowired
+    private UserService userService;
 
 
     public static void init() {
@@ -30,5 +32,9 @@ public class SpringBeanFactory {
 
     public FriendService getFriendService() {
         return friendService;
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 }

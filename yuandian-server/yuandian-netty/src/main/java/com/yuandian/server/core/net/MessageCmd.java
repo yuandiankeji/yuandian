@@ -32,6 +32,8 @@ public final class MessageCmd {
     public final static class PUSH_MESSAGE_CMD {
         static final int PUSH_BASE = 9999;
         public static final short PUSH_CHAT = PUSH_BASE + 1;
+        public static final short PUSH_APPLY_FRIEND=PUSH_BASE+2;
+        public static final short PUSH_APPLY_AGREE=PUSH_BASE+3;
     }
 
     /**

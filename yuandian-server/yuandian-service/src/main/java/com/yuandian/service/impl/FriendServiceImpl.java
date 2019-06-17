@@ -33,4 +33,19 @@ public class FriendServiceImpl implements FriendService {
 
         return null;
     }
+
+    @Override
+    public int apply(long uid, long targetId) {
+        return 0;
+    }
+
+    @Override
+    public boolean applyOption(long uid, long targetId) {
+        return false;
+    }
+
+    @Override
+    public List<Long> getApplyList(long uid) {
+        return null;
+    }
 }

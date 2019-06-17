@@ -18,6 +18,12 @@ public class IoClientManager {
     public static void put(UserInfo userInfo) {
 
         userInfo.getChannel().attr(SESSION_CLIENT_ID).set(userInfo.getUid());
+        UserInfo userOld = getOnlineUser(userInfo.getUid());
+        if (userOld != null) {
+            //强制客户端下线
+            onLineSession.remove(userOld.getUid());
+            userOld.getChannel().close();
+        }
         onLineSession.putIfAbsent(userInfo.getUid(), userInfo);
     }
 
@@ -39,8 +45,10 @@ public class IoClientManager {
     }
 
     public static void remove(Channel channel) {
-        long uid = channel.attr(SESSION_CLIENT_ID).get();
-        onLineSession.remove(uid);
+        if (channel != null) {
+            long uid = channel.attr(SESSION_CLIENT_ID).get();
+            onLineSession.remove(uid);
+        }
     }
 
 

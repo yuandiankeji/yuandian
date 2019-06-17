@@ -3,6 +3,9 @@ syntax = "proto2";
 option java_package = "com.yuandian.data.common";
 option java_multiple_files = true;
 
+message PSuccessInfo{
+
+}
 message PUserInfo {
     optional int32 uid = 1;
     optional string name = 2;
@@ -52,4 +55,14 @@ message PChatInfo {
 }
 message PChatInfos {
     repeated PChatInfo chatInfo = 1;
+}
+
+
+message PApplyInfo{
+    optional int64 targetUid = 2;
+    optional int64 applyTime=3;
+}
+
+message PApplyInfos {
+    repeated PApplyInfo applyList = 1;
 }
