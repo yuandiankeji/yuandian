@@ -42,7 +42,6 @@ public class YuanDianServer {
 
     private static void initConfig(String args) {
         SpringBeanFactory.init();
-        SpringBeanFactory.getInstance().getChatService().test();
         ServerConfig serverConfig = ServerConfigManager.getInstance().init(args).getServerConfig();
         RedisFactory.getInstance().init();
         TcpMessageProcessor.getSingleton().init();
