@@ -4,24 +4,25 @@ import "common.proto";
 option java_multiple_files = true;
 option java_package = "com.yuandian.data.message";
 
-//cmd=1002 return
+//cmd=AUTH_ACCOUNT  return success 登陆认证
 message PAuth {
     optional int64 uid = 1;
     optional string deviceId = 2;
     optional string token = 3;
 }
 
-//cmd=1004 return PChatInfo
+//cmd=SEND_CHAT  return PChatInfo 发送消息
 message PSendChat {
     optional PChatInfo chat = 1;
 }
 
-//cmd=1005  return 获取聊天记录
+//cmd=GET_CHAT_RECORD  return  获取聊天记录
 message PGetChatRecord {
     optional int64 targetId = 1;
     optional int64 limit = 2;
+    optional bool extra = 3;
 }
-//cmd=1006  删除聊天
+//cmd=DELETE_CHAT_RECORD  删除聊天
 message PDeleteChat {
     optional int64 targetId = 1;
     optional int64 mId = 2;
