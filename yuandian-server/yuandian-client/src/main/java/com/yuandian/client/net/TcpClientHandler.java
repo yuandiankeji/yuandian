@@ -2,7 +2,6 @@ package com.yuandian.client.net;
 
 import com.yuandian.client.handler.AbstractRespHandler;
 
-import com.yuandian.data.message.PAuth;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

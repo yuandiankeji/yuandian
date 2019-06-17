@@ -3,27 +3,66 @@ syntax = "proto2";
 option java_package = "com.yuandian.data.common";
 option java_multiple_files = true;
 
+message PSuccessInfo{
+
+}
 message PUserInfo {
     optional int32 uid = 1;
     optional string name = 2;
     optional string openid = 3;
 }
 
+//用户基础信息
+message PUserBaseInfo {
+    optional int32 uid = 1;
+    optional string account = 2;
+    optional string sex = 3;
+    optional string headUrl = 4;
+    optional string nickName = 5;
+    optional string phoneNum = 6;
+
+}
+
+message PUserBaseInfos{
+    repeated PUserBaseInfo baseInfos=1;
+}
+
 message PErrorInfo {
     optional int64 cmd = 1;
     optional int64 code = 2;
 }
+message PChatUserListInfo {
+    optional int64 uid = 1;
+    optional int32 noReadNum = 2;
+    optional int64 time = 3;
+    optional string message = 4;
+    optional PUserBaseInfo userInfo = 5;
+}
+
+message PChatListInfos {
+    repeated PChatUserListInfo list = 1;
+}
 
 // 聊天消息体
 message PChatInfo {
-    optional int64 uid=1;
-    optional int64 targetUid=2;
-    optional int64 mid=3;
-    optional int32 type=4;//1文字，2表情，3图片，。。。。后面再添加
-    optional string context=5;
-    optional int64 isRead=6;
-    optional int64 cTime=7;
+    optional int64 uid = 1;
+    optional int64 targetUid = 2;
+    optional int64 mid = 3;
+    optional int32 type = 4; //1文字，2表情，3图片，。。。。后面再添加
+    optional string context = 5;
+    optional int64 isRead = 6;
+    optional int64 cTime = 7;
 }
 message PChatInfos {
-    required PChatInfo chatInfo = 1;
+    repeated PChatInfo chatInfo = 1;
+}
+
+
+message PApplyInfo{
+    optional int64 targetUid = 2;
+    optional int64 applyTime=3;
+}
+
+message PApplyInfos {
+    repeated PApplyInfo applyList = 1;
 }

@@ -39,7 +39,7 @@ public class GetChatRecord extends AbstractTcpHandler {
                 pb.setCTime(po.getCtime());
                 pb.setContext(po.getContext());
                 pb.setIsRead(po.getIsread());
-                pbs.setChatInfo(pb);
+                pbs.addChatInfo(pb);
             });
             userInfo.writeData(cmd, pbs.build().toByteArray());
         } catch (InvalidProtocolBufferException e) {

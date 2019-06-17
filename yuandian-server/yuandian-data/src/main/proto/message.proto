@@ -21,6 +21,8 @@ message PGetChatRecord {
     optional int64 targetId = 1;
     optional int64 limit = 2;
     optional bool extra = 3;
+    optional int64 footMId = 4; //上一次末尾消息id
+
 }
 //cmd=DELETE_CHAT_RECORD  删除聊天
 message PDeleteChat {
@@ -28,12 +30,41 @@ message PDeleteChat {
     optional int64 mId = 2;
 }
 
-//cmd=10067 阅读聊天
+//cmd=1007 阅读聊天
 message PReadChat {
     optional int64 targetId = 1;
 }
 
-//10100 申请好友
+//cmd=1008 获取聊天好友列表 return PChatListInfos
+message PGetChatUserList {
+
+}
+
+//1100 申请好友
 message PApplyFriend {
     optional int64 targetId = 1;
 }
+//1101 同意好友申请
+message AgreeApply {
+    optional int64 targetId = 1;
+}
+//1102 拒绝好友
+message RefuseApply {
+    optional int64 targetId = 1;
+}
+
+//1103 删除好友
+message DeleteFriend {
+    optional int64 targetId = 1;
+}
+
+//1104 好友列表 return PUserBaseInfos
+message GetFriendList{
+
+}
+//1104 好友列表 return  PApplyInfos
+message GetApplyList{
+
+}
+
+//

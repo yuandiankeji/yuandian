@@ -36,7 +36,7 @@
             <version>1.0.8</version>
         </dependency>
 
-<!--        <dependency>-->
+        <!--        <dependency>-->
 <!--            <groupId>yuandian-data</groupId>-->
 <!--            <artifactId>yuandian-data</artifactId>-->
 <!--            <version>1.0</version>-->

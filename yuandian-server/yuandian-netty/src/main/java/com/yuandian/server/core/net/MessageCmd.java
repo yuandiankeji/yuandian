@@ -1,5 +1,7 @@
 package com.yuandian.server.core.net;
 
+import com.sun.org.apache.regexp.internal.RE;
+
 /**
  * @author twjitm 2019/4/6/21:06
  */
@@ -47,6 +49,14 @@ public final class MessageCmd {
 
 
 
+    public static final int ALL_FRIEND_APPLY_LIST = REQUEST_BASE + 20;//申请列表
+    public static final int APPLY_FRIEND = REQUEST_BASE + 21;// 申请好友
+    public static final int AGREE_FRIEND = REQUEST_BASE + 22;//同意
+    public static final int REFUSE_FRIEND = REQUEST_BASE + 23;//拒绝
+    public static final int ALL_FRIEND_LIST = REQUEST_BASE + 24;//好友列表
+    public static final int DELETE_FRIEND = REQUEST_BASE + 25;//删除好友
+
+
 
     /**
      * 推送消息号
@@ -54,6 +64,8 @@ public final class MessageCmd {
     public final static class PUSH_MESSAGE_CMD {
         static final int PUSH_BASE = 9999;
         public static final short PUSH_CHAT = PUSH_BASE + 1;
+        public static final short PUSH_APPLY_FRIEND=PUSH_BASE+2;
+        public static final short PUSH_APPLY_AGREE=PUSH_BASE+3;
     }
 
     /**
