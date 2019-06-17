@@ -16,7 +16,7 @@ message PSendChat {
     optional PChatInfo chat = 1;
 }
 
-//cmd=GET_CHAT_RECORD  return  获取聊天记录
+//cmd=GET_CHAT_RECORD  return PChatInfos 获取聊天记录
 message PGetChatRecord {
     optional int64 targetId = 1;
     optional int64 limit = 2;
@@ -30,41 +30,47 @@ message PDeleteChat {
     optional int64 mId = 2;
 }
 
-//cmd=1007 阅读聊天
+//cmd=READ_CHAT 阅读聊天
 message PReadChat {
     optional int64 targetId = 1;
 }
 
-//cmd=1008 获取聊天好友列表 return PChatListInfos
+//cmd=GET_CHAT_USER_LIST return PChatListInfos 获取聊天好友列表
 message PGetChatUserList {
 
 }
+//cmd=LOGOUT 推出登陆
+message PLogout{
 
-//1100 申请好友
+}
+
+//cmd=APPLY_FRIEND 申请好友
 message PApplyFriend {
     optional int64 targetId = 1;
 }
-//1101 同意好友申请
-message AgreeApply {
+//cmd=AGREE_FRIEND  同意好友申请
+message PAgreeApply {
     optional int64 targetId = 1;
 }
-//1102 拒绝好友
-message RefuseApply {
+//cmd=REFUSE_FRIEND 拒绝好友
+message PRefuseApply {
     optional int64 targetId = 1;
 }
 
-//1103 删除好友
+//cmd=ALL_FRIEND_APPLY_LIST return PApplyInfos 申请列表
+message PGetApplyList{
+
+}
+
+//cmd=DELETE_FRIEND  删除好友
 message DeleteFriend {
     optional int64 targetId = 1;
 }
 
-//1104 好友列表 return PUserBaseInfos
+//cmd=ALL_FRIEND_LIST 好友列表 return PUserBaseInfos
 message GetFriendList{
 
 }
-//1104 好友列表 return  PApplyInfos
-message GetApplyList{
 
-}
 
 //
