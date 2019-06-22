@@ -8,7 +8,7 @@ import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
-import com.yuandian.server.core.net.MessageCmd;
+import com.yuandian.core.common.MessageCmd;
 import com.yuandian.server.logic.AbstractTcpHandler;
 import com.yuandian.server.logic.chat.entity.ChatPo;
 import com.yuandian.server.logic.chat.service.ChatService;

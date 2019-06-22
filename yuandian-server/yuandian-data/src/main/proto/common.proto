@@ -3,18 +3,15 @@ syntax = "proto2";
 option java_package = "com.yuandian.data.common";
 option java_multiple_files = true;
 
-message PSuccessInfo{
-
-}
 message PUserInfo {
-    optional int32 uid = 1;
+    optional int64 uid = 1;
     optional string name = 2;
     optional string openid = 3;
 }
 
 //用户基础信息
 message PUserBaseInfo {
-    optional int32 uid = 1;
+    optional int64 uid = 1;
     optional string account = 2;
     optional string sex = 3;
     optional string headUrl = 4;
@@ -23,14 +20,16 @@ message PUserBaseInfo {
 
 }
 
-message PUserBaseInfos{
-    repeated PUserBaseInfo baseInfos=1;
+message PUserBaseInfos {
+    repeated PUserBaseInfo baseInfos = 1;
 }
 
-message PErrorInfo {
+message PResultInfo {
     optional int64 cmd = 1;
     optional int64 code = 2;
+    optional string message=3;
 }
+
 message PChatUserListInfo {
     optional int64 uid = 1;
     optional int32 noReadNum = 2;
@@ -58,9 +57,9 @@ message PChatInfos {
 }
 
 
-message PApplyInfo{
+message PApplyInfo {
     optional int64 targetUid = 2;
-    optional int64 applyTime=3;
+    optional int64 applyTime = 3;
 }
 
 message PApplyInfos {

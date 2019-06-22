@@ -1,5 +1,6 @@
 package com.yuandian.service.impl;
 
+import com.yuandian.entity.ApplyPo;
 import com.yuandian.entity.FriendPo;
 import com.yuandian.service.FriendService;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public List<Long> getApplyList(long uid) {
+    public List<ApplyPo> getApplyList(long uid) {
         return null;
     }
 }

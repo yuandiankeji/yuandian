@@ -1,5 +1,6 @@
 package com.yuandian.service;
 
+import com.yuandian.entity.ApplyPo;
 import com.yuandian.entity.FriendPo;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface FriendService {
 
     public boolean applyOption(long uid, long targetId);
 
-    public List<Long> getApplyList(long uid);
+    public List<ApplyPo> getApplyList(long uid);
 
 
 }

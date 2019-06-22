@@ -4,6 +4,12 @@ import "common.proto";
 option java_multiple_files = true;
 option java_package = "com.yuandian.data.message";
 
+//---------------------------------------------------------------------
+//---------------远点长链接服务器协议格式说明文档---------------------------
+//说明： cmd=消息对应的消息id ，在类 com.yuandian.core.common.MessageCmd 中
+//return 默认返回状态：（无其他注释）PResultInfo。 若有则返回注释
+//---------------------------------------------------------------------
+
 //cmd=AUTH_ACCOUNT  return success 登陆认证
 message PAuth {
     optional int64 uid = 1;
@@ -40,7 +46,7 @@ message PGetChatUserList {
 
 }
 //cmd=LOGOUT 推出登陆
-message PLogout{
+message PLogout {
 
 }
 
@@ -58,19 +64,18 @@ message PRefuseApply {
 }
 
 //cmd=ALL_FRIEND_APPLY_LIST return PApplyInfos 申请列表
-message PGetApplyList{
+message PGetApplyList {
 
 }
 
 //cmd=DELETE_FRIEND  删除好友
-message DeleteFriend {
+message PDeleteFriend {
     optional int64 targetId = 1;
 }
 
 //cmd=ALL_FRIEND_LIST 好友列表 return PUserBaseInfos
-message GetFriendList{
+message GetFriendList {
 
 }
-
 
 //
