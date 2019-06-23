@@ -1,12 +1,13 @@
 package com.yuandian.service;
 
+import com.yuandian.core.common.ResultObject;
 import com.yuandian.entity.ApplyPo;
 import com.yuandian.entity.FriendPo;
 
 import java.util.List;
 
 public interface FriendService {
-    public int addFriend(long uid, long fuid);
+    public ResultObject<Integer> addFriend(long uid, long fuid);
 
     public List<FriendPo> getFriendList(long uid);
 
@@ -23,5 +24,7 @@ public interface FriendService {
 
     public List<ApplyPo> getApplyList(long uid);
 
+
+    ResultObject<Integer> refuseApply(long uid, long targetId);
 
 }

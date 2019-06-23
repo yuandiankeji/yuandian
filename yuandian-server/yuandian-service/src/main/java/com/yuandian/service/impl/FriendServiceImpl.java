@@ -1,5 +1,6 @@
 package com.yuandian.service.impl;
 
+import com.yuandian.core.common.ResultObject;
 import com.yuandian.entity.ApplyPo;
 import com.yuandian.entity.FriendPo;
 import com.yuandian.service.FriendService;
@@ -10,8 +11,8 @@ import java.util.List;
 @Service
 public class FriendServiceImpl implements FriendService {
     @Override
-    public int addFriend(long uid, long fuid) {
-        return 0;
+    public ResultObject<Integer> addFriend(long uid, long fuid) {
+        return null;
     }
 
     @Override
@@ -47,6 +48,11 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public List<ApplyPo> getApplyList(long uid) {
+        return null;
+    }
+
+    @Override
+    public ResultObject<Integer> refuseApply(long uid, long targetId) {
         return null;
     }
 }

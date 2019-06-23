@@ -1,8 +1,8 @@
 package com.yuandian.server.core.net;
 
+import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.net.MessageCoderFactory;
-import com.yuandian.data.common.PErrorInfo;
-import com.yuandian.data.common.PSuccessInfo;
+import com.yuandian.data.common.PResultInfo;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -11,7 +11,7 @@ import io.netty.channel.ChannelFutureListener;
 /**
  * @author twjitm 2019/3/24/22:51
  */
-public  class IoClient {
+public class IoClient {
 
     private final int OK_STATUS = 0;
 
@@ -34,15 +34,20 @@ public  class IoClient {
     }
 
     public final ChannelFuture writeData(short cmd) {
-        PSuccessInfo.Builder successInfo = PSuccessInfo.newBuilder();
-        return writeData(cmd, successInfo.build().toByteArray());
+
+        return writeData(cmd, ErrorCode.SYS_SUCCESS);
     }
 
-    public final ChannelFuture writeErrorData(short cmd, short code) {
-        PErrorInfo.Builder builder = PErrorInfo.newBuilder();
+    public final ChannelFuture writeData(short cmd, short code, String tips) {
+        PResultInfo.Builder builder = PResultInfo.newBuilder();
         builder.setCmd(cmd);
         builder.setCode(code);
+        builder.setMessage(tips);
         return _writeData(cmd, code, builder.build().toByteArray());
+    }
+
+    public final ChannelFuture writeData(short cmd, short code) {
+        return writeData(cmd, code, "default");
     }
 
     public final ChannelFuture writeData(short cmd, int status, byte[] data) {

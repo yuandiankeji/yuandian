@@ -32,7 +32,7 @@ public class ApplyFriend extends AbstractTcpHandler {
             e.printStackTrace();
         }
         if (applyFriend == null) {
-            userInfo.writeErrorData(cmd, ErrorCode.USER_INFO_ERROR);
+            userInfo.writeData(cmd, ErrorCode.USER_INFO_ERROR);
             return;
         }
         long uid = userInfo.getUid();

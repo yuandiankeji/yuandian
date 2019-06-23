@@ -29,7 +29,7 @@ public class AUTH extends AbstractTcpHandler {
             String deviceId=pLogin.getDeviceId();
             boolean result = UserService.checkUserToken(uid, deviceId, token);
             if (!result) {
-                client.writeErrorData(cmd, ErrorCode.AUTH_ID_ERROR);
+                client.writeData(cmd, ErrorCode.AUTH_ID_ERROR);
                 return;
             }
             user.setUid(pLogin.getUid());

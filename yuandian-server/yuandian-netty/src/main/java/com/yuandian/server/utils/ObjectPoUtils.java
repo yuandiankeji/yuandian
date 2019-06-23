@@ -6,6 +6,9 @@ import com.yuandian.entity.UserPO;
 
 import java.util.List;
 
+/**
+ * 对象转化工具类
+ */
 public class ObjectPoUtils {
 
     public static PUserBaseInfos getPuserBaseInfos(List<UserPO> userPOList) {
