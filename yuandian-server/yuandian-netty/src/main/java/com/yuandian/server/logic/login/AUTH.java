@@ -8,9 +8,9 @@ import com.yuandian.core.common.ErrorCode;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.core.common.MessageCmd;
-import com.yuandian.server.logic.AbstractTcpHandler;
+import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.model.UserInfo;
-import com.yuandian.server.logic.user.UserService;
+import com.yuandian.server.logic.user.service.UserService;
 
 /**
  * 认证

@@ -1,4 +1,4 @@
-package com.yuandian.server.logic.user;
+package com.yuandian.server.logic.user.service;
 
 import org.springframework.stereotype.Service;
 

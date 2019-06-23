@@ -7,7 +7,7 @@ import com.yuandian.data.message.PRefuseApply;
 import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
-import com.yuandian.server.logic.AbstractTcpHandler;
+import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.model.UserInfo;
 
 /**
