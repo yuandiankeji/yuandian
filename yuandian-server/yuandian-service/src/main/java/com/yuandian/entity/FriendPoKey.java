@@ -1,23 +1,23 @@
 package com.yuandian.entity;
 
 public class FriendPoKey {
-    private Integer uid;
+    private Long uid;
 
-    private Integer fuid;
+    private Long fuid;
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
-    public Integer getFuid() {
+    public Long getFuid() {
         return fuid;
     }
 
-    public void setFuid(Integer fuid) {
+    public void setFuid(Long fuid) {
         this.fuid = fuid;
     }
 }

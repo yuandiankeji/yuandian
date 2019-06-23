@@ -20,5 +20,9 @@ public interface ErrorCode {
      * 用户信息错误
      */
     short USER_INFO_ERROR = 10002;
+    /**
+     *重复的添加好友
+     */
+    short FRIEND_REPEAT_ADD=10010;
 
 }

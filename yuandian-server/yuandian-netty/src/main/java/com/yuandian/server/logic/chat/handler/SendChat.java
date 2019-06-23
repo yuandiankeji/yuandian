@@ -48,8 +48,8 @@ public class SendChat extends AbstractTcpHandler {
                 targetUser.writeData(MessageCmd.PUSH_MESSAGE_CMD.PUSH_CHAT, pushChatMessage.build().toByteArray());
             }
             //保存消息
-            //Todo
 
+            userInfo.writeData(cmd, pChat.toByteArray());
 
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();

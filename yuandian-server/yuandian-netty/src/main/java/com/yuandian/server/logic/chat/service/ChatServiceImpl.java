@@ -2,16 +2,20 @@ package com.yuandian.server.logic.chat.service;
 
 import com.yuandian.core.common.DateConstants;
 import com.yuandian.core.common.Rediskey;
+import com.yuandian.entity.UserPO;
 import com.yuandian.server.config.RedisFactory;
 import com.yuandian.server.logic.chat.entity.ChatPo;
+import com.yuandian.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -23,6 +27,9 @@ public class ChatServiceImpl implements ChatService {
         RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
         String key = String.format(Rediskey.CHAT_MESSAGE_INFO_LIST, getChatMainKey(chatPo.getUid(), chatPo.getTargetId()));
         chatRedis.hsetString(key, chatPo.getMid() + "", chatPo.serialize(), DateConstants.SECOND);
+        String user_list_key = String.format(Rediskey.CHAT_USER_LIST, chatPo.getUid());
+        chatRedis.saddString(user_list_key, chatPo.getTargetId() + "");
+
     }
 
     @Override
@@ -56,6 +63,34 @@ public class ChatServiceImpl implements ChatService {
 
         return 0;
     }
+
+    @Override
+    public List<UserPO> getChatUserInfo(long uid) {
+        //UserPO userPO=userService.selectUserById(uid);
+        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
+        String key = String.format(Rediskey.CHAT_USER_LIST, uid);
+        Set<String> allChatUserId = chatRedis.smembersString(key);
+        for (String targetUid : allChatUserId) {
+            long target_uid = Long.parseLong(targetUid);
+
+        }
+        List<UserPO> userPOList = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            UserPO userPO = new UserPO();
+            userPO.setAccount("121212");
+            userPO.setAge("2424");
+            userPO.setHeadUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556968161473&di=d23018d493acb7083a5f6ae49c7a18bb&imgtype=0&src=http%3A%2F%2Fs16.sinaimg.cn%2Fmw690%2F002apk40zy7aHsBI98b4f%26690");
+            userPO.setNickName("yuandian");
+            userPO.setSex(1);
+            userPO.setUid(uid);
+            userPO.setStatus(1);
+            userPO.setPhoneNum("1008611");
+            userPO.setSignature("hello，world");
+            userPOList.add(userPO);
+        }
+        return userPOList;
+    }
+
 
     private String getChatMainKey(long uid, long targetId) {
         String token;

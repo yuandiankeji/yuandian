@@ -17,6 +17,7 @@ message PUserBaseInfo {
     optional string headUrl = 4;
     optional string nickName = 5;
     optional string phoneNum = 6;
+    optional string signature =7;
 
 }
 
@@ -38,7 +39,7 @@ message PChatUserListInfo {
     optional PUserBaseInfo userInfo = 5;
 }
 
-message PChatListInfos {
+message PChatUserListInfos {
     repeated PChatUserListInfo list = 1;
 }
 

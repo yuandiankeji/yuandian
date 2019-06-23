@@ -1,5 +1,6 @@
 package com.yuandian.server.logic.chat.service;
 
+import com.yuandian.entity.UserPO;
 import com.yuandian.server.logic.chat.entity.ChatPo;
 
 import java.util.List;
@@ -15,5 +16,6 @@ public interface ChatService {
     public long read(long uid,long targetId);
 
 
+    List<UserPO> getChatUserInfo(long uid);
 
 }

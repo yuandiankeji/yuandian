@@ -4,6 +4,11 @@ public class ResultObject<T> {
     private short code;
     private T t;
 
+    public ResultObject(short code, T t) {
+        this.code = code;
+        this.t = t;
+    }
+
     public short getCode() {
         return code;
     }

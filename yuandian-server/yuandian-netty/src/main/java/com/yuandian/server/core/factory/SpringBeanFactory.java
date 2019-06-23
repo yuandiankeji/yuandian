@@ -11,9 +11,9 @@ public class SpringBeanFactory {
     private static SpringBeanFactory factory;
     @Autowired
     private ChatService chatService;
-    @Autowired
+    //@Autowired
     private FriendService friendService;
-    @Autowired
+  //  @Autowired
     private UserService userService;
 
 
