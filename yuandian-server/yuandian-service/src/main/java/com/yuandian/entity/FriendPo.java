@@ -2,33 +2,16 @@ package com.yuandian.entity;
 
 import java.util.Date;
 
-public class FriendPo {
-    private long uid;
-    private long fuid;
-    private long groupId;
+public class FriendPo extends FriendPoKey {
+    private Integer groupId;
+
     private Date cTime;
 
-    public long getUid() {
-        return uid;
-    }
-
-    public void setUid(long uid) {
-        this.uid = uid;
-    }
-
-    public long getFuid() {
-        return fuid;
-    }
-
-    public void setFuid(long fuid) {
-        this.fuid = fuid;
-    }
-
-    public long getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(long groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 
