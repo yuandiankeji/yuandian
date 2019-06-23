@@ -30,11 +30,11 @@ public class RedisFactory {
     public void init() {
         RedisConfig global = ServerConfigManager.getInstance().getRedisConfig("global");
         JedisPool globalJedisPool = new JedisPool(global.getId(), global.getPort());
-        globalJedisPool.getResource().auth("yuandianredis");
+       // globalJedisPool.getResource().auth("yuandianredis");
         pool.put(global.getName(), new Redis(globalJedisPool));
         RedisConfig chat = ServerConfigManager.getInstance().getRedisConfig("chat");
         JedisPool chatJedisPool = new JedisPool(chat.getId(), chat.getPort());
-        chatJedisPool.getResource().auth("yuandianredis");
+       // chatJedisPool.getResource().auth("yuandianredis");
         pool.put(chat.getName(), new Redis(chatJedisPool));
     }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuandian.server.logic.mapper.FriendMapper">
+    <resultMap id="baseMap" type="com.yuandian.server.logic.model.entity.FriendPo">
+        <id column="uid" property="uid"/>
+        <id column="target_id" property="targetId"/>
+        <id column="group_id" property="groupId"/>
+        <id column="ctime" property="ctime"/>
+    </resultMap>
+
+</mapper>

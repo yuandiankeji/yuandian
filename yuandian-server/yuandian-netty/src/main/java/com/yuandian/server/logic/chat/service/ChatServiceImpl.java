@@ -4,8 +4,8 @@ import com.yuandian.core.common.DateConstants;
 import com.yuandian.core.common.Rediskey;
 import com.yuandian.entity.UserPO;
 import com.yuandian.server.config.RedisFactory;
-import com.yuandian.server.logic.chat.entity.ChatPo;
-import com.yuandian.service.UserService;
+import com.yuandian.server.logic.mapper.ChatMapper;
+import com.yuandian.server.logic.model.entity.ChatPo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,8 @@ import java.util.Set;
 @Service
 public class ChatServiceImpl implements ChatService {
 
+    @Autowired
+    private ChatMapper chatMapper;
     private Logger logger = LoggerFactory.getLogger(ChatServiceImpl.class);
 
     @Override

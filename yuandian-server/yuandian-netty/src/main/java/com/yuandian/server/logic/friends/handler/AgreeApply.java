@@ -10,7 +10,7 @@ import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.server.logic.AbstractTcpHandler;
-import com.yuandian.server.logic.user.UserInfo;
+import com.yuandian.server.logic.model.UserInfo;
 
 /**
  * 同意好友申请

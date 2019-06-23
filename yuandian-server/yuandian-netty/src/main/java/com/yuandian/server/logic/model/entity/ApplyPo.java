@@ -1,4 +1,4 @@
-package com.yuandian.server.logic.friends.entity;
+package com.yuandian.server.logic.model.entity;
 
 import com.yuandian.core.common.RedisCache;
 

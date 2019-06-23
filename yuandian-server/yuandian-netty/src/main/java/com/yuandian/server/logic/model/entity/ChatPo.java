@@ -1,4 +1,4 @@
-package com.yuandian.server.logic.chat.entity;
+package com.yuandian.server.logic.model.entity;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;

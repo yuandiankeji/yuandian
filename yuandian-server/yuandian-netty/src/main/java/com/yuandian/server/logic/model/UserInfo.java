@@ -1,4 +1,4 @@
-package com.yuandian.server.logic.user;
+package com.yuandian.server.logic.model;
 
 import com.yuandian.server.core.net.IoClient;
 import io.netty.channel.Channel;

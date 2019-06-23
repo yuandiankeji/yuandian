@@ -9,7 +9,7 @@ import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.server.logic.AbstractTcpHandler;
 import com.yuandian.server.logic.chat.service.ChatService;
-import com.yuandian.server.logic.user.UserInfo;
+import com.yuandian.server.logic.model.UserInfo;
 
 /**
  * @author twjitm 2019/4/17/0:03

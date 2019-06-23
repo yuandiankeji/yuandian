@@ -1,6 +1,5 @@
 package com.yuandian.server.logic.friends.handler;
 
-import com.yuandian.data.common.PUserBaseInfo;
 import com.yuandian.data.common.PUserBaseInfos;
 import com.yuandian.entity.FriendPo;
 import com.yuandian.entity.UserPO;
@@ -10,7 +9,7 @@ import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.server.logic.AbstractTcpHandler;
-import com.yuandian.server.logic.user.UserInfo;
+import com.yuandian.server.logic.model.UserInfo;
 import com.yuandian.server.utils.ObjectPoUtils;
 import com.yuandian.service.UserService;
 import org.slf4j.Logger;

@@ -1,7 +1,7 @@
 package com.yuandian.server.logic.chat.service;
 
 import com.yuandian.entity.UserPO;
-import com.yuandian.server.logic.chat.entity.ChatPo;
+import com.yuandian.server.logic.model.entity.ChatPo;
 
 import java.util.List;
 

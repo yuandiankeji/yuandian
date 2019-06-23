@@ -1,6 +1,6 @@
 package com.yuandian.server.core.net;
 
-import com.yuandian.server.logic.user.UserInfo;
+import com.yuandian.server.logic.model.UserInfo;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 

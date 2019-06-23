@@ -13,12 +13,12 @@ public class SpringBeanFactory {
     private ChatService chatService;
     //@Autowired
     private FriendService friendService;
-  //  @Autowired
+    //  @Autowired
     private UserService userService;
 
 
     public static void init() {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext-spring.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext-bean.xml", "spring/applicationContext-spring.xml");
         factory = (SpringBeanFactory) context.getBean("springBeanFactory");
     }
 
