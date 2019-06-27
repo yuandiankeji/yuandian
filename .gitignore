@@ -9,7 +9,7 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
+~
 # Package Files #
 *.jar
 *.war
@@ -160,3 +160,4 @@ local.properties
 # End of https://www.gitignore.io/api/eclipse
 
 /yuandian-server/yuandian-data/src/main/java/
+~.*
