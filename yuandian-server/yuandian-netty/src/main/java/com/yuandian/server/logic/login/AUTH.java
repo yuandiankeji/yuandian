@@ -27,11 +27,11 @@ public class AUTH extends AbstractTcpHandler {
             String token=pLogin.getToken();
             long uid=pLogin.getUid();
             String deviceId=pLogin.getDeviceId();
-            boolean result = UserService.checkUserToken(uid, deviceId, token);
-            if (!result) {
-                client.writeData(cmd, ErrorCode.AUTH_ID_ERROR);
-                return;
-            }
+            boolean result = false;//UserService.checkUserToken(uid, deviceId, token);
+//            if (!result) {
+//                client.writeData(cmd, ErrorCode.AUTH_ID_ERROR);
+//                return;
+//            }
             user.setUid(pLogin.getUid());
             IoClientManager.put(user);
             PUserInfo.Builder puserInfo = PUserInfo.newBuilder();

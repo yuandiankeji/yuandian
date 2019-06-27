@@ -6,6 +6,7 @@ import com.yuandian.core.utils.ZDateUtils;
 import com.yuandian.server.logic.mapper.FriendPoMapper;
 import com.yuandian.server.logic.model.entity.ApplyPo;
 import com.yuandian.server.logic.model.entity.FriendPo;
+import com.yuandian.server.logic.model.entity.FriendPoKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,33 +23,40 @@ public class FriendServiceImpl implements FriendService {
         if (isfriend) {
             return new ResultObject<>(ErrorCode.FRIEND_REPEAT_ADD, 1);
         }
-        FriendPo friend = new FriendPo();
+        FriendPo friend = new FriendPo(uid,fuid);
         friend.setUid(uid);
         friend.setFuid(fuid);
         friend.setcTime(ZDateUtils.now());
         friend.setGroupId(1L);
-        friendMapper.insert(new FriendPo());
+        friendMapper.insert(friend);
         return new ResultObject<>(ErrorCode.SYS_SUCCESS, 1);
     }
 
     @Override
     public List<FriendPo> getFriendList(long uid) {
-        return null;
+        return friendMapper.getFriends(uid);
     }
 
     @Override
     public void deleteFriend(long uid, long fuid) {
-
+        friendMapper.deleteByPrimaryKey(new FriendPoKey(uid, fuid));
     }
 
     @Override
     public boolean isFriend(long uid, long fuid) {
-        return false;
+        FriendPo friend = this.getFriend(uid, fuid);
+        return friend != null;
     }
 
     @Override
     public FriendPo getFriend(long uid, long fuid) {
 
+        List<FriendPo> list = this.getFriendList(uid);
+        for (FriendPo po : list) {
+            if (po.getFuid() == fuid) {
+                return po;
+            }
+        }
         return null;
     }
 

@@ -7,6 +7,12 @@ public class FriendPo extends FriendPoKey {
 
     private Date cTime;
 
+
+
+    public FriendPo(Long uid, Long fuid) {
+        super(uid, fuid);
+    }
+
     public Long getGroupId() {
         return groupId;
     }

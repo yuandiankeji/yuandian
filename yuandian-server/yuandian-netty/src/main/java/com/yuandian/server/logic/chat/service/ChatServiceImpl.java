@@ -2,13 +2,11 @@ package com.yuandian.server.logic.chat.service;
 
 import com.yuandian.core.common.DateConstants;
 import com.yuandian.core.common.Rediskey;
-import com.yuandian.entity.UserPO;
 import com.yuandian.server.config.RedisFactory;
-import com.yuandian.server.logic.mapper.ChatMapper;
 import com.yuandian.server.logic.model.entity.ChatPo;
+import com.yuandian.server.logic.model.entity.UserPo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -20,8 +18,7 @@ import java.util.Set;
 @Service
 public class ChatServiceImpl implements ChatService {
 
-    @Autowired
-    private ChatMapper chatMapper;
+
     private Logger logger = LoggerFactory.getLogger(ChatServiceImpl.class);
 
     @Override
@@ -67,7 +64,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<UserPO> getChatUserInfo(long uid) {
+    public List<UserPo> getChatUserInfo(long uid) {
         //UserPO userPO=userService.selectUserById(uid);
         RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
         String key = String.format(Rediskey.CHAT_USER_LIST, uid);
@@ -76,9 +73,9 @@ public class ChatServiceImpl implements ChatService {
             long target_uid = Long.parseLong(targetUid);
 
         }
-        List<UserPO> userPOList = new ArrayList<>();
+        List<UserPo> userPOList = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
-            UserPO userPO = new UserPO();
+            UserPo userPO = new UserPo();
             userPO.setAccount("121212");
             userPO.setAge("2424");
             userPO.setHeadUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556968161473&di=d23018d493acb7083a5f6ae49c7a18bb&imgtype=0&src=http%3A%2F%2Fs16.sinaimg.cn%2Fmw690%2F002apk40zy7aHsBI98b4f%26690");

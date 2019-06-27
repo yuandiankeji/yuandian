@@ -17,6 +17,10 @@
     where uid = #{uid,jdbcType=BIGINT}
       and fuid = #{fuid,jdbcType=BIGINT}
   </select>
+  <select id="getFriends" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select  <include refid="Base_Column_List"/> from friend where  uid=#{uid}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="com.yuandian.server.logic.model.entity.FriendPoKey">
     delete from friend
     where uid = #{uid,jdbcType=BIGINT}
@@ -79,82 +83,5 @@
     where uid = #{uid,jdbcType=BIGINT}
       and fuid = #{fuid,jdbcType=BIGINT}
   </update>
-  <resultMap id="BaseResultMap" type="com.yuandian.server.logic.model.entity.FriendPo">
-    <id column="uid" jdbcType="INTEGER" property="uid" />
-    <id column="fuid" jdbcType="INTEGER" property="fuid" />
-    <result column="group_id" jdbcType="INTEGER" property="groupId" />
-    <result column="c_time" jdbcType="TIMESTAMP" property="cTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    uid, fuid, group_id, c_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="com.yuandian.server.logic.model.entity.FriendPoKey" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from friend
-    where uid = #{uid,jdbcType=INTEGER}
-      and fuid = #{fuid,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.yuandian.server.logic.model.entity.FriendPoKey">
-    delete from friend
-    where uid = #{uid,jdbcType=INTEGER}
-      and fuid = #{fuid,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.yuandian.server.logic.model.entity.FriendPo">
-    insert into friend (uid, fuid, group_id, 
-      c_time)
-    values (#{uid,jdbcType=INTEGER}, #{fuid,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, 
-      #{cTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.yuandian.server.logic.model.entity.FriendPo">
-    insert into friend
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="fuid != null">
-        fuid,
-      </if>
-      <if test="groupId != null">
-        group_id,
-      </if>
-      <if test="cTime != null">
-        c_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="fuid != null">
-        #{fuid,jdbcType=INTEGER},
-      </if>
-      <if test="groupId != null">
-        #{groupId,jdbcType=INTEGER},
-      </if>
-      <if test="cTime != null">
-        #{cTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yuandian.server.logic.model.entity.FriendPo">
-    update friend
-    <set>
-      <if test="groupId != null">
-        group_id = #{groupId,jdbcType=INTEGER},
-      </if>
-      <if test="cTime != null">
-        c_time = #{cTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where uid = #{uid,jdbcType=INTEGER}
-      and fuid = #{fuid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yuandian.server.logic.model.entity.FriendPo">
-    update friend
-    set group_id = #{groupId,jdbcType=INTEGER},
-      c_time = #{cTime,jdbcType=TIMESTAMP}
-    where uid = #{uid,jdbcType=INTEGER}
-      and fuid = #{fuid,jdbcType=INTEGER}
-  </update>
+
 </mapper>

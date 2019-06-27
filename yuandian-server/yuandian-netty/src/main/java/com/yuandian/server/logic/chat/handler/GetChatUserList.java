@@ -5,7 +5,6 @@ import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.data.common.PChatUserListInfos;
 import com.yuandian.data.message.PGetChatUserList;
-import com.yuandian.entity.UserPO;
 import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.net.IoClient;
@@ -13,6 +12,7 @@ import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.server.logic.model.UserInfo;
+import com.yuandian.server.logic.model.entity.UserPo;
 import com.yuandian.server.utils.ObjectPoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class GetChatUserList extends AbstractTcpHandler {
             return;
         }
         ChatService chatService = SpringBeanFactory.getInstance().getChatService();
-        List<UserPO> userPOList = chatService.getChatUserInfo(uid);
+        List<UserPo> userPOList = chatService.getChatUserInfo(uid);
         PChatUserListInfos chatUserList = ObjectPoUtils.getPChatUserListInfos(userPOList);
         userInfo.writeData(cmd, chatUserList.toByteArray());
 

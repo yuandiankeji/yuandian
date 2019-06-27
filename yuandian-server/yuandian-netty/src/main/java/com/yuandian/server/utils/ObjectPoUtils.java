@@ -5,7 +5,7 @@ import com.yuandian.data.common.PChatUserListInfo;
 import com.yuandian.data.common.PChatUserListInfos;
 import com.yuandian.data.common.PUserBaseInfo;
 import com.yuandian.data.common.PUserBaseInfos;
-import com.yuandian.entity.UserPO;
+import com.yuandian.server.logic.model.entity.UserPo;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ObjectPoUtils {
 
-    public static PUserBaseInfos getPuserBaseInfos(List<UserPO> userPOList) {
+    public static PUserBaseInfos getPuserBaseInfos(List<UserPo> userPOList) {
         PUserBaseInfos.Builder pUserBaseInfos = PUserBaseInfos.newBuilder();
         userPOList.forEach((userPO) -> {
             PUserBaseInfo builder = getPUserBaseInfo(userPO);
@@ -24,7 +24,7 @@ public class ObjectPoUtils {
 
     }
 
-    public static PUserBaseInfo getPUserBaseInfo(UserPO userPO) {
+    public static PUserBaseInfo getPUserBaseInfo(UserPo userPO) {
         PUserBaseInfo.Builder builder = PUserBaseInfo.newBuilder();
         builder.setAccount(userPO.getAccount());
         builder.setHeadUrl(userPO.getHeadUrl());
@@ -35,7 +35,7 @@ public class ObjectPoUtils {
         return builder.build();
     }
 
-    public static PChatUserListInfos getPChatUserListInfos(List<UserPO> userPOList) {
+    public static PChatUserListInfos getPChatUserListInfos(List<UserPo> userPOList) {
         PChatUserListInfos.Builder infos = PChatUserListInfos.newBuilder();
         userPOList.forEach((userPO) -> {
             PChatUserListInfo.Builder pchat = PChatUserListInfo.newBuilder();

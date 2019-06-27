@@ -1,5 +1,6 @@
 package com.yuandian.server.logic.user.service;
 
+import com.yuandian.server.logic.model.entity.UserPo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -7,15 +8,8 @@ import javax.annotation.Resource;
 /**
  * 用户管理
  */
-public class UserService {
-    /**
-     * @param uid
-     * @param deviceId
-     * @param token
-     */
-    public static boolean checkUserToken(long uid, String deviceId, String token) {
+public interface UserService {
 
-        return true;
-    }
+    public UserPo getUserInfo(long uid);
 
 }

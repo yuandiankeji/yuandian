@@ -2,7 +2,7 @@ package com.yuandian.server.core.factory;
 
 import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.server.logic.friends.service.FriendService;
-import com.yuandian.service.UserService;
+import com.yuandian.server.logic.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -11,9 +11,9 @@ public class SpringBeanFactory {
     private static SpringBeanFactory factory;
     @Autowired
     private ChatService chatService;
-    //@Autowired
+    @Autowired
     private FriendService friendService;
-    //  @Autowired
+    @Autowired
     private UserService userService;
 
 

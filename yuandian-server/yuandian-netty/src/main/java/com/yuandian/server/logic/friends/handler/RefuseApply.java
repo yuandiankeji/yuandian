@@ -2,8 +2,10 @@ package com.yuandian.server.logic.friends.handler;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.yuandian.core.common.ErrorCode;
+import com.yuandian.core.common.MessageCmd;
 import com.yuandian.core.common.ResultObject;
 import com.yuandian.data.message.PRefuseApply;
+import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
@@ -13,6 +15,7 @@ import com.yuandian.server.logic.model.UserInfo;
 /**
  * 拒绝好友申请
  */
+@MessageAnnotation(cmd = MessageCmd.REFUSE_FRIEND)
 public class RefuseApply extends AbstractTcpHandler {
     @Override
     public void handler(IoClient client, short cmd, byte[] bytes) {

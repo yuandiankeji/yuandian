@@ -5,6 +5,11 @@ public class FriendPoKey {
 
     private Long fuid;
 
+    public FriendPoKey(Long uid, Long fuid) {
+        this.uid = uid;
+        this.fuid = fuid;
+    }
+
     public Long getUid() {
         return uid;
     }
