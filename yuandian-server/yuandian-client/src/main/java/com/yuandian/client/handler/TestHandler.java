@@ -10,6 +10,13 @@ public class TestHandler extends AbstractRespHandler {
     }
 
     @Override
+    public boolean verification(IoMessage message) {
+        super.verification(message);
+        return true;
+
+    }
+
+    @Override
     public void handler(IoMessage message) {
 //        PAuth.Builder builder = PAuth.newBuilder();
 //        builder.setUid(1L);

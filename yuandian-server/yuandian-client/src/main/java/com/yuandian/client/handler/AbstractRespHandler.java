@@ -10,6 +10,7 @@ import com.yuandian.client.net.IoMessage;
  * @author twjitm 2019/4/15/23:18
  */
 public abstract class AbstractRespHandler {
+    private static int STATUS_OK = 200;
     private int cmd;
 
     public AbstractRespHandler(int cmd) {
@@ -18,6 +19,16 @@ public abstract class AbstractRespHandler {
 
     public int getCmd() {
         return cmd;
+    }
+
+    /**
+     * 消息返回通过处理
+     * @param message
+     * @return
+     */
+    public boolean verification(IoMessage message) {
+        int status = message.getStatus();
+        return status == STATUS_OK;
     }
 
     public abstract void handler(IoMessage message);

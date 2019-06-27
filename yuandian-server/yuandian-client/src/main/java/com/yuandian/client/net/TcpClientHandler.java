@@ -47,7 +47,10 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
         ByteBuf byteBuf = (ByteBuf) msg;
         IoMessage ioMessage = MessageCoderFactory.getSingleton().decode(ctx, byteBuf);
         AbstractRespHandler handler = MessageRegister.getHandlerMap(ioMessage.getCmd());
-        handler.handler(ioMessage);
+        boolean check = handler.verification(ioMessage);
+        if (check) {
+            handler.handler(ioMessage);
+        }
     }
 
     @Override
