@@ -33,7 +33,7 @@ public class AllFriendsList extends AbstractTcpHandler {
         UserService userService = SpringBeanFactory.getInstance().getUserService();
         List<UserPO> userPOList = new ArrayList<>();
 
-        friendPoList.forEach((friend) -> userPOList.add(userService.selectUserById(friend.getfUid())));
+        friendPoList.forEach((friend) -> userPOList.add(userService.selectUserById(friend.getFuid())));
         PUserBaseInfos baseInfos = ObjectPoUtils.getPuserBaseInfos(userPOList);
         userInfo.writeData(cmd, baseInfos.toByteArray());
     }
