@@ -1,12 +1,13 @@
 package com.yuandian.server.logic.model.entity;
 
+import com.alibaba.fastjson.JSON;
 import com.yuandian.core.common.RedisCache;
 
 public class ApplyPo implements RedisCache {
     private long uid;
     private long targetId;
     private long cTime;
-    private  long option;
+    private long option;
 
     public long getUid() {
         return uid;
@@ -32,13 +33,26 @@ public class ApplyPo implements RedisCache {
         this.cTime = cTime;
     }
 
+    public long getOption() {
+        return option;
+    }
+
+    public void setOption(long option) {
+        this.option = option;
+    }
+
     @Override
     public String serialize() {
-        return null;
+        return JSON.toJSONString(this);
     }
 
     @Override
     public Object deserialize(String json) {
-        return null;
+        ApplyPo po = JSON.parseObject(json, ApplyPo.class);
+        this.uid = po.getUid();
+        this.targetId = po.getTargetId();
+        this.option = po.getOption();
+        this.cTime = po.getcTime();
+        return po;
     }
 }

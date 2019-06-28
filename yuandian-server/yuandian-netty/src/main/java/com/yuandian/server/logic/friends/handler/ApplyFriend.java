@@ -37,11 +37,17 @@ public class ApplyFriend extends AbstractTcpHandler {
         }
         long uid = userInfo.getUid();
         long targetId = applyFriend.getTargetId();
-        SpringBeanFactory.getInstance().getFriendService().apply(uid, targetId);
+        int result = SpringBeanFactory.getInstance().getFriendService().apply(uid, targetId);
+        if (result < 0) {
+            userInfo.writeData(cmd, ErrorCode.USER_INFO_ERROR, "default");
+            return;
+        }
+        //通知被申请人
         UserInfo targetUserInfo = IoClientManager.getUserInfo(targetId);
         PushFriendApply.Builder push = PushFriendApply.newBuilder();
         push.setTargetId(targetId);
         targetUserInfo.writeData(MessageCmd.PUSH_MESSAGE_CMD.PUSH_APPLY_FRIEND, push.build().toByteArray());
+
         userInfo.writeData(cmd);
     }
 }

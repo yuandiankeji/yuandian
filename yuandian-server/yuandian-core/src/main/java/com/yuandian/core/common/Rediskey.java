@@ -18,4 +18,10 @@ public interface Rediskey {
     String CHAT_MESSAGE_INFO_LIST = "h:chat:message:%s";
     //聊天好友列表
     String CHAT_USER_LIST = "h:chat:user:list:%s";
+
+    //申请列表 目标人uid
+    String FRIEND_APPLY_LIST="h:apply:friend:list:%s";
+
+    //屏蔽好友列表
+    String BAN_FRIEND_LIST="s:ban:friend:list:%s";
 }
