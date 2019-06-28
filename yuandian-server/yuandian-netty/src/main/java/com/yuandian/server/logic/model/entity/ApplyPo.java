@@ -6,6 +6,7 @@ public class ApplyPo implements RedisCache {
     private long uid;
     private long targetId;
     private long cTime;
+    private  long option;
 
     public long getUid() {
         return uid;
