@@ -17,13 +17,16 @@ public class NetConnection implements Runnable {
     private int port;
     private String ip;
 
+    TcpClientHandler handler;
+
     public NetConnection(int port, String ip) {
         this.port = port;
         this.ip = ip;
+        handler = new TcpClientHandler(this);
     }
 
 
-    public static void startup(String ip, int port) {
+    private void startup(String ip, int port) {
         EventLoopGroup eventExecutors = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(eventExecutors);
@@ -35,7 +38,7 @@ public class NetConnection implements Runnable {
                 ChannelPipeline p = ch.pipeline();
                 p.addLast(new IdleStateHandler(0, 0, 30),
                         new LengthFieldBasedFrameDecoder(128 * 1024, 9, 4, 0, 0, true),
-                        new TcpClientHandler());
+                        handler);
             }
         });
         try {
@@ -51,4 +54,11 @@ public class NetConnection implements Runnable {
     public void run() {
         startup(ip, port);
     }
+
+    //掉线处理
+    public void channelUnregistered() {
+        startup(ip, port);
+    }
+
+    ;
 }

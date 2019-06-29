@@ -6,9 +6,11 @@ import io.netty.channel.Channel;
 
 public class NetClient {
     private Channel channel;
+    private NetConnection netConnection;
 
-    public NetClient(Channel channel) {
+    public NetClient(Channel channel, NetConnection netConnection) {
         this.channel = channel;
+        this.netConnection = netConnection;
     }
 
     public void writeData(short cmd, int status, byte[] data) {
@@ -30,6 +32,10 @@ public class NetClient {
 
     public Channel getChannel() {
         return channel;
+    }
+
+    public NetConnection getNetConnection() {
+        return netConnection;
     }
 
 }
