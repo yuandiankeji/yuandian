@@ -10,12 +10,14 @@ import com.yuandian.server.logic.mapper.FriendPoMapper;
 import com.yuandian.server.logic.model.entity.ApplyPo;
 import com.yuandian.server.logic.model.entity.FriendPo;
 import com.yuandian.server.logic.model.entity.FriendPoKey;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class FriendServiceImpl implements FriendService {
@@ -118,16 +120,24 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public List<Long> getBlacklist(long uid) {
-        return null;
+        String key = RedisKeyUtils.getBlackListKey(uid);
+        Set<String> set = RedisFactory.getInstance().getRedis("global").smembersString(key);
+        List<Long> blackList = new ArrayList<>();
+        set.forEach(targetId -> blackList.add(Long.parseLong(targetId)));
+        return blackList;
     }
 
     @Override
     public List<Long> addBlackList(long uid, long targetUId) {
-        return null;
+        String key = RedisKeyUtils.getBlackListKey(uid);
+        RedisFactory.getInstance().getRedis("global").saddString(key, targetUId + "");
+        return getBlacklist(uid);
     }
 
     @Override
     public void removeBlack(long uid, long targetUid) {
+        String key = RedisKeyUtils.getBlackListKey(uid);
+        RedisFactory.getInstance().getRedis("global").sremString(key, targetUid + "");
 
     }
 }

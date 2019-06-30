@@ -46,7 +46,7 @@ public class ApplyFriend extends AbstractTcpHandler {
         UserInfo targetUserInfo = IoClientManager.getUserInfo(targetId);
         PushFriendApply.Builder push = PushFriendApply.newBuilder();
         push.setTargetId(targetId);
-        targetUserInfo.writeData(MessageCmd.PUSH_MESSAGE_CMD.PUSH_APPLY_FRIEND, push.build().toByteArray());
+        targetUserInfo.writeData(MessageCmd.PushMessageCmd.PUSH_APPLY_FRIEND, push.build().toByteArray());
 
         userInfo.writeData(cmd);
     }

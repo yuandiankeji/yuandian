@@ -45,7 +45,7 @@ public class SendChat extends AbstractTcpHandler {
                 chatPo.setContext(pChat.getContext());
                 chatPo.setType(chatType);
                 chatService.saveChat(chatPo);
-                targetUser.writeData(MessageCmd.PUSH_MESSAGE_CMD.PUSH_CHAT, pushChatMessage.build().toByteArray());
+                targetUser.writeData(MessageCmd.PushMessageCmd.PUSH_CHAT, pushChatMessage.build().toByteArray());
             }
             //保存消息
 

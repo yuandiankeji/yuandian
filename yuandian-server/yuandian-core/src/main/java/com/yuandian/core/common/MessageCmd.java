@@ -71,17 +71,20 @@ public final class MessageCmd {
      */
     public static final int DELETE_FRIEND = REQUEST_BASE + 25;
 
-
-
-
-
-
+    /**
+     * 黑名单列表
+     */
+    public static final int BLACK_LIST = REQUEST_BASE + 26;
+    /**
+     * 屏蔽/取消屏蔽 好友
+     */
+    public static final int SHIELD_USER = REQUEST_BASE + 27;
 
 
     /**
      * 推送消息号
      */
-    public final static class PUSH_MESSAGE_CMD {
+    public final static class PushMessageCmd {
         static final int PUSH_BASE = 9999;
         /**
          * 聊天消息推送

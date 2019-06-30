@@ -17,7 +17,7 @@ message PUserBaseInfo {
     optional string headUrl = 4;
     optional string nickName = 5;
     optional string phoneNum = 6;
-    optional string signature =7;
+    optional string signature = 7;
 
 }
 
@@ -28,7 +28,7 @@ message PUserBaseInfos {
 message PResultInfo {
     optional int64 cmd = 1;
     optional int64 code = 2;
-    optional string message=3;
+    optional string message = 3;
 }
 
 message PChatUserListInfo {
@@ -58,11 +58,29 @@ message PChatInfos {
 }
 
 
+//申请列表
 message PApplyInfo {
+    optional int32 status=1;//0,申请中，1已同意，2，一拒绝
     optional int64 targetUid = 2;
     optional int64 applyTime = 3;
 }
 
 message PApplyInfos {
     repeated PApplyInfo applyList = 1;
+}
+
+//好友信息列表
+message PFriendInfo {
+    optional PUserBaseInfo userInfo = 1;
+    optional int32 type = 2;
+    optional int32 option = 3;
+}
+
+//黑名单列表
+message PBlackListInfo {
+    optional int64 uid = 1;
+}
+
+message PBlackListInfos {
+    repeated PBlackListInfo list = 1;
 }

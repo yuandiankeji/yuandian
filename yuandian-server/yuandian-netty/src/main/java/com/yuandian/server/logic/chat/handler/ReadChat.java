@@ -32,6 +32,6 @@ public class ReadChat extends AbstractTcpHandler {
         PushChatRead.Builder pb = PushChatRead.newBuilder();
         pb.setTargetId(userInfo.getUid());
         pb.setChatId(mid);
-        targetUserInfo.writeData(MessageCmd.PUSH_MESSAGE_CMD.PUSH_CHAT, pb.build().toByteArray());
+        targetUserInfo.writeData(MessageCmd.PushMessageCmd.PUSH_CHAT, pb.build().toByteArray());
     }
 }
