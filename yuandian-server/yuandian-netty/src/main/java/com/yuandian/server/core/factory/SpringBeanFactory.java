@@ -1,7 +1,7 @@
 package com.yuandian.server.core.factory;
 
 import com.yuandian.server.logic.chat.service.ChatService;
-import com.yuandian.service.FriendService;
+import com.yuandian.server.logic.friends.service.FriendService;
 import com.yuandian.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

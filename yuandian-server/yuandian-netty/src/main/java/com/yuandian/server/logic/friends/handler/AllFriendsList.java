@@ -1,7 +1,6 @@
 package com.yuandian.server.logic.friends.handler;
 
 import com.yuandian.data.common.PUserBaseInfos;
-import com.yuandian.entity.FriendPo;
 import com.yuandian.entity.UserPO;
 import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.factory.SpringBeanFactory;
@@ -10,6 +9,7 @@ import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.model.UserInfo;
+import com.yuandian.server.logic.model.entity.FriendPo;
 import com.yuandian.server.utils.ObjectPoUtils;
 import com.yuandian.service.UserService;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class AllFriendsList extends AbstractTcpHandler {
         UserService userService = SpringBeanFactory.getInstance().getUserService();
         List<UserPO> userPOList = new ArrayList<>();
 
-        friendPoList.forEach((friend) -> userPOList.add(userService.selectUserById(friend.getFuid())));
+        friendPoList.forEach((friend) -> userPOList.add(userService.selectUserById(friend.getfUid())));
         PUserBaseInfos baseInfos = ObjectPoUtils.getPuserBaseInfos(userPOList);
         userInfo.writeData(cmd, baseInfos.toByteArray());
     }

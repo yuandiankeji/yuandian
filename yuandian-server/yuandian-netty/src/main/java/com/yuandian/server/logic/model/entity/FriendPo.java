@@ -1,45 +1,25 @@
 package com.yuandian.server.logic.model.entity;
 
-import com.yuandian.core.common.RedisCache;
+import java.util.Date;
 
-public class FriendPo implements RedisCache {
-    private Long uid;
-    private Long fUid;
-    private Long cTime;
+public class FriendPo extends FriendPoKey {
+    private Integer groupId;
 
+    private Date cTime;
 
-    public Long getUid() {
-        return uid;
+    public Integer getGroupId() {
+        return groupId;
     }
 
-    public void setUid(Long uid) {
-        this.uid = uid;
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
-    public Long getfUid() {
-        return fUid;
-    }
-
-    public void setfUid(Long fUid) {
-        this.fUid = fUid;
-    }
-
-    public Long getcTime() {
+    public Date getcTime() {
         return cTime;
     }
 
-    public void setcTime(Long cTime) {
+    public void setcTime(Date cTime) {
         this.cTime = cTime;
     }
-
-    @Override
-    public Object deserialize(String json) {
-        return null;
-    }
-
-    @Override
-    public String serialize() {
-        return null;
-    }
-
 }

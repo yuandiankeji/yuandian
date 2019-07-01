@@ -410,7 +410,7 @@ public class ZDateUtils {
         return false;
     }
 
-    public static  Date Now(){
+    public static  Date now(){
         return new Date();
     }
 

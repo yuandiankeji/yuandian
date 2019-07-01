@@ -2,7 +2,6 @@ package com.yuandian.server.logic.friends.handler;
 
 import com.yuandian.data.common.PApplyInfo;
 import com.yuandian.data.common.PApplyInfos;
-import com.yuandian.entity.ApplyPo;
 import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.net.IoClient;
@@ -10,6 +9,7 @@ import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.model.UserInfo;
+import com.yuandian.server.logic.model.entity.ApplyPo;
 
 import java.util.List;
 
