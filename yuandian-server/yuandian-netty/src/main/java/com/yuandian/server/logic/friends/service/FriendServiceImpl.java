@@ -3,6 +3,7 @@ package com.yuandian.server.logic.friends.service;
 import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.common.ResultObject;
 import com.yuandian.core.utils.ZDateUtils;
+import com.yuandian.server.logic.mapper.FriendPoMapper;
 import com.yuandian.server.logic.model.entity.ApplyPo;
 import com.yuandian.server.logic.model.entity.FriendPo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.List;
 @Service
 public class FriendServiceImpl implements FriendService {
     @Autowired
-    FriendMapper friendMapper;
+    FriendPoMapper friendMapper;
 
     @Override
     public ResultObject<Integer> addFriend(long uid, long fuid) {
@@ -23,7 +24,7 @@ public class FriendServiceImpl implements FriendService {
         }
         FriendPo friend = new FriendPo();
         friend.setUid(uid);
-        friend.setfUid(fuid);
+        friend.setFuid(fuid);
         friend.setcTime(ZDateUtils.now());
         friend.setGroupId(1L);
         friendMapper.insert(new FriendPo());
