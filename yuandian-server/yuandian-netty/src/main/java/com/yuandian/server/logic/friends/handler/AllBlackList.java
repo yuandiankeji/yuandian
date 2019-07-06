@@ -13,6 +13,9 @@ import com.yuandian.server.logic.model.UserInfo;
 
 import java.util.List;
 
+/**
+ * 获取黑名单列表
+ */
 @MessageAnnotation(cmd = MessageCmd.ALL_FRIEND_LIST)
 public class AllBlackList extends AbstractTcpHandler {
     @Override

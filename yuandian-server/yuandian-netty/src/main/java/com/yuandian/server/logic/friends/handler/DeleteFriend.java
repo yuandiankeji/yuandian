@@ -11,6 +11,9 @@ import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.model.UserInfo;
 
+/**
+ * 删除好友
+ */
 @MessageAnnotation(cmd = MessageCmd.DELETE_FRIEND)
 public class DeleteFriend extends AbstractTcpHandler {
     @Override

@@ -118,6 +118,7 @@ public class FriendServiceImpl implements FriendService {
         return null;
     }
 
+    //黑名单相关
     @Override
     public List<Long> getBlacklist(long uid) {
         String key = RedisKeyUtils.getBlackListKey(uid);
