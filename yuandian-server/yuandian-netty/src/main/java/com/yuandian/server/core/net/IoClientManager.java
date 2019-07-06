@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class IoClientManager {
     private static final AttributeKey<Long> SESSION_CLIENT_ID = AttributeKey.valueOf("SESSION_CLIENT_ID");
-    private static Map<Long, UserInfo> onLineSession = new ConcurrentHashMap<>();
+    private static volatile Map<Long, UserInfo> onLineSession = new ConcurrentHashMap<>();
 
 
     public static void put(UserInfo userInfo) {
