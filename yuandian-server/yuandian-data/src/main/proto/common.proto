@@ -18,6 +18,8 @@ message PUserBaseInfo {
     optional string nickName = 5;
     optional string phoneNum = 6;
     optional string signature = 7;
+    optional bool isFriends = 8;
+    optional bool ban = 9;
 
 }
 

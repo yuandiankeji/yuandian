@@ -4,6 +4,8 @@ import com.yuandian.server.logic.model.UserInfo;
 import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author twjitm 2019/4/9/14:56
  */
 public class IoClientManager {
+    private  static  Logger logger = LoggerFactory.getLogger(IoClientManager.class);
     private static final AttributeKey<Long> SESSION_CLIENT_ID = AttributeKey.valueOf("SESSION_CLIENT_ID");
     private static volatile Map<Long, UserInfo> onLineSession = new ConcurrentHashMap<>();
 
@@ -51,6 +54,8 @@ public class IoClientManager {
             if (attr != null) {
                 Long uid = attr.get();
                 if (uid != null) {
+
+                    logger.info("[IoClient] client close");
                     onLineSession.remove(uid);
                 }
 
