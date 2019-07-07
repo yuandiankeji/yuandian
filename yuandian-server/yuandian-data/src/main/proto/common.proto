@@ -82,5 +82,5 @@ message PBlackListInfo {
 }
 
 message PBlackListInfos {
-    repeated PBlackListInfo list = 1;
+    repeated int64 list = 1;
 }

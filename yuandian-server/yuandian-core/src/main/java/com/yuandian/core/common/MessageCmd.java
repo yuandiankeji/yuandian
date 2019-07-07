@@ -76,9 +76,13 @@ public final class MessageCmd {
      */
     public static final int BLACK_LIST = REQUEST_BASE + 26;
     /**
-     * 屏蔽/取消屏蔽 好友
+     * 屏蔽 好友
      */
     public static final int SHIELD_USER = REQUEST_BASE + 27;
+    /**
+     * 取消屏蔽
+     */
+    public static final int REMOVE_BLACK = REQUEST_BASE + 28;
 
 
     /**

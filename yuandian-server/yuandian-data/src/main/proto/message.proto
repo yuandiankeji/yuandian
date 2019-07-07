@@ -74,8 +74,20 @@ message PDeleteFriend {
 }
 
 //cmd=ALL_FRIEND_LIST 好友列表 return PUserBaseInfos
-message GetFriendList {
+message PGetFriendList {
 
 }
 
-//
+//cmd=SHIELD_USER 添加到屏蔽人
+message PAddToBanBlack{
+    optional int64 targetId=1;
+}
+//cmd =BLACK_LIST 获取屏蔽人列表
+
+message PGetBanBlackList{
+
+}
+//cmd = REMOVE_BLACK 移除屏蔽人 return PBlackListInfos
+message PRemoveBanBlack{
+    optional int64 targetId=1;
+}

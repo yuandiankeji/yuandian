@@ -49,8 +49,11 @@ public class IoClientManager {
         if (channel != null) {
             Attribute<Long> attr = channel.attr(SESSION_CLIENT_ID);
             if (attr != null) {
-                long uid = attr.get();
-                onLineSession.remove(uid);
+                Long uid = attr.get();
+                if (uid != null) {
+                    onLineSession.remove(uid);
+                }
+
             }
 
         }

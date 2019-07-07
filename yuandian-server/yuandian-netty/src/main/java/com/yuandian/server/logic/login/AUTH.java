@@ -33,6 +33,8 @@ public class AUTH extends AbstractTcpHandler {
 //                return;
 //            }
             user.setUid(pLogin.getUid());
+            user.setDevice(deviceId);
+            user.setOpenId(token);
             IoClientManager.put(user);
             PUserInfo.Builder puserInfo = PUserInfo.newBuilder();
             puserInfo.setUid((int) user.getUid());
