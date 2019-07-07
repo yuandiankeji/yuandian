@@ -32,7 +32,7 @@ public class RefuseApply extends AbstractTcpHandler {
         long targetId = pRefuseApply.getTargetId();
         ResultObject<Integer> resultObject =
                 SpringBeanFactory.getInstance().getFriendService().refuseApply(uid, targetId);
-        userInfo.writeData(cmd, resultObject.getCode());
+        userInfo.writeData(cmd);
 
     }
 }

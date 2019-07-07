@@ -31,6 +31,7 @@ public class AllApplyList extends AbstractTcpHandler {
             PApplyInfo.Builder pApplyInfo = PApplyInfo.newBuilder();
             pApplyInfo.setApplyTime(ctime);
             pApplyInfo.setTargetUid(targetId);
+            pApplyInfo.setStatus((int) applyPo.getOption());
             pApplyInfos.addApplyList(pApplyInfo);
         }
         userInfo.writeData(cmd, pApplyInfos.build().toByteArray());

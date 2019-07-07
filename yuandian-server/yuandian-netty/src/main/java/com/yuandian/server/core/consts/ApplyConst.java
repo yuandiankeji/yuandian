@@ -1,12 +1,22 @@
 package com.yuandian.server.core.consts;
 
-public interface ApplyConst {
+public enum ApplyConst {
+
     //未处理
-    int DEFAULT_OPTION = 0;
+    DEFAULT_OPTION(1),
     //已同意
-    int APPLY_AGREE = 1;
+    APPLY_AGREE(2),
     //已拒绝
-    int REFUSE_APPLY = 2;
+    REFUSE_APPLY(3),
     //屏蔽
-    int BLACK_APPLY = 3;
+    BLACK_APPLY(4);
+    private int code;
+
+    ApplyConst(int code) {
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
 }

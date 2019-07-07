@@ -1,6 +1,9 @@
 package com.yuandian.client.handler;
 
 import com.yuandian.client.net.IoMessage;
+import com.yuandian.client.net.SessionManager;
+import com.yuandian.data.message.PAddToBanBlack;
+import com.yuandian.data.message.PGetChatUserList;
 
 //import com.yuandian.data.message.PAuth;
 
@@ -18,11 +21,10 @@ public class TestHandler extends AbstractRespHandler {
 
     @Override
     public void handler(IoMessage message) {
-//        PAuth.Builder builder = PAuth.newBuilder();
-//        builder.setUid(1L);
-//        builder.setDeviceId("111");
-//        builder.setToken("1212");
-//        byte[] bytes = builder.build().toByteArray();
+
+        PAddToBanBlack.Builder pGetChatUserList = PAddToBanBlack.newBuilder();
+        pGetChatUserList.setTargetId(1L);
+        SessionManager.getSingleton().getClient().writeData((short) 1028,pGetChatUserList.build().toByteArray());
 
 
     }

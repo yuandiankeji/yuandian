@@ -78,27 +78,42 @@ public class FriendServiceImpl implements FriendService {
         ApplyPo applyPo = new ApplyPo();
         applyPo.setUid(targetId);
         applyPo.setTargetId(uid);
-        applyPo.setOption(ApplyConst.DEFAULT_OPTION);
+        applyPo.setOption(ApplyConst.DEFAULT_OPTION.getCode());
         applyPo.setcTime(ZDateUtils.now().getTime());
         redis.hset(applyListKey, uid + "", applyPo.serialize());
         return 0;
     }
 
+    /**
+     * 好友申请操作
+     *
+     * @param uid
+     * @param targetId
+     * @param option
+     * @return
+     */
     @Override
     public boolean applyOption(long uid, long targetId, int option) {
-        switch (option) {
-            case ApplyConst.APPLY_AGREE:
-                break;
-            case ApplyConst.REFUSE_APPLY:
-                break;
-            case ApplyConst.BLACK_APPLY:
-                break;
-            default:
-                break;
+        String applyListKey = RedisKeyUtils.getFriendApplyListKey(uid);
+        RedisFactory.Redis redis = RedisFactory.getInstance().getRedis("global");
+        String filed = targetId + "";
+        if (redis.hexists(applyListKey, filed)) {
+            return false;
         }
+        ApplyPo applyPo = new ApplyPo();
+        applyPo.setUid(uid);
+        applyPo.setTargetId(targetId);
+        applyPo.setcTime(ZDateUtils.now().getTime());
+        applyPo.setOption(option);
+        redis.hset(applyListKey, filed, applyPo.serialize());
         return false;
     }
 
+    /**
+     * 申请列表
+     * @param uid
+     * @return
+     */
     @Override
     public List<ApplyPo> getApplyList(long uid) {
         String applyListKey = RedisKeyUtils.getFriendApplyListKey(uid);
@@ -113,8 +128,15 @@ public class FriendServiceImpl implements FriendService {
         return applyPoList;
     }
 
+    /**
+     * 拒绝好友
+     * @param uid
+     * @param targetId
+     * @return
+     */
     @Override
     public ResultObject<Integer> refuseApply(long uid, long targetId) {
+        this.applyOption(uid,targetId,ApplyConst.REFUSE_APPLY.getCode());
         return null;
     }
 
