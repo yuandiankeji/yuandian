@@ -66,13 +66,13 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<UserPo> getChatUserInfo(long uid) {
         //UserPO userPO=userService.selectUserById(uid);
-        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
-        String key = String.format(Rediskey.CHAT_USER_LIST, uid);
-        Set<String> allChatUserId = chatRedis.smembersString(key);
-        for (String targetUid : allChatUserId) {
-            long target_uid = Long.parseLong(targetUid);
-
-        }
+//        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
+//        String key = String.format(Rediskey.CHAT_USER_LIST, uid);
+//        Set<String> allChatUserId = chatRedis.smembersString(key);
+//        for (String targetUid : allChatUserId) {
+//            long target_uid = Long.parseLong(targetUid);
+//
+//        }
         List<UserPo> userPOList = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
             UserPo userPO = new UserPo();
