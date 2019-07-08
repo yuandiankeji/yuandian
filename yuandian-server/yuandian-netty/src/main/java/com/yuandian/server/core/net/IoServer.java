@@ -49,7 +49,7 @@ public class IoServer implements Runnable {
                             ChannelPipeline p = ch.pipeline();
                             p.addLast(
                                     new IdleStateHandler(0, 0, 30),
-                                    new LengthFieldBasedFrameDecoder(128 * 1024, 9, 4, 0, 0, true),
+                                    new LengthFieldBasedFrameDecoder(1024 * 1024, 9, 4, 0, 0, true),
                                     new TcpServerHandler());
                         }
                     }).childOption(ChannelOption.AUTO_READ, true);
