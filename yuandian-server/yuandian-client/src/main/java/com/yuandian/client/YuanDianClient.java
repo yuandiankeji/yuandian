@@ -10,6 +10,6 @@ import com.yuandian.client.net.NetConnection;
 public class YuanDianClient {
     public static void main(String[] args) {
         MessageRegister.register(1002, TestHandler.class);//47.104.139.83
-        new Thread(new NetConnection(9090, "127.0.0.1")).start();
+        new Thread(new NetConnection(9090, "47.104.139.83")).start();
     }
 }

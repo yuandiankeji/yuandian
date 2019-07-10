@@ -40,7 +40,7 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println(111);
         PAuth.Builder builder = PAuth.newBuilder();
-        builder.setUid(1L);
+        builder.setUid(48418949812977664L);
         builder.setDeviceId("111");
         builder.setToken("1212");
         byte[] bytes = builder.build().toByteArray();

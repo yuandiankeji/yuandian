@@ -952,7 +952,7 @@ public class RedisFactory {
         public Set<String> smembersString(String key) {
             Jedis jedis = null;
             boolean sucess = true;
-            Set<String> rt = null;
+            Set<String> rt = new HashSet<>();
             try {
                 jedis = jedisPool.getResource();
                 rt = jedis.smembers(key);

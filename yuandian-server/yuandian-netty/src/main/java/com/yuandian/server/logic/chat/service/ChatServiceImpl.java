@@ -5,8 +5,10 @@ import com.yuandian.core.common.Rediskey;
 import com.yuandian.server.config.RedisFactory;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.model.entity.UserPo;
+import com.yuandian.server.logic.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -17,6 +19,9 @@ import java.util.Set;
 
 @Service
 public class ChatServiceImpl implements ChatService {
+
+    @Autowired
+    UserService userService;
 
 
     private Logger logger = LoggerFactory.getLogger(ChatServiceImpl.class);
@@ -63,29 +68,21 @@ public class ChatServiceImpl implements ChatService {
         return 0;
     }
 
+    /**
+     * 聊天好友
+     */
     @Override
     public List<UserPo> getChatUserInfo(long uid) {
-        //UserPO userPO=userService.selectUserById(uid);
-//        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
-//        String key = String.format(Rediskey.CHAT_USER_LIST, uid);
-//        Set<String> allChatUserId = chatRedis.smembersString(key);
-//        for (String targetUid : allChatUserId) {
-//            long target_uid = Long.parseLong(targetUid);
-//
-//        }
         List<UserPo> userPOList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            UserPo userPO = new UserPo();
-            userPO.setAccount("121212");
-            userPO.setAge("2424");
-            userPO.setHeadUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556968161473&di=d23018d493acb7083a5f6ae49c7a18bb&imgtype=0&src=http%3A%2F%2Fs16.sinaimg.cn%2Fmw690%2F002apk40zy7aHsBI98b4f%26690");
-            userPO.setNickName("yuandian");
-            userPO.setSex(1);
-            userPO.setUid(uid);
-            userPO.setStatus(1);
-            userPO.setPhoneNum("1008611");
-            userPO.setSignature("hello，world");
-            userPOList.add(userPO);
+        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
+        String key = String.format(Rediskey.CHAT_USER_LIST, uid);
+        logger.info(key);
+        Set<String> allChatUserId = chatRedis.smembersString(key);
+        logger.info("chat user size="+allChatUserId.size());
+        for (String targetUid : allChatUserId) {
+            long target_uid = Long.parseLong(targetUid);
+            UserPo friend = userService.getUserInfo(target_uid);
+            userPOList.add(friend);
         }
         return userPOList;
     }

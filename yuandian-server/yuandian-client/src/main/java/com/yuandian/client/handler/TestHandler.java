@@ -24,7 +24,7 @@ public class TestHandler extends AbstractRespHandler {
 
         PAddToBanBlack.Builder pGetChatUserList = PAddToBanBlack.newBuilder();
         pGetChatUserList.setTargetId(1L);
-        SessionManager.getSingleton().getClient().writeData((short) 1028,pGetChatUserList.build().toByteArray());
+        SessionManager.getSingleton().getClient().writeData((short) 1008,pGetChatUserList.build().toByteArray());
 
 
     }
