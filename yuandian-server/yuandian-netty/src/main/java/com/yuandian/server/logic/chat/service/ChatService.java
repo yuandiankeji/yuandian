@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ChatService {
 
-    public void saveChat(ChatPo chatPo);
+    public void saveChat(ChatPo chatPo,boolean online);
 
     public List<ChatPo> getChatInfo(long uid, long targetId, int limit);
 

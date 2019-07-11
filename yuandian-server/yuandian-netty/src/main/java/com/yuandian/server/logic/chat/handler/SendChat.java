@@ -42,11 +42,14 @@ public class SendChat extends AbstractTcpHandler {
             chatPo.setIsread(0);
             chatPo.setCtime(ZDateUtils.getSeconds());
             chatPo.setContext(pChat.getContext());
+            chatPo.setMid(ZDateUtils.now().getTime());
             chatPo.setType(chatType);
+            boolean targetOnline = false;
             if (targetUser != null) {
                 targetUser.writeData(MessageCmd.PushMessageCmd.PUSH_CHAT, pushChatMessage.build().toByteArray());
+                targetOnline = true;
             }
-            chatService.saveChat(chatPo);
+            chatService.saveChat(chatPo,targetOnline);
             //保存消息
 
             userInfo.writeData(cmd, pChat.toByteArray());

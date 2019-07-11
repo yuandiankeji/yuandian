@@ -1,6 +1,7 @@
 package com.yuandian.server.logic.chat.service;
 
 import com.yuandian.core.common.DateConstants;
+import com.yuandian.core.common.RedisKeyUtils;
 import com.yuandian.core.common.Rediskey;
 import com.yuandian.server.config.RedisService;
 import com.yuandian.server.logic.model.entity.ChatPo;
@@ -29,41 +30,40 @@ public class ChatServiceImpl implements ChatService {
     private Logger logger = LoggerFactory.getLogger(ChatServiceImpl.class);
 
     @Override
-    public void saveChat(ChatPo chatPo) {
-        String key = String.format(Rediskey.CHAT_MESSAGE_INFO_LIST, getChatMainKey(chatPo.getUid(), chatPo.getTargetId()));
-        redisChatService.hsetString(key, chatPo.getMid() + "", chatPo.serialize(), DateConstants.SECOND);
+    public void saveChat(ChatPo chatPo, boolean online) {
+        String key = RedisKeyUtils.getChatInfoListKey(chatPo.getUid(), chatPo.getTargetId());
+        redisChatService.zAdd(key, chatPo.serialize(), chatPo.getMid());
         String user_list_key = String.format(Rediskey.CHAT_USER_LIST, chatPo.getUid());
         redisChatService.saddString(user_list_key, chatPo.getTargetId() + "");
+        if (!online) {
+            String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
+            redisChatService.incr(incrKey);
+        }
 
     }
 
     @Override
     public List<ChatPo> getChatInfo(long uid, long targetId, int limit) {
-        String key = String.format(Rediskey.CHAT_MESSAGE_INFO_LIST, getChatMainKey(uid, targetId));
-        logger.info("key=" + key);
-        Map<String, String> map = redisChatService.hgetAll(key);
+        String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
+        Set<String> data = redisChatService.zrangeByScore(key, 0, limit, limit);
         List<ChatPo> list = new ArrayList<>();
-        logger.info("data" +
-                +map.size());
-        for (Map.Entry<String, String> e : map.entrySet()) {
+        for (String e : data) {
             ChatPo po = new ChatPo();
-            po = (ChatPo) po.deserialize(e.getValue());
+            po = (ChatPo) po.deserialize(e);
             list.add(po);
         }
-
-        logger.info("chat size=" + list.size());
         return list;
     }
 
     @Override
     public void delete(long uid, long targetId, long mid) {
-        String key = String.format(Rediskey.CHAT_MESSAGE_INFO_LIST, getChatMainKey(uid, targetId));
+        String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
         redisChatService.hdel(key, mid + "");
     }
 
     @Override
     public long read(long uid, long targetId) {
-
+        //this.getChatInfo(uid,targetId);
         return 0;
     }
 
@@ -86,14 +86,4 @@ public class ChatServiceImpl implements ChatService {
     }
 
 
-    private String getChatMainKey(long uid, long targetId) {
-        String token;
-
-        if (uid > targetId) {
-            token = uid + ":" + targetId;
-        } else {
-            token = targetId + ":" + uid;
-        }
-        return token;
-    }
 }

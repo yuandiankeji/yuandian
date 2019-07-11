@@ -5,6 +5,7 @@ import com.yuandian.data.common.PChatUserListInfo;
 import com.yuandian.data.common.PChatUserListInfos;
 import com.yuandian.data.common.PUserBaseInfo;
 import com.yuandian.data.common.PUserBaseInfos;
+import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.logic.model.entity.UserPo;
 
 import java.util.List;
@@ -35,8 +36,9 @@ public class ObjectPoUtils {
         return builder.build();
     }
 
-    public static PChatUserListInfos getPChatUserListInfos(List<UserPo> userPOList) {
+    public static PChatUserListInfos getPChatUserListInfos(long uid,List<UserPo> userPOList) {
         PChatUserListInfos.Builder infos = PChatUserListInfos.newBuilder();
+        SpringBeanFactory.getInstance().getChatService();
         userPOList.forEach((userPO) -> {
             PChatUserListInfo.Builder pchat = PChatUserListInfo.newBuilder();
             PUserBaseInfo userBaseInfo = getPUserBaseInfo(userPO);
@@ -44,7 +46,7 @@ public class ObjectPoUtils {
             pchat.setNoReadNum(1);
             pchat.setMessage("你好，世界");
             pchat.setTime(ZDateUtils.getSeconds());
-            pchat.setUid(1L);
+            pchat.setUid(uid);
             infos.addList(pchat);
 
         });

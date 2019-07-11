@@ -38,9 +38,10 @@ public class GetChatUserList extends AbstractTcpHandler {
             e.printStackTrace();
             return;
         }
+        long userId = userInfo.getUid();
         ChatService chatService = SpringBeanFactory.getInstance().getChatService();
         List<UserPo> userPOList = chatService.getChatUserInfo(uid);
-        PChatUserListInfos chatUserList = ObjectPoUtils.getPChatUserListInfos(userPOList);
+        PChatUserListInfos chatUserList = ObjectPoUtils.getPChatUserListInfos(userId,userPOList);
         userInfo.writeData(cmd, chatUserList.toByteArray());
 
     }
