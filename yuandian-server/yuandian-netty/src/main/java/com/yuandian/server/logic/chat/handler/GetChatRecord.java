@@ -24,10 +24,11 @@ public class GetChatRecord extends AbstractTcpHandler {
             PGetChatRecord getChatRecord = PGetChatRecord.parseFrom(bytes);
             UserInfo userInfo = IoClientManager.getUserInfo(client);
             long targetId = getChatRecord.getTargetId();
-            int limit = (int) getChatRecord.getLimit();
+            long limit = getChatRecord.getLimit();
             long uid = userInfo.getUid();
+            long footMId = getChatRecord.getFootMId();
             ChatService chatService = SpringBeanFactory.getInstance().getChatService();
-            List<ChatPo> chatPoList = chatService.getChatInfo(uid, targetId, limit);
+            List<ChatPo> chatPoList = chatService.getChatInfo(uid, targetId, footMId, limit, 10);
 
             PChatInfos.Builder pbs = PChatInfos.newBuilder();
             chatPoList.forEach(po -> {

@@ -25,7 +25,7 @@ message PSendChat {
 //cmd=GET_CHAT_RECORD  return PChatInfos 获取聊天记录
 message PGetChatRecord {
     optional int64 targetId = 1;
-    optional int64 limit = 2;
+    optional int64 limit = 2;//档期时间
     optional bool extra = 3;
     optional int64 footMId = 4; //上一次末尾消息id
 

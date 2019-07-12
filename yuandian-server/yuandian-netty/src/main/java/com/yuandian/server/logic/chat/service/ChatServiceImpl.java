@@ -1,6 +1,5 @@
 package com.yuandian.server.logic.chat.service;
 
-import com.yuandian.core.common.DateConstants;
 import com.yuandian.core.common.RedisKeyUtils;
 import com.yuandian.core.common.Rediskey;
 import com.yuandian.server.config.RedisService;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -43,9 +41,9 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<ChatPo> getChatInfo(long uid, long targetId, int limit) {
+    public List<ChatPo> getChatInfo(long uid, long targetId, long minMid, long maxMid, int limit) {
         String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
-        Set<String> data = redisChatService.zrangeByScore(key, 0, limit, limit);
+        Set<String> data = redisChatService.zrangeByScore(key, minMid, maxMid, limit);
         List<ChatPo> list = new ArrayList<>();
         for (String e : data) {
             ChatPo po = new ChatPo();
@@ -58,12 +56,13 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void delete(long uid, long targetId, long mid) {
         String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
-        redisChatService.hdel(key, mid + "");
+        redisChatService.zremRangeByScore(key, mid ,mid);
     }
 
     @Override
     public long read(long uid, long targetId) {
-        //this.getChatInfo(uid,targetId);
+        String key = RedisKeyUtils.getNotReadChatNum(uid, targetId);
+        redisChatService.setString(key, "0");
         return 0;
     }
 
@@ -83,6 +82,22 @@ public class ChatServiceImpl implements ChatService {
             userPOList.add(friend);
         }
         return userPOList;
+    }
+
+    /**
+     * 获取最后一条消息
+     *
+     * @param uid
+     * @param targetId
+     * @return
+     */
+    @Override
+    public ChatPo getLastChatInfo(long uid, Long targetId) {
+        List<ChatPo> chatPos = this.getChatInfo(uid, targetId, 0,-1,1);
+        if (chatPos != null) {
+            return chatPos.get(chatPos.size() - 1);
+        }
+        return null;
     }
 
 
