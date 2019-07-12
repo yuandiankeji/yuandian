@@ -37,6 +37,7 @@ public class ChatServiceImpl implements ChatService {
             String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
             redisChatService.incr(incrKey);
         }
+        redisChatService.hgetFromObject("",ChatPo.class);
 
     }
 

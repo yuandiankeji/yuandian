@@ -2,7 +2,7 @@ package com.yuandian.core.common;
 
 public interface RedisCache {
 
-    public  String serialize();
+    public String serialize();
 
     public Object deserialize(String json);
 }

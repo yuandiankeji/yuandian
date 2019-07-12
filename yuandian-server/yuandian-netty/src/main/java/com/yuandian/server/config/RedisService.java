@@ -1,5 +1,9 @@
 package com.yuandian.server.config;
 
+import com.alibaba.fastjson.JSON;
+import com.yuandian.core.common.RedisCache;
+import com.yuandian.server.core.base.CacheBase;
+import com.yuandian.server.logic.model.entity.ChatPo;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -535,6 +539,26 @@ public class RedisService {
             }
         }
         return rt;
+    }
+
+    public <T> List<T> hgetFromObject(String key, Class<T> clazz) {
+        Map<String, String> map = this.hgetAll(key);
+        Collection<String> values = map.values();
+        List<T> result = new ArrayList<>();
+        values.forEach((item) -> {
+            T cache = JSON.parseObject(item, clazz);
+            result.add((cache));
+        });
+        return result;
+    }
+
+    public <T> void hsetFromObject(String key, CacheBase cacheBase) {
+        String filed = cacheBase.getFiledKey();
+        String data = JSON.toJSONString(cacheBase);
+        if (filed == null) {
+            return;
+        }
+        this.hset(key, filed, data);
     }
 
     public Map<String, String> hgetAll(String key) {
