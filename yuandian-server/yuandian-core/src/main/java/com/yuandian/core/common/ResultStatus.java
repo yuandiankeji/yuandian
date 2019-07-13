@@ -19,7 +19,8 @@ public enum ResultStatus {
     USER_NOT_REGSTION(-1008, "用户未注册"),
     USER_EXIST(-1007, "已经存在此手机号的用户"),
     OLD_PWD_ERROR(-1009, "老密码输入错误"),
-    CANNOT_NULL(-1010, "内容不能为空");
+    CANNOT_NULL(-1010, "内容不能为空"),
+    GOODS_NOT_FOUND(-1011, "不存在该物品");
 
     /**
      * 返回码

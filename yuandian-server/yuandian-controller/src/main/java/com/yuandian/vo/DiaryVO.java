@@ -19,6 +19,16 @@ public class DiaryVO {
 
     private Date publishTime;
 
+    private PublisherVo publisher;
+
+    public PublisherVo getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(PublisherVo publisher) {
+        this.publisher = publisher;
+    }
+
     public Long getId() {
         return id;
     }

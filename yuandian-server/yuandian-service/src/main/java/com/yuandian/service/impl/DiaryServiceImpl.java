@@ -27,7 +27,6 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public List<DiaryPO> getDiarysByGoodsId(long goodsId) {
         DiaryPOExample example = new DiaryPOExample();
-
         DiaryPOExample.Criteria criteria = example.createCriteria();
         criteria.andGoodsIdEqualTo(goodsId);
         return diaryPOMapper.selectByExampleWithBLOBs(example);
