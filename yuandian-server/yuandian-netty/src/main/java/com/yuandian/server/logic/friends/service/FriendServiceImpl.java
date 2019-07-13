@@ -112,6 +112,7 @@ public class FriendServiceImpl implements FriendService {
 
     /**
      * 申请列表
+     *
      * @param uid
      * @return
      */
@@ -130,13 +131,14 @@ public class FriendServiceImpl implements FriendService {
 
     /**
      * 拒绝好友
+     *
      * @param uid
      * @param targetId
      * @return
      */
     @Override
     public ResultObject<Integer> refuseApply(long uid, long targetId) {
-        this.applyOption(uid,targetId,ApplyConst.REFUSE_APPLY.getCode());
+        this.applyOption(uid, targetId, ApplyConst.REFUSE_APPLY.getCode());
         return null;
     }
 
@@ -162,5 +164,11 @@ public class FriendServiceImpl implements FriendService {
         String key = RedisKeyUtils.getBlackListKey(uid);
         redisChatService.sremString(key, targetUid + "");
 
+    }
+
+    @Override
+    public boolean isban(long uid, long targetId) {
+        List<Long> bans = this.getBlacklist(uid);
+        return bans.stream().anyMatch(id -> id == targetId);
     }
 }

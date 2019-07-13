@@ -21,7 +21,7 @@ public interface FriendService {
 
     public int apply(long uid, long targetId);
 
-    public boolean applyOption(long uid, long targetId,int option);
+    public boolean applyOption(long uid, long targetId, int option);
 
     public List<ApplyPo> getApplyList(long uid);
 
@@ -29,7 +29,11 @@ public interface FriendService {
     ResultObject<Integer> refuseApply(long uid, long targetId);
 
     public List<Long> getBlacklist(long uid);
-    public List<Long> addBlackList(long uid,long targetUId);
-    public void removeBlack(long uid,long targetUid);
+
+    public List<Long> addBlackList(long uid, long targetUId);
+
+    public void removeBlack(long uid, long targetUid);
+
+    public boolean isban(long uid, long targetId);
 
 }

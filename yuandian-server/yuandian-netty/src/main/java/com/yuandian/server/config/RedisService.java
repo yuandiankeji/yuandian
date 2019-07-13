@@ -1,9 +1,7 @@
 package com.yuandian.server.config;
 
 import com.alibaba.fastjson.JSON;
-import com.yuandian.core.common.RedisCache;
 import com.yuandian.server.core.base.CacheBase;
-import com.yuandian.server.logic.model.entity.ChatPo;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -553,7 +551,7 @@ public class RedisService {
     }
 
     public <T> void hsetFromObject(String key, CacheBase cacheBase) {
-        String filed = cacheBase.getFiledKey();
+        String filed = cacheBase.filedKey();
         String data = JSON.toJSONString(cacheBase);
         if (filed == null) {
             return;

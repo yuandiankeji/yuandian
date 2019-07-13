@@ -97,7 +97,7 @@ public class ChatPo  extends CacheBase implements RedisCache {
     }
 
     @Override
-    public String getFiledKey() {
+    public String filedKey() {
         return mid + "";
     }
 }

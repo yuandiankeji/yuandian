@@ -24,5 +24,8 @@ public interface ErrorCode {
      *重复的添加好友
      */
     short FRIEND_REPEAT_ADD=10010;
+    /**
+     *
+     */
 
 }

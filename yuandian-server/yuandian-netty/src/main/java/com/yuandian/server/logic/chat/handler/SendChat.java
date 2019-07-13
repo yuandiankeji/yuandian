@@ -1,6 +1,7 @@
 package com.yuandian.server.logic.chat.handler;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.utils.ZDateUtils;
 import com.yuandian.data.common.PChatInfo;
 import com.yuandian.data.message.PSendChat;
@@ -11,6 +12,7 @@ import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.server.core.net.AbstractTcpHandler;
+import com.yuandian.server.logic.friends.service.FriendService;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.server.logic.model.UserInfo;
@@ -31,6 +33,12 @@ public class SendChat extends AbstractTcpHandler {
             long toUid = pChat.getTargetUid();
             int chatType = pChat.getType();
             ChatService chatService = SpringBeanFactory.getInstance().getChatService();
+            FriendService friendService = SpringBeanFactory.getInstance().getFriendService();
+            boolean isBan = friendService.isban(uid, toUid);
+            if (isBan) {
+                userInfo.writeData(cmd, ErrorCode.SYS_SUCCESS);
+                return;
+            }
             UserInfo targetUser = IoClientManager.getOnlineUser(toUid);
             ChatPo chatPo = new ChatPo();
 
@@ -49,7 +57,7 @@ public class SendChat extends AbstractTcpHandler {
                 targetUser.writeData(MessageCmd.PushMessageCmd.PUSH_CHAT, pushChatMessage.build().toByteArray());
                 targetOnline = true;
             }
-            chatService.saveChat(chatPo,targetOnline);
+            chatService.saveChat(chatPo, targetOnline);
             //保存消息
 
             userInfo.writeData(cmd, pChat.toByteArray());
