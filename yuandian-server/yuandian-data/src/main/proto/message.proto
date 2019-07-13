@@ -25,7 +25,7 @@ message PSendChat {
 //cmd=GET_CHAT_RECORD  return PChatInfos 获取聊天记录
 message PGetChatRecord {
     optional int64 targetId = 1;
-    optional int64 limit = 2;
+    optional int64 limit = 2;//档期时间
     optional bool extra = 3;
     optional int64 footMId = 4; //上一次末尾消息id
 
@@ -74,8 +74,20 @@ message PDeleteFriend {
 }
 
 //cmd=ALL_FRIEND_LIST 好友列表 return PUserBaseInfos
-message GetFriendList {
+message PGetFriendList {
 
 }
 
-//
+//cmd=SHIELD_USER 添加到屏蔽人
+message PAddToBanBlack{
+    optional int64 targetId=1;
+}
+//cmd =BLACK_LIST 获取屏蔽人列表
+
+message PGetBanBlackList{
+
+}
+//cmd = REMOVE_BLACK 移除屏蔽人 return PBlackListInfos
+message PRemoveBanBlack{
+    optional int64 targetId=1;
+}

@@ -1,104 +1,105 @@
 package com.yuandian.server.logic.chat.service;
 
-import com.yuandian.core.common.DateConstants;
+import com.yuandian.core.common.RedisKeyUtils;
 import com.yuandian.core.common.Rediskey;
-import com.yuandian.server.config.RedisFactory;
+import com.yuandian.server.config.RedisService;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.model.entity.UserPo;
+import com.yuandian.server.logic.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Service
 public class ChatServiceImpl implements ChatService {
 
+    @Autowired
+    UserService userService;
+    @Autowired
+    RedisService redisChatService;
+
 
     private Logger logger = LoggerFactory.getLogger(ChatServiceImpl.class);
 
     @Override
-    public void saveChat(ChatPo chatPo) {
-        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
-        String key = String.format(Rediskey.CHAT_MESSAGE_INFO_LIST, getChatMainKey(chatPo.getUid(), chatPo.getTargetId()));
-        chatRedis.hsetString(key, chatPo.getMid() + "", chatPo.serialize(), DateConstants.SECOND);
+    public void saveChat(ChatPo chatPo, boolean online) {
+        String key = RedisKeyUtils.getChatInfoListKey(chatPo.getUid(), chatPo.getTargetId());
+        redisChatService.zAdd(key, chatPo.serialize(), chatPo.getMid());
         String user_list_key = String.format(Rediskey.CHAT_USER_LIST, chatPo.getUid());
-        chatRedis.saddString(user_list_key, chatPo.getTargetId() + "");
+        redisChatService.saddString(user_list_key, chatPo.getTargetId() + "");
+        if (!online) {
+            String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
+            redisChatService.incr(incrKey);
+        }
+        redisChatService.hgetFromObject("",ChatPo.class);
 
     }
 
     @Override
-    public List<ChatPo> getChatInfo(long uid, long targetId, int limit) {
-        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
-        String key = String.format(Rediskey.CHAT_MESSAGE_INFO_LIST, getChatMainKey(uid, targetId));
-        logger.info("key=" + key);
-        Map<String, String> map = chatRedis.hgetAll(key);
+    public List<ChatPo> getChatInfo(long uid, long targetId, long minMid, long maxMid, int limit) {
+        String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
+        Set<String> data = redisChatService.zrangeByScore(key, minMid, maxMid, limit);
         List<ChatPo> list = new ArrayList<>();
-        logger.info("data" +
-                +map.size());
-        for (Map.Entry<String, String> e : map.entrySet()) {
+        for (String e : data) {
             ChatPo po = new ChatPo();
-            po = (ChatPo) po.deserialize(e.getValue());
+            po = (ChatPo) po.deserialize(e);
             list.add(po);
         }
-
-        logger.info("chat size=" + list.size());
         return list;
     }
 
     @Override
     public void delete(long uid, long targetId, long mid) {
-        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
-        String key = String.format(Rediskey.CHAT_MESSAGE_INFO_LIST, getChatMainKey(uid, targetId));
-        chatRedis.hdel(key, mid + "");
+        String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
+        redisChatService.zremRangeByScore(key, mid ,mid);
     }
 
     @Override
     public long read(long uid, long targetId) {
-
+        String key = RedisKeyUtils.getNotReadChatNum(uid, targetId);
+        redisChatService.setString(key, "0");
         return 0;
     }
 
+    /**
+     * 聊天好友
+     */
     @Override
     public List<UserPo> getChatUserInfo(long uid) {
-        //UserPO userPO=userService.selectUserById(uid);
-        RedisFactory.Redis chatRedis = RedisFactory.getInstance().getRedis("chat");
+        List<UserPo> userPOList = new ArrayList<>();
         String key = String.format(Rediskey.CHAT_USER_LIST, uid);
-        Set<String> allChatUserId = chatRedis.smembersString(key);
+        logger.info(key);
+        Set<String> allChatUserId = redisChatService.smembersString(key);
+        logger.info("chat user size=" + allChatUserId.size());
         for (String targetUid : allChatUserId) {
             long target_uid = Long.parseLong(targetUid);
-
-        }
-        List<UserPo> userPOList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            UserPo userPO = new UserPo();
-            userPO.setAccount("121212");
-            userPO.setAge("2424");
-            userPO.setHeadUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556968161473&di=d23018d493acb7083a5f6ae49c7a18bb&imgtype=0&src=http%3A%2F%2Fs16.sinaimg.cn%2Fmw690%2F002apk40zy7aHsBI98b4f%26690");
-            userPO.setNickName("yuandian");
-            userPO.setSex(1);
-            userPO.setUid(uid);
-            userPO.setStatus(1);
-            userPO.setPhoneNum("1008611");
-            userPO.setSignature("hello，world");
-            userPOList.add(userPO);
+            UserPo friend = userService.getUserInfo(target_uid);
+            userPOList.add(friend);
         }
         return userPOList;
     }
 
-
-    private String getChatMainKey(long uid, long targetId) {
-        String token;
-
-        if (uid > targetId) {
-            token = uid + ":" + targetId;
-        } else {
-            token = targetId + ":" + uid;
+    /**
+     * 获取最后一条消息
+     *
+     * @param uid
+     * @param targetId
+     * @return
+     */
+    @Override
+    public ChatPo getLastChatInfo(long uid, Long targetId) {
+        List<ChatPo> chatPos = this.getChatInfo(uid, targetId, 0,-1,1);
+        if (chatPos != null) {
+            return chatPos.get(chatPos.size() - 1);
         }
-        return token;
+        return null;
     }
+
+
 }

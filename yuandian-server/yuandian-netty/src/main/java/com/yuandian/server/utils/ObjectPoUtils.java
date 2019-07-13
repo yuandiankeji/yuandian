@@ -1,10 +1,16 @@
 package com.yuandian.server.utils;
 
+import com.yuandian.core.common.RedisKeyUtils;
 import com.yuandian.core.utils.ZDateUtils;
+import com.yuandian.core.utils.ZStringUtil;
 import com.yuandian.data.common.PChatUserListInfo;
 import com.yuandian.data.common.PChatUserListInfos;
 import com.yuandian.data.common.PUserBaseInfo;
 import com.yuandian.data.common.PUserBaseInfos;
+import com.yuandian.server.config.RedisService;
+import com.yuandian.server.core.factory.SpringBeanFactory;
+import com.yuandian.server.logic.chat.service.ChatService;
+import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.model.entity.UserPo;
 
 import java.util.List;
@@ -35,16 +41,37 @@ public class ObjectPoUtils {
         return builder.build();
     }
 
-    public static PChatUserListInfos getPChatUserListInfos(List<UserPo> userPOList) {
+    /**
+     * 封装聊天列表
+     *
+     * @param uid
+     * @param userPOList
+     * @return
+     */
+    public static PChatUserListInfos getPChatUserListInfos(long uid, List<UserPo> userPOList) {
         PChatUserListInfos.Builder infos = PChatUserListInfos.newBuilder();
+        RedisService redisChatService = SpringBeanFactory.getInstance().getRedisChatService();
+        ChatService chatService = SpringBeanFactory.getInstance().getChatService();
         userPOList.forEach((userPO) -> {
+            String notReadNumStr = redisChatService.getString(RedisKeyUtils.getNotReadChatNum(uid, userPO.getUid()));
+            int num = 0;
+            if (ZStringUtil.isEmptyStr(notReadNumStr)) {
+                num = Integer.parseInt(notReadNumStr);
+            }
             PChatUserListInfo.Builder pchat = PChatUserListInfo.newBuilder();
             PUserBaseInfo userBaseInfo = getPUserBaseInfo(userPO);
             pchat.setUserInfo(userBaseInfo);
-            pchat.setNoReadNum(1);
-            pchat.setMessage("你好，世界");
-            pchat.setTime(ZDateUtils.getSeconds());
-            pchat.setUid(1L);
+            ChatPo chatPo = chatService.getLastChatInfo(uid, userPO.getUid());
+            String message = "";
+            long cTime = 0;
+            if (chatPo != null) {
+                message = chatPo.getContext();
+                cTime = chatPo.getCtime();
+            }
+            pchat.setNoReadNum(num);
+            pchat.setMessage(message);
+            pchat.setTime(cTime);
+            pchat.setUid(uid);
             infos.addList(pchat);
 
         });

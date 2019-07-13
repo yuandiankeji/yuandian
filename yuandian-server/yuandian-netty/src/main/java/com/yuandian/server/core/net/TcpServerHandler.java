@@ -2,6 +2,7 @@ package com.yuandian.server.core.net;
 
 import com.yuandian.core.net.IoMessage;
 import com.yuandian.core.net.MessageCoderFactory;
+import com.yuandian.server.logic.model.UserInfo;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -46,9 +47,17 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         logger.info("[TcpServerHandler]  channel in  active");
-        Channel channel = ctx.channel();
         IoClientManager.remove(ctx.channel());
-        channel.close();
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        super.exceptionCaught(ctx, cause);
+        logger.info("[TcpServerHandler] close client connection");
+        Channel channel = ctx.channel();
+        if (channel.isActive()) {
+            ctx.close();
+        }
     }
 
     @Override

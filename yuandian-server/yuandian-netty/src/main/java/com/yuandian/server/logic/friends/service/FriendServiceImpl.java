@@ -4,13 +4,12 @@ import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.common.RedisKeyUtils;
 import com.yuandian.core.common.ResultObject;
 import com.yuandian.core.utils.ZDateUtils;
-import com.yuandian.server.config.RedisFactory;
+import com.yuandian.server.config.RedisService;
 import com.yuandian.server.core.consts.ApplyConst;
 import com.yuandian.server.logic.mapper.FriendPoMapper;
 import com.yuandian.server.logic.model.entity.ApplyPo;
 import com.yuandian.server.logic.model.entity.FriendPo;
 import com.yuandian.server.logic.model.entity.FriendPoKey;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +22,10 @@ import java.util.Set;
 public class FriendServiceImpl implements FriendService {
     @Autowired
     FriendPoMapper friendMapper;
+    @Autowired
+    RedisService redisChatService;
+    @Autowired
+    RedisService redisGlobalService;
 
     @Override
     public ResultObject<Integer> addFriend(long uid, long fuid) {
@@ -70,40 +73,53 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public int apply(long uid, long targetId) {
         String applyListKey = RedisKeyUtils.getFriendApplyListKey(targetId);
-        RedisFactory.Redis redis = RedisFactory.getInstance().getRedis("global");
-        boolean exists = redis.hexists(applyListKey, targetId + "");
+        boolean exists = redisChatService.hexists(applyListKey, targetId + "");
         if (exists) {
             return -1;
         }
         ApplyPo applyPo = new ApplyPo();
         applyPo.setUid(targetId);
         applyPo.setTargetId(uid);
-        applyPo.setOption(ApplyConst.DEFAULT_OPTION);
+        applyPo.setOption(ApplyConst.DEFAULT_OPTION.getCode());
         applyPo.setcTime(ZDateUtils.now().getTime());
-        redis.hset(applyListKey, uid + "", applyPo.serialize());
+        redisChatService.hset(applyListKey, uid + "", applyPo.serialize());
         return 0;
     }
 
+    /**
+     * 好友申请操作
+     *
+     * @param uid
+     * @param targetId
+     * @param option
+     * @return
+     */
     @Override
     public boolean applyOption(long uid, long targetId, int option) {
-        switch (option) {
-            case ApplyConst.APPLY_AGREE:
-                break;
-            case ApplyConst.REFUSE_APPLY:
-                break;
-            case ApplyConst.BLACK_APPLY:
-                break;
-            default:
-                break;
+        String applyListKey = RedisKeyUtils.getFriendApplyListKey(uid);
+        String filed = targetId + "";
+        if (redisChatService.hexists(applyListKey, filed)) {
+            return false;
         }
+        ApplyPo applyPo = new ApplyPo();
+        applyPo.setUid(uid);
+        applyPo.setTargetId(targetId);
+        applyPo.setcTime(ZDateUtils.now().getTime());
+        applyPo.setOption(option);
+        redisChatService.hset(applyListKey, filed, applyPo.serialize());
         return false;
     }
 
+    /**
+     * 申请列表
+     *
+     * @param uid
+     * @return
+     */
     @Override
     public List<ApplyPo> getApplyList(long uid) {
         String applyListKey = RedisKeyUtils.getFriendApplyListKey(uid);
-        RedisFactory.Redis redis = RedisFactory.getInstance().getRedis("global");
-        Map<String, String> dataMap = redis.hgetAll(applyListKey);
+        Map<String, String> dataMap = redisChatService.hgetAll(applyListKey);
         List<ApplyPo> applyPoList = new ArrayList<>();
         dataMap.forEach((targetUid, applyPoStr) -> {
             ApplyPo applyPo = new ApplyPo();
@@ -113,8 +129,16 @@ public class FriendServiceImpl implements FriendService {
         return applyPoList;
     }
 
+    /**
+     * 拒绝好友
+     *
+     * @param uid
+     * @param targetId
+     * @return
+     */
     @Override
     public ResultObject<Integer> refuseApply(long uid, long targetId) {
+        this.applyOption(uid, targetId, ApplyConst.REFUSE_APPLY.getCode());
         return null;
     }
 
@@ -122,7 +146,7 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public List<Long> getBlacklist(long uid) {
         String key = RedisKeyUtils.getBlackListKey(uid);
-        Set<String> set = RedisFactory.getInstance().getRedis("global").smembersString(key);
+        Set<String> set = redisChatService.smembersString(key);
         List<Long> blackList = new ArrayList<>();
         set.forEach(targetId -> blackList.add(Long.parseLong(targetId)));
         return blackList;
@@ -131,14 +155,20 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public List<Long> addBlackList(long uid, long targetUId) {
         String key = RedisKeyUtils.getBlackListKey(uid);
-        RedisFactory.getInstance().getRedis("global").saddString(key, targetUId + "");
+        redisChatService.saddString(key, targetUId + "");
         return getBlacklist(uid);
     }
 
     @Override
     public void removeBlack(long uid, long targetUid) {
         String key = RedisKeyUtils.getBlackListKey(uid);
-        RedisFactory.getInstance().getRedis("global").sremString(key, targetUid + "");
+        redisChatService.sremString(key, targetUid + "");
 
+    }
+
+    @Override
+    public boolean isban(long uid, long targetId) {
+        List<Long> bans = this.getBlacklist(uid);
+        return bans.stream().anyMatch(id -> id == targetId);
     }
 }

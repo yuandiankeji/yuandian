@@ -13,7 +13,7 @@ import io.netty.channel.ChannelFutureListener;
  */
 public class IoClient {
 
-    private final int OK_STATUS = 0;
+    private final int OK_STATUS = 200;
 
     private Channel channel;
 

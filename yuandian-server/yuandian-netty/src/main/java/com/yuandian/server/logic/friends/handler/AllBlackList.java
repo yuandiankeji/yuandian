@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 获取黑名单列表
  */
-@MessageAnnotation(cmd = MessageCmd.ALL_FRIEND_LIST)
+@MessageAnnotation(cmd = MessageCmd.BLACK_LIST)
 public class AllBlackList extends AbstractTcpHandler {
     @Override
     public void handler(IoClient client, short cmd, byte[] bytes) {
@@ -29,7 +29,7 @@ public class AllBlackList extends AbstractTcpHandler {
         PBlackListInfos.Builder builder = PBlackListInfos.newBuilder();
         list.forEach(targetId -> {
             pBlackListInfo.setUid(targetId);
-            builder.addList(pBlackListInfo);
+            builder.addList(targetId);
         });
         userInfo.writeData(cmd, builder.build().toByteArray());
 

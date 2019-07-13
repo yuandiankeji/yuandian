@@ -18,6 +18,8 @@ message PUserBaseInfo {
     optional string nickName = 5;
     optional string phoneNum = 6;
     optional string signature = 7;
+    optional bool isFriends = 8;
+    optional bool ban = 9;
 
 }
 
@@ -82,5 +84,5 @@ message PBlackListInfo {
 }
 
 message PBlackListInfos {
-    repeated PBlackListInfo list = 1;
+    repeated int64 list = 1;
 }

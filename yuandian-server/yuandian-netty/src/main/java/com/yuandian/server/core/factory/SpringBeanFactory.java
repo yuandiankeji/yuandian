@@ -1,5 +1,6 @@
 package com.yuandian.server.core.factory;
 
+import com.yuandian.server.config.RedisService;
 import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.server.logic.friends.service.FriendService;
 import com.yuandian.server.logic.user.service.UserService;
@@ -15,7 +16,10 @@ public class SpringBeanFactory {
     private FriendService friendService;
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private RedisService redisChatService;
+    @Autowired
+    private RedisService redisGlobalService;
 
     public static void init() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext-bean.xml", "spring/applicationContext-spring.xml");
@@ -36,5 +40,13 @@ public class SpringBeanFactory {
 
     public UserService getUserService() {
         return userService;
+    }
+
+    public RedisService getRedisChatService() {
+        return redisChatService;
+    }
+
+    public RedisService getRedisGlobalService() {
+        return redisGlobalService;
     }
 }

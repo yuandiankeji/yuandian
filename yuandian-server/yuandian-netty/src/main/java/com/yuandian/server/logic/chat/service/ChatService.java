@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ChatService {
 
-    public void saveChat(ChatPo chatPo);
+    public void saveChat(ChatPo chatPo,boolean online);
 
-    public List<ChatPo> getChatInfo(long uid, long targetId, int limit);
+    public List<ChatPo> getChatInfo(long uid, long targetId, long minMid, long maxMid, int limit);
 
     public void delete(long uid, long targetId,long mid);
 
@@ -18,4 +18,5 @@ public interface ChatService {
 
     List<UserPo> getChatUserInfo(long uid);
 
+    ChatPo getLastChatInfo(long uid, Long targetId);
 }

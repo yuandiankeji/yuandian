@@ -16,6 +16,8 @@ public interface Rediskey {
     String MSG_CODE = "phone_msg#";
     //聊天信息保存
     String CHAT_MESSAGE_INFO_LIST = "h:chat:message:%s";
+    //有多少条未读的消息
+    String NOT_READ_CHAT_MESSAGE_NUM = "incr:chat:not:read:num:%s:%s";
     //聊天好友列表
     String CHAT_USER_LIST = "h:chat:user:list:%s";
 

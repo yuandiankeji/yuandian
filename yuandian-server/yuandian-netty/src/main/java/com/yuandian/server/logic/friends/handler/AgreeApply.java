@@ -6,10 +6,12 @@ import com.yuandian.core.common.MessageCmd;
 import com.yuandian.core.common.ResultObject;
 import com.yuandian.data.message.PAgreeApply;
 import com.yuandian.server.core.annotation.MessageAnnotation;
+import com.yuandian.server.core.consts.ApplyConst;
 import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.server.core.net.AbstractTcpHandler;
+import com.yuandian.server.logic.friends.service.FriendService;
 import com.yuandian.server.logic.model.UserInfo;
 
 /**
@@ -30,7 +32,9 @@ public class AgreeApply extends AbstractTcpHandler {
             return;
         }
         long targetUid = pAgreeApply.getTargetId();
-        ResultObject<Integer> result = SpringBeanFactory.getInstance().getFriendService().addFriend(uid, targetUid);
+        FriendService friendService = SpringBeanFactory.getInstance().getFriendService();
+        ResultObject<Integer> result = friendService.addFriend(uid, targetUid);
+        friendService.applyOption(uid, targetUid, ApplyConst.APPLY_AGREE.getCode());
         if (!result.success()) {
 
         }
