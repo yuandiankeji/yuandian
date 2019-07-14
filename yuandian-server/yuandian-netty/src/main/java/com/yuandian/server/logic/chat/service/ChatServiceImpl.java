@@ -2,6 +2,7 @@ package com.yuandian.server.logic.chat.service;
 
 import com.yuandian.core.common.RedisKeyUtils;
 import com.yuandian.core.common.Rediskey;
+import com.yuandian.core.utils.CollectionUtil;
 import com.yuandian.server.config.RedisService;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.model.entity.UserPo;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +39,7 @@ public class ChatServiceImpl implements ChatService {
             String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
             redisChatService.incr(incrKey);
         }
-        redisChatService.hgetFromObject("",ChatPo.class);
+        redisChatService.hgetFromObject("", ChatPo.class);
 
     }
 
@@ -57,7 +59,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void delete(long uid, long targetId, long mid) {
         String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
-        redisChatService.zremRangeByScore(key, mid ,mid);
+        redisChatService.zremRangeByScore(key, mid, mid);
     }
 
     @Override
@@ -94,8 +96,8 @@ public class ChatServiceImpl implements ChatService {
      */
     @Override
     public ChatPo getLastChatInfo(long uid, Long targetId) {
-        List<ChatPo> chatPos = this.getChatInfo(uid, targetId, 0,-1,1);
-        if (chatPos != null) {
+        List<ChatPo> chatPos = this.getChatInfo(uid, targetId, 0, -1, 1);
+        if (!CollectionUtil.isEmpty(chatPos)) {
             return chatPos.get(chatPos.size() - 1);
         }
         return null;

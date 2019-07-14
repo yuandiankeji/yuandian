@@ -36,7 +36,7 @@ public class SendChat extends AbstractTcpHandler {
             FriendService friendService = SpringBeanFactory.getInstance().getFriendService();
             boolean isBan = friendService.isban(uid, toUid);
             if (isBan) {
-                userInfo.writeData(cmd, ErrorCode.SYS_SUCCESS);
+                userInfo.writeData(cmd, ErrorCode.BAN_USER_SHEND_MESSAGE_ERROR);
                 return;
             }
             UserInfo targetUser = IoClientManager.getOnlineUser(toUid);

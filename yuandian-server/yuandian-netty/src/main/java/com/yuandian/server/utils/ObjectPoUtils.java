@@ -10,6 +10,7 @@ import com.yuandian.data.common.PUserBaseInfos;
 import com.yuandian.server.config.RedisService;
 import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.logic.chat.service.ChatService;
+import com.yuandian.server.logic.friends.service.FriendService;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.model.entity.UserPo;
 
@@ -20,48 +21,54 @@ import java.util.List;
  */
 public class ObjectPoUtils {
 
-    public static PUserBaseInfos getPuserBaseInfos(List<UserPo> userPOList) {
+    public static PUserBaseInfos getPuserBaseInfos(long uid,List<UserPo> userPos) {
         PUserBaseInfos.Builder pUserBaseInfos = PUserBaseInfos.newBuilder();
-        userPOList.forEach((userPO) -> {
-            PUserBaseInfo builder = getPUserBaseInfo(userPO);
+        userPos.forEach((userPo) -> {
+            PUserBaseInfo builder = getPUserBaseInfo(uid,userPo);
             pUserBaseInfos.addBaseInfos(builder);
         });
         return pUserBaseInfos.build();
 
     }
 
-    public static PUserBaseInfo getPUserBaseInfo(UserPo userPO) {
+    public static PUserBaseInfo getPUserBaseInfo(long uid, UserPo userPo) {
         PUserBaseInfo.Builder builder = PUserBaseInfo.newBuilder();
-        builder.setAccount(userPO.getAccount());
-        builder.setHeadUrl(userPO.getHeadUrl());
-        builder.setNickName(userPO.getNickName());
-        builder.setPhoneNum(userPO.getPhoneNum());
-        builder.setUid(userPO.getUid());
-        builder.setSex(userPO.getSex() + "");
+        FriendService friendService = SpringBeanFactory.getInstance().getFriendService();
+        boolean isban = friendService.isban(uid, userPo.getUid());
+        builder.setBan(isban);
+        boolean isFriend = friendService.isFriend(uid, userPo.getUid());
+        builder.setIsFriends(isFriend);
+        builder.setAccount(userPo.getAccount());
+        builder.setHeadUrl(userPo.getHeadUrl());
+        builder.setNickName(userPo.getNickName());
+        builder.setPhoneNum(userPo.getPhoneNum());
+        builder.setUid(userPo.getUid());
+        builder.setSex(userPo.getSex() + "");
         return builder.build();
     }
+
 
     /**
      * 封装聊天列表
      *
      * @param uid
-     * @param userPOList
+     * @param userPos
      * @return
      */
-    public static PChatUserListInfos getPChatUserListInfos(long uid, List<UserPo> userPOList) {
+    public static PChatUserListInfos getPChatUserListInfos(long uid, List<UserPo> userPos) {
         PChatUserListInfos.Builder infos = PChatUserListInfos.newBuilder();
         RedisService redisChatService = SpringBeanFactory.getInstance().getRedisChatService();
         ChatService chatService = SpringBeanFactory.getInstance().getChatService();
-        userPOList.forEach((userPO) -> {
-            String notReadNumStr = redisChatService.getString(RedisKeyUtils.getNotReadChatNum(uid, userPO.getUid()));
+        userPos.forEach((userPo) -> {
+            String notReadNumStr = redisChatService.getString(RedisKeyUtils.getNotReadChatNum(uid, userPo.getUid()));
             int num = 0;
-            if (ZStringUtil.isEmptyStr(notReadNumStr)) {
+            if (!ZStringUtil.isEmptyStr(notReadNumStr)) {
                 num = Integer.parseInt(notReadNumStr);
             }
             PChatUserListInfo.Builder pchat = PChatUserListInfo.newBuilder();
-            PUserBaseInfo userBaseInfo = getPUserBaseInfo(userPO);
+            PUserBaseInfo userBaseInfo = getPUserBaseInfo(uid,userPo);
             pchat.setUserInfo(userBaseInfo);
-            ChatPo chatPo = chatService.getLastChatInfo(uid, userPO.getUid());
+            ChatPo chatPo = chatService.getLastChatInfo(uid, userPo.getUid());
             String message = "";
             long cTime = 0;
             if (chatPo != null) {

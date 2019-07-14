@@ -1,6 +1,7 @@
 package com.yuandian.server.logic.friends.service;
 
 import com.yuandian.core.common.ResultObject;
+import com.yuandian.server.core.consts.ApplyConst;
 import com.yuandian.server.logic.model.entity.ApplyPo;
 import com.yuandian.server.logic.model.entity.FriendPo;
 
@@ -24,6 +25,7 @@ public interface FriendService {
     public boolean applyOption(long uid, long targetId, int option);
 
     public List<ApplyPo> getApplyList(long uid);
+    public ApplyPo getApplyPo(long uid,long targetId);
 
 
     ResultObject<Integer> refuseApply(long uid, long targetId);

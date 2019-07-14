@@ -26,6 +26,9 @@ public interface ErrorCode {
     short FRIEND_REPEAT_ADD=10010;
     /**
      *
+     * 用户已经屏蔽，不能发送消息
      */
+
+    short BAN_USER_SHEND_MESSAGE_ERROR=10011;
 
 }

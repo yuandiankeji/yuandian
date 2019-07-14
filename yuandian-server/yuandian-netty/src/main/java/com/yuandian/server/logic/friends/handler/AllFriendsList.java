@@ -36,7 +36,7 @@ public class AllFriendsList extends AbstractTcpHandler {
         List<UserPo> userPOList = new ArrayList<>();
 
         friendPoList.forEach((friend) -> userPOList.add(userService.getUserInfo(friend.getFuid())));
-        PUserBaseInfos baseInfos = ObjectPoUtils.getPuserBaseInfos(userPOList);
+        PUserBaseInfos baseInfos = ObjectPoUtils.getPuserBaseInfos(uid,userPOList);
         userInfo.writeData(cmd, baseInfos.toByteArray());
     }
 }

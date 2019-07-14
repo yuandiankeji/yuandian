@@ -13,10 +13,7 @@ import com.yuandian.server.logic.model.entity.FriendPoKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class FriendServiceImpl implements FriendService {
@@ -101,12 +98,20 @@ public class FriendServiceImpl implements FriendService {
         if (redisChatService.hexists(applyListKey, filed)) {
             return false;
         }
-        ApplyPo applyPo = new ApplyPo();
-        applyPo.setUid(uid);
-        applyPo.setTargetId(targetId);
-        applyPo.setcTime(ZDateUtils.now().getTime());
-        applyPo.setOption(option);
-        redisChatService.hset(applyListKey, filed, applyPo.serialize());
+        if (option == ApplyConst.DEFAULT_OPTION.getCode()) {
+            ApplyPo applyPo = new ApplyPo();
+            applyPo.setUid(uid);
+            applyPo.setTargetId(targetId);
+            applyPo.setcTime(ZDateUtils.now().getTime());
+            applyPo.setOption(option);
+            redisChatService.hset(applyListKey, filed, applyPo.serialize());
+        } else {
+            ApplyPo apply = this.getApplyPo(uid, targetId);
+            if (apply != null) {
+                apply.setOption(option);
+                redisChatService.hset(applyListKey, filed, apply.serialize());
+            }
+        }
         return false;
     }
 
@@ -127,6 +132,14 @@ public class FriendServiceImpl implements FriendService {
             applyPoList.add(applyPo);
         });
         return applyPoList;
+    }
+
+    @Override
+    public ApplyPo getApplyPo(long uid, long targetId) {
+        List<ApplyPo> applys = this.getApplyList(uid);
+        Optional<ApplyPo> first = applys.stream().
+                filter(applyPo -> applyPo.getTargetId() == targetId).findFirst();
+        return first.orElse(null);
     }
 
     /**
@@ -153,9 +166,10 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public List<Long> addBlackList(long uid, long targetUId) {
+    public List<Long> addBlackList(long uid, long targetId) {
         String key = RedisKeyUtils.getBlackListKey(uid);
-        redisChatService.saddString(key, targetUId + "");
+        redisChatService.saddString(key, targetId + "");
+        this.applyOption(uid, targetId, ApplyConst.BLACK_APPLY.getCode());
         return getBlacklist(uid);
     }
 
@@ -163,12 +177,13 @@ public class FriendServiceImpl implements FriendService {
     public void removeBlack(long uid, long targetUid) {
         String key = RedisKeyUtils.getBlackListKey(uid);
         redisChatService.sremString(key, targetUid + "");
-
+        String applyKey = RedisKeyUtils.getFriendApplyListKey(uid);
+        redisChatService.hdel(applyKey, targetUid + "");
     }
 
     @Override
     public boolean isban(long uid, long targetId) {
         List<Long> bans = this.getBlacklist(uid);
-        return bans.stream().anyMatch(id -> id == targetId);
+        return bans.stream().anyMatch(banId -> banId.equals(targetId));
     }
 }
