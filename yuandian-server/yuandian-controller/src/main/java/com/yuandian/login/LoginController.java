@@ -42,7 +42,7 @@ public class LoginController {
 
     @ApiOperation("登录接口")
     @RequestMapping(value = "/login", method = {RequestMethod.POST,RequestMethod.GET})
-    public ResultModel login(@ApiParam("手机号") @RequestParam String phone, @ApiParam("密码或验证码") @RequestParam String pwd, @ApiParam("设备id") @RequestParam String deviceId, @ApiParam("登录方式0验证码1密码") int type) {
+    public ResultModel login(@ApiParam("手机号") @RequestParam String phone, @ApiParam("密码或验证码") @RequestParam String pwd, @ApiParam("设备id") @RequestParam String deviceId, @ApiParam("登录方式0验证码1密码") @RequestParam int type) {
         LoginPO loginPO = loginService.selectByPhone(phone);
         ResultModel resultModel;
         if (loginPO == null) {
