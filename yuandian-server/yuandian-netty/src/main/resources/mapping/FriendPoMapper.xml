@@ -18,7 +18,7 @@
       and fuid = #{fuid,jdbcType=BIGINT}
   </select>
   <select id="getFriends" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select  <include refid="Base_Column_List"/> from friend where  uid=#{uid}
+    select  <include refid="Base_Column_List"/> from friend where  uid=#{uid} or fuid=#{uid}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="com.yuandian.server.logic.model.entity.FriendPoKey">
