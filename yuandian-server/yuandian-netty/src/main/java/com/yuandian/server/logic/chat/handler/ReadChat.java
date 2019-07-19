@@ -13,6 +13,7 @@ import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.server.logic.model.UserInfo;
 
 /**
+ * 阅读消息
  * @author twjitm 2019/4/17/0:03
  */
 @MessageAnnotation(cmd = MessageCmd.READ_CHAT)

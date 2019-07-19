@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -39,8 +38,6 @@ public class ChatServiceImpl implements ChatService {
             String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
             redisChatService.incr(incrKey);
         }
-        redisChatService.hgetFromObject("", ChatPo.class);
-
     }
 
     @Override

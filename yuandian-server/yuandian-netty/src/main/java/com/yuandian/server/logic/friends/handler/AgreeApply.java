@@ -5,6 +5,7 @@ import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.core.common.ResultObject;
 import com.yuandian.data.message.PAgreeApply;
+import com.yuandian.data.push.PushFriendAgree;
 import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.consts.ApplyConst;
 import com.yuandian.server.core.factory.SpringBeanFactory;
@@ -36,8 +37,13 @@ public class AgreeApply extends AbstractTcpHandler {
         ResultObject<Integer> result = friendService.addFriend(uid, targetUid);
         friendService.applyOption(uid, targetUid, ApplyConst.APPLY_AGREE.getCode());
         if (!result.success()) {
-
+            userInfo.writeData(cmd, ErrorCode.AUTH_ID_ERROR);
+            return;
         }
+        PushFriendAgree.Builder push = PushFriendAgree.newBuilder();
+        push.setTargetId(uid);
+        UserInfo targetUser = IoClientManager.getUserInfo(targetUid);
+        targetUser.writeData(MessageCmd.PushMessageCmd.PUSH_APPLY_AGREE, push.build().toByteArray());
         userInfo.writeData(cmd, result.getCode());
     }
 }
