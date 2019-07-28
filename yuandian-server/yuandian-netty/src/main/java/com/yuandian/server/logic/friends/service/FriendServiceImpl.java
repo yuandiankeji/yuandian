@@ -33,15 +33,25 @@ public class FriendServiceImpl implements FriendService {
         FriendPo friend = new FriendPo(uid, fuid);
         friend.setUid(uid);
         friend.setFuid(fuid);
-        friend.setcTime(ZDateUtils.now());
+        friend.setcTime(new Date());
         friend.setGroupId(1L);
         friendMapper.insert(friend);
         return new ResultObject<>(ErrorCode.SYS_SUCCESS, 1);
     }
 
     @Override
-    public List<FriendPo> getFriendList(long uid) {
-        return friendMapper.getFriends(uid);
+    public List<Long> getFriendList(long uid) {
+        List<FriendPo> list = friendMapper.getFriends(uid);
+        Set<Long> friendSet = new HashSet<>();
+        list.forEach(friendPo -> {
+            if (friendPo.getUid() != uid) {
+                friendSet.add(friendPo.getUid());
+            }
+            if (friendPo.getFuid() != uid) {
+                friendSet.add(friendPo.getFuid());
+            }
+        });
+        return new ArrayList<>(friendSet);
     }
 
     @Override
@@ -52,19 +62,16 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public boolean isFriend(long uid, long fuid) {
         FriendPo friend = this.getFriend(uid, fuid);
+        if (friend == null) {
+            friend = this.getFriend(fuid, uid);
+        }
         return friend != null;
     }
 
     @Override
     public FriendPo getFriend(long uid, long fuid) {
-
-        List<FriendPo> list = this.getFriendList(uid);
-        for (FriendPo po : list) {
-            if (po.getFuid() == fuid) {
-                return po;
-            }
-        }
-        return null;
+        FriendPo po = friendMapper.selectByPrimaryKey(new FriendPoKey(uid, fuid));
+        return po;
     }
 
     @Override
@@ -78,7 +85,7 @@ public class FriendServiceImpl implements FriendService {
         applyPo.setUid(targetId);
         applyPo.setTargetId(uid);
         applyPo.setOption(ApplyConst.DEFAULT_OPTION.getCode());
-        applyPo.setcTime(ZDateUtils.now().getTime());
+        applyPo.setcTime(ZDateUtils.getNow());
         redisChatService.hset(applyListKey, uid + "", applyPo.serialize());
         return 0;
     }
@@ -102,7 +109,7 @@ public class FriendServiceImpl implements FriendService {
             ApplyPo applyPo = new ApplyPo();
             applyPo.setUid(uid);
             applyPo.setTargetId(targetId);
-            applyPo.setcTime(ZDateUtils.now().getTime());
+            applyPo.setcTime(ZDateUtils.getNow());
             applyPo.setOption(option);
             redisChatService.hset(applyListKey, filed, applyPo.serialize());
         } else {

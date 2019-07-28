@@ -83,6 +83,10 @@ public final class MessageCmd {
      * 取消屏蔽
      */
     public static final int REMOVE_BLACK = REQUEST_BASE + 28;
+    /**
+     * 聊天列表里面移除好友
+     */
+    public static final short DELETE_CHAT_USER_LIST = 29;
 
 
     /**

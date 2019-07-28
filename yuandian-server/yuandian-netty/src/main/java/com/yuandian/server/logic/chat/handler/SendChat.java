@@ -41,16 +41,24 @@ public class SendChat extends AbstractTcpHandler {
             }
             UserInfo targetUser = IoClientManager.getOnlineUser(toUid);
             ChatPo chatPo = new ChatPo();
-
             PushChatMessage.Builder pushChatMessage = PushChatMessage.newBuilder();
-            pushChatMessage.setChatInfo(pChat);
+            long mId = ZDateUtils.getNow();
+            PChatInfo.Builder builder = PChatInfo.newBuilder();
+            builder.setMid(mId);
+            builder.setContext(pChat.getContext());
+            builder.setCTime(ZDateUtils.getNow());
+            builder.setTargetUid(toUid);
+            builder.setType(chatType);
+            builder.setIsRead(0);
+            builder.setUid(uid);
+            pushChatMessage.setChatInfo(builder.build());
             //往别的客户端推送消息,暂时不考虑分布式
             chatPo.setUid(uid);
             chatPo.setTargetId(toUid);
             chatPo.setIsread(0);
-            chatPo.setCtime(ZDateUtils.getSeconds());
+            chatPo.setCtime(ZDateUtils.getNow());
             chatPo.setContext(pChat.getContext());
-            chatPo.setMid(ZDateUtils.now().getTime());
+            chatPo.setMid(mId);
             chatPo.setType(chatType);
             boolean targetOnline = false;
             if (targetUser != null) {
@@ -60,7 +68,7 @@ public class SendChat extends AbstractTcpHandler {
             chatService.saveChat(chatPo, targetOnline);
             //保存消息
 
-            userInfo.writeData(cmd, pChat.toByteArray());
+            userInfo.writeData(cmd, builder.build().toByteArray());
 
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();

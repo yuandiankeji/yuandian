@@ -1,7 +1,9 @@
 package com.yuandian.server.logic.chat.service;
 
+import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.common.RedisKeyUtils;
 import com.yuandian.core.common.Rediskey;
+import com.yuandian.core.common.ResultObject;
 import com.yuandian.core.utils.CollectionUtil;
 import com.yuandian.server.config.RedisService;
 import com.yuandian.server.logic.model.entity.ChatPo;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -43,13 +46,14 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatPo> getChatInfo(long uid, long targetId, long minMid, long maxMid, int limit) {
         String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
-        Set<String> data = redisChatService.zrangeByScore(key, minMid, maxMid, limit);
+        Set<String> data = redisChatService.zrevrangeByScore(key, maxMid, minMid, limit);
         List<ChatPo> list = new ArrayList<>();
         for (String e : data) {
             ChatPo po = new ChatPo();
             po = (ChatPo) po.deserialize(e);
             list.add(po);
         }
+        list.sort(Comparator.comparing(ChatPo::getMid));
         return list;
     }
 
@@ -93,11 +97,25 @@ public class ChatServiceImpl implements ChatService {
      */
     @Override
     public ChatPo getLastChatInfo(long uid, Long targetId) {
-        List<ChatPo> chatPos = this.getChatInfo(uid, targetId, 0, -1, 1);
+        List<ChatPo> chatPos = this.getChatInfo(uid, targetId, -1, 0, 1);
         if (!CollectionUtil.isEmpty(chatPos)) {
             return chatPos.get(chatPos.size() - 1);
         }
         return null;
+    }
+
+    /**
+     * 移除聊天好友
+     *
+     * @param uid
+     * @param targetId
+     * @return
+     */
+    @Override
+    public ResultObject<Integer> removeChatUser(long uid, long targetId) {
+        String user_list_key = String.format(Rediskey.CHAT_USER_LIST, uid);
+        redisChatService.sremString(user_list_key, targetId + "");
+        return new ResultObject<Integer>(ErrorCode.SYS_SUCCESS, 1);
     }
 
 

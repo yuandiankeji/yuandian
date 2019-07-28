@@ -410,16 +410,18 @@ public class ZDateUtils {
         return false;
     }
 
-    public static  Date now(){
-        return new Date();
-    }
 
-    public static long getSeconds(){
+
+    public static long getSeconds() {
         long now = System.currentTimeMillis();
         return now / SECOND;
     }
 
-    public static String getDateString(Date d){
+    public static long getNow() {
+        return System.currentTimeMillis();
+    }
+
+    public static String getDateString(Date d) {
         Calendar c = Calendar.getInstance();
         c.setTime(d);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

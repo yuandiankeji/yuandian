@@ -1,5 +1,6 @@
 package com.yuandian.server.logic.chat.service;
 
+import com.yuandian.core.common.ResultObject;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.model.entity.UserPo;
 
@@ -19,4 +20,6 @@ public interface ChatService {
     List<UserPo> getChatUserInfo(long uid);
 
     ChatPo getLastChatInfo(long uid, Long targetId);
+
+    ResultObject<Integer> removeChatUser(long uid, long targetId);
 }

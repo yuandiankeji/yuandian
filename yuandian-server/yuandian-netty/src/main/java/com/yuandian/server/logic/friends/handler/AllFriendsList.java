@@ -31,11 +31,11 @@ public class AllFriendsList extends AbstractTcpHandler {
     public void handler(IoClient client, short cmd, byte[] bytes) {
         UserInfo userInfo = IoClientManager.getUserInfo(client);
         long uid = userInfo.getUid();
-        List<FriendPo> friendPoList = SpringBeanFactory.getInstance().getFriendService().getFriendList(uid);
+        List<Long> friendPoList = SpringBeanFactory.getInstance().getFriendService().getFriendList(uid);
         UserService userService = SpringBeanFactory.getInstance().getUserService();
         List<UserPo> userPOList = new ArrayList<>();
 
-        friendPoList.forEach((friend) -> userPOList.add(userService.getUserInfo(friend.getFuid())));
+        friendPoList.forEach((friend) -> userPOList.add(userService.getUserInfo(friend)));
         PUserBaseInfos baseInfos = ObjectPoUtils.getPuserBaseInfos(uid,userPOList);
         userInfo.writeData(cmd, baseInfos.toByteArray());
     }
