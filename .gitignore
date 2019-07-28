@@ -161,3 +161,4 @@ local.properties
 
 /yuandian-server/yuandian-data/src/main/java/
 ~.*
+.DS_Store
