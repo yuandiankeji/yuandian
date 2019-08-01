@@ -1,9 +1,6 @@
 package com.yuandian.server.logic.chat.service;
 
-import com.yuandian.core.common.ErrorCode;
-import com.yuandian.core.common.RedisKeyUtils;
-import com.yuandian.core.common.Rediskey;
-import com.yuandian.core.common.ResultObject;
+import com.yuandian.core.common.*;
 import com.yuandian.core.utils.CollectionUtil;
 import com.yuandian.server.config.RedisService;
 import com.yuandian.server.logic.model.entity.ChatPo;
@@ -15,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -103,7 +98,13 @@ public class ChatServiceImpl implements ChatService {
         if (!CollectionUtil.isEmpty(chatPos)) {
             return chatPos.get(chatPos.size() - 1);
         }
-        return null;
+        String key = String.format(Rediskey.CHAT_USER_LIST, uid);
+        Set<ChatPo> lastChatStr = redisChatService.zrange(key, -1, -1, new ChatPo());
+        if (CollectionUtil.isEmpty(lastChatStr)) {
+            return null;
+        }
+        ArrayList<ChatPo> list = new ArrayList<>(lastChatStr);
+        return list.get(0);
     }
 
     /**

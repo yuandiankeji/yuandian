@@ -1,6 +1,7 @@
 package com.yuandian.server.config;
 
 import com.alibaba.fastjson.JSON;
+import com.yuandian.core.common.RedisCache;
 import com.yuandian.server.core.base.CacheBase;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
@@ -1715,6 +1716,22 @@ public class RedisService {
             }
         }
         return Collections.emptySet();
+    }
+
+    /**
+     * @param key
+     * @param beginIndex
+     * @param endIndex
+     * @return
+     */
+    public <T> Set<T> zrange(String key, int beginIndex, int endIndex, RedisCache cache) {
+        Set<String> list = this.zRange(key, beginIndex, endIndex);
+        Set<T> set = Collections.emptySet();
+        for (String data : list) {
+            T po = (T) cache.deserialize(data);
+            set.add(po);
+        }
+        return set;
     }
 
 

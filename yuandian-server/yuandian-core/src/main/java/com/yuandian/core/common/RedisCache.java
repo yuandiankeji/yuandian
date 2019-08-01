@@ -1,8 +1,11 @@
 package com.yuandian.core.common;
 
-public interface RedisCache {
+public abstract class RedisCache<T> {
 
-    public String serialize();
+    public abstract String serialize();
 
-    public Object deserialize(String json);
+    public abstract T deserialize(String json);
+
+    public abstract String uniqueKey();
+
 }

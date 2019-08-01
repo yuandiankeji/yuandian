@@ -2,6 +2,7 @@ package com.yuandian.core.utils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -19,6 +20,19 @@ public class CollectionUtil {
         }
         return b;
     }
+
+
+    /**
+     * 判断某个list是否没有数据
+     */
+    public static <T> boolean isEmpty(Set<T> list) {
+        boolean b = false;
+        if (list == null || list.isEmpty()) {
+            b = true;
+        }
+        return b;
+    }
+
 
     public static <T> boolean isEmpty(T[] list) {
         boolean b = false;
