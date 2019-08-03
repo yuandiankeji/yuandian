@@ -14,6 +14,7 @@ import com.yuandian.server.logic.model.UserInfo;
 
 /**
  * 阅读消息
+ *
  * @author twjitm 2019/4/17/0:03
  */
 @MessageAnnotation(cmd = MessageCmd.READ_CHAT)
@@ -36,5 +37,6 @@ public class ReadChat extends AbstractTcpHandler {
         pb.setTargetId(userInfo.getUid());
         pb.setChatId(mid);
         targetUserInfo.writeData(MessageCmd.PushMessageCmd.PUSH_CHAT, pb.build().toByteArray());
+        userInfo.writeData(cmd);
     }
 }

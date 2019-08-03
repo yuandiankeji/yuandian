@@ -45,8 +45,8 @@ public class ChatServiceImpl implements ChatService {
         List<ChatPo> list = new ArrayList<>();
         for (String e : data) {
             ChatPo po = new ChatPo();
-            po = (ChatPo) po.deserialize(e);
-            if (po.getMid() != maxMid) {
+            po = po.deserialize(e);
+            if (po.getMid() < maxMid) {
                 list.add(po);
             }
         }
