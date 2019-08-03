@@ -1726,7 +1726,7 @@ public class RedisService {
      */
     public <T> Set<T> zrange(String key, int beginIndex, int endIndex, RedisCache cache) {
         Set<String> list = this.zRange(key, beginIndex, endIndex);
-        Set<T> set = Collections.emptySet();
+        Set<T> set = new HashSet<>(Collections.emptySet());
         for (String data : list) {
             T po = (T) cache.deserialize(data);
             set.add(po);

@@ -4,6 +4,7 @@ package com.yuandian.core.common;
  * @author twjitm 2019/4/6/21:06
  */
 public final class MessageCmd {
+    public static final int TEST_PROTO = 999;
     /**
      * 请求消息号
      */

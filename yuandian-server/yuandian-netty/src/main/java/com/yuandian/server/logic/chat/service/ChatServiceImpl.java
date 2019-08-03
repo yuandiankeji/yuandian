@@ -94,10 +94,6 @@ public class ChatServiceImpl implements ChatService {
      */
     @Override
     public ChatPo getLastChatInfo(long uid, Long targetId) {
-        List<ChatPo> chatPos = this.getChatInfo(uid, targetId, -1, 0, 1);
-        if (!CollectionUtil.isEmpty(chatPos)) {
-            return chatPos.get(chatPos.size() - 1);
-        }
         String key = String.format(Rediskey.CHAT_USER_LIST, uid);
         Set<ChatPo> lastChatStr = redisChatService.zrange(key, -1, -1, new ChatPo());
         if (CollectionUtil.isEmpty(lastChatStr)) {
