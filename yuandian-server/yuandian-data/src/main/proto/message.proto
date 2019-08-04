@@ -95,3 +95,8 @@ message PGetBanBlackList {
 message PRemoveBanBlack {
     optional int64 targetId = 1;
 }
+
+//cmd = GET_USER_INFO  获取用户信息 return PUserBaseInfo
+message PGetUserInfo {
+    optional int64 targetId = 1;
+}

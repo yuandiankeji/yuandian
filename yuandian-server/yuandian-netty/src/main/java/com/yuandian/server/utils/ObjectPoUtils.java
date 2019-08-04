@@ -13,6 +13,7 @@ import com.yuandian.server.logic.friends.service.FriendService;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.model.entity.UserPo;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -81,6 +82,7 @@ public class ObjectPoUtils {
             infos.addList(pchat);
 
         });
+        infos.getListList().sort(Comparator.comparing(PChatUserListInfo::getTime));
         return infos.build();
 
     }

@@ -50,7 +50,7 @@ public class ChatServiceImpl implements ChatService {
                 list.add(po);
             }
         }
-        list.sort(Comparator.comparing(ChatPo::getMid));
+        list.sort(Comparator.comparing(ChatPo::getCtime));
         return list;
     }
 
@@ -94,7 +94,7 @@ public class ChatServiceImpl implements ChatService {
      */
     @Override
     public ChatPo getLastChatInfo(long uid, Long targetId) {
-        String key = String.format(Rediskey.CHAT_USER_LIST, uid);
+        String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
         Set<ChatPo> lastChatStr = redisChatService.zrange(key, -1, -1, new ChatPo());
         if (CollectionUtil.isEmpty(lastChatStr)) {
             return null;
