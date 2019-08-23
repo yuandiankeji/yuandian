@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "common.proto";
 option java_multiple_files = true;
@@ -12,33 +12,33 @@ option java_package = "com.yuandian.data.message";
 
 //cmd=AUTH_ACCOUNT  return success 登陆认证
 message PAuth {
-    optional int64 uid = 1;
-    optional string deviceId = 2;
-    optional string token = 3;
+     int64 uid = 1;
+     string deviceId = 2;
+     string token = 3;
 }
 
 //cmd=SEND_CHAT  return PChatInfo 发送消息
 message PSendChat {
-    optional PChatInfo chat = 1;
+     PChatInfo chat = 1;
 }
 
 //cmd=GET_CHAT_RECORD  return PChatInfos 获取聊天记录
 message PGetChatRecord {
-    optional int64 targetId = 1;
-    optional int64 limit = 2; //档期时间
-    optional bool extra = 3;
-    optional int64 footMId = 4; //上一次末尾消息id
+     int64 targetId = 1;
+     int64 limit = 2; //档期时间
+     bool extra = 3;
+     int64 footMId = 4; //上一次末尾消息id
 
 }
 //cmd=DELETE_CHAT_RECORD  删除聊天
 message PDeleteChat {
-    optional int64 targetId = 1;
-    optional int64 mId = 2;
+     int64 targetId = 1;
+     int64 mId = 2;
 }
 
 //cmd=READ_CHAT 阅读聊天
 message PReadChat {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }
 
 //cmd=GET_CHAT_USER_LIST return PChatListInfos 获取聊天好友列表
@@ -52,15 +52,15 @@ message PLogout {
 
 //cmd=APPLY_FRIEND 申请好友
 message PApplyFriend {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }
 //cmd=AGREE_FRIEND  同意好友申请
 message PAgreeApply {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }
 //cmd=REFUSE_FRIEND 拒绝好友
 message PRefuseApply {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }
 
 //cmd=ALL_FRIEND_APPLY_LIST return PApplyInfos 申请列表
@@ -69,12 +69,12 @@ message PGetApplyList {
 }
 //cmd=DELETE_CHAT_USER_LIST 移除聊天好友
 message PRemoveUserInChatList {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }
 
 //cmd=DELETE_FRIEND  删除好友
 message PDeleteFriend {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }
 
 //cmd=ALL_FRIEND_LIST 好友列表 return PUserBaseInfos
@@ -84,7 +84,7 @@ message PGetFriendList {
 
 //cmd=SHIELD_USER 添加到屏蔽人
 message PAddToBanBlack {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }
 //cmd =BLACK_LIST 获取屏蔽人列表
 
@@ -93,10 +93,10 @@ message PGetBanBlackList {
 }
 //cmd = REMOVE_BLACK 移除屏蔽人 return PBlackListInfos
 message PRemoveBanBlack {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }
 
 //cmd = GET_USER_INFO  获取用户信息 return PUserBaseInfo
 message PGetUserInfo {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }

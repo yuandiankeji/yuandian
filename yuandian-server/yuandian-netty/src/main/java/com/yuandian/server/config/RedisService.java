@@ -2,6 +2,7 @@ package com.yuandian.server.config;
 
 import com.alibaba.fastjson.JSON;
 import com.yuandian.core.common.RedisCache;
+import com.yuandian.core.utils.ZDateUtils;
 import com.yuandian.server.core.base.CacheBase;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
@@ -481,7 +482,7 @@ public class RedisService {
 
 
     public void hset(String key, String field, String value) {
-        this.hsetString(key, field, value, 0);
+        this.hsetString(key, field, value, (int) (ZDateUtils.ONE_DAY*30L));
     }
 
     public void hsetString(String key, String field, String value, int seconds) {

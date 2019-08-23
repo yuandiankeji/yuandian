@@ -12,7 +12,7 @@
 
     <!--动态数据源的配置-->
     <bean id="dynamicDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/yuandian"/>
+        <property name="url" value="jdbc:mysql://47.104.139.83:3306/yuandian"/>
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="username" value="root"/>
         <property name="password" value="yuandianmysql"/>

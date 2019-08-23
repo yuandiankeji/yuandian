@@ -1,5 +1,5 @@
 //cmd 1000
-syntax = "proto2";
+syntax = "proto3";
 
 import "common.proto";
 option java_multiple_files = true;
@@ -7,21 +7,21 @@ option java_package = "com.yuandian.data.push";
 
 //cmd=10000
 message PushChatMessage {
-    optional PChatInfo chatInfo = 1;
+     PChatInfo chatInfo = 1;
 }
 
 //cmd =10001
 message PushChatRead {
-    optional int64 targetId = 1;
-    optional int64 chatId = 2;
+     int64 targetId = 1;
+     int64 chatId = 2;
 }
 
 //cmd=10002 好友申请通知
 message PushFriendApply {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }
 
 //cmd =10003 好友同意通知
 message PushFriendAgree {
-    optional int64 targetId = 1;
+     int64 targetId = 1;
 }

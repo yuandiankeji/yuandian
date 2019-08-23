@@ -58,7 +58,7 @@ public class ObjectPoUtils {
      */
     public static PChatUserListInfos getPChatUserListInfos(long uid, List<UserPo> userPos) {
         PChatUserListInfos.Builder infos = PChatUserListInfos.newBuilder();
-        RedisService redisChatService = SpringBeanFactory.getInstance().getRedisChatService();
+        RedisService redisChatService = SpringBeanFactory.getInstance().getRedisService();
         ChatService chatService = SpringBeanFactory.getInstance().getChatService();
         List<PChatUserListInfo.Builder> builderList = new ArrayList<>();
         userPos.forEach((userPo) -> {

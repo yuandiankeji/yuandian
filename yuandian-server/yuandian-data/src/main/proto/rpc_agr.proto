@@ -1,7 +1,29 @@
-syntax = "proto2";
+syntax = "proto3";
 
 option java_package = "com.yuandian.data.rpc";
 option java_multiple_files = true;
-message RItem {
-    optional int32 sdId = 1;
+
+message Req {
+    string username = 1;
+}
+
+message Resp {
+    string person = 1;
+}
+
+message NotifyMessageReq {
+    string cmd = 1;
+    string data = 2;
+}
+
+message NotifyMessageResp {
+
+}
+
+service RpcWorldService {
+    rpc query (Req) returns (Resp) {
+    }
+
+    rpc notify (NotifyMessageReq) returns (NotifyMessageResp) {
+    }
 }
