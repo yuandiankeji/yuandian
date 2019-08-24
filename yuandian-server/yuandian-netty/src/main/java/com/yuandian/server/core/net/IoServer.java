@@ -22,11 +22,11 @@ public class IoServer implements Runnable {
 
     private static Logger logger = LoggerFactory.getLogger(IoServer.class);
 
-    NioEventLoopGroup bossGroup;
-    NioEventLoopGroup workerGroup;
-    ChannelFuture future;
-    String ip;
-    long port;
+    private NioEventLoopGroup bossGroup;
+    private NioEventLoopGroup workerGroup;
+    private ChannelFuture future;
+    private String ip;
+    private long port;
 
     public IoServer(String ip, int port) {
         this.ip = ip;
@@ -41,8 +41,6 @@ public class IoServer implements Runnable {
 
         ServerBootstrap b = new ServerBootstrap();
         try {
-            //ch.pipeline().addLast("frame", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 2, 4, 0, 0));
-
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 512)

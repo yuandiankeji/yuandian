@@ -21,11 +21,11 @@ import org.slf4j.LoggerFactory;
  */
 @MessageAnnotation(cmd = MessageCmd.GET_USER_INFO)
 public class GetUserUserInfo extends AbstractTcpHandler {
-    Logger logger = LoggerFactory.getLogger(GetUserUserInfo.class);
+    private Logger logger = LoggerFactory.getLogger(GetUserUserInfo.class);
 
     @Override
     public void handler(IoClient client, short cmd, byte[] bytes) {
-        PGetUserInfo pGetUserInfo = null;
+        PGetUserInfo pGetUserInfo;
         UserInfo user = IoClientManager.getUserInfo(client);
 
         try {
