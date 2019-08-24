@@ -54,7 +54,7 @@ public class YuanDianServer {
     private static void initConnection(ServerConfig config) {
         try {
             ThreadPoolFactory.getInstance().executeGeneral(ioServer = new IoServer(config.getIp(), (int) config.getPort()));
-            //ThreadPoolFactory.getInstance().executeGeneral(ioRpcServer = new IoRpcServer(config.getRpcIp(), (int) config.getRpcPort()));
+            ThreadPoolFactory.getInstance().executeGeneral(ioRpcServer = new IoRpcServer(config.getRpcIp(), (int) config.getRpcPort()));
         } catch (Exception e) {
             e.printStackTrace();
         }

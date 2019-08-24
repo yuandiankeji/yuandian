@@ -35,5 +35,4 @@ public interface Rediskey {
 
     //地图物品
     String MAP_GOODS = "map:goods:";
-    String BAN_FRIEND_LIST = "s:ban:friend:list:%s";
 }
