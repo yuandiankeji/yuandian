@@ -482,7 +482,7 @@ public class RedisService {
 
 
     public void hset(String key, String field, String value) {
-        this.hsetString(key, field, value, (int) (ZDateUtils.ONE_DAY*30L));
+        this.hsetString(key, field, value, -1);
     }
 
     public void hsetString(String key, String field, String value, int seconds) {

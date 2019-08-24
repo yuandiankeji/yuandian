@@ -11,6 +11,8 @@ import com.yuandian.core.common.MessageCmd;
 import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.server.logic.model.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 阅读消息
@@ -19,6 +21,7 @@ import com.yuandian.server.logic.model.UserInfo;
  */
 @MessageAnnotation(cmd = MessageCmd.READ_CHAT)
 public class ReadChat extends AbstractTcpHandler {
+    Logger logger = LoggerFactory.getLogger(ReadChat.class);
 
     @Override
     public void handler(IoClient client, short cmd, byte[] bytes) {
@@ -27,8 +30,10 @@ public class ReadChat extends AbstractTcpHandler {
         PReadChat builder = null;
         try {
             builder = PReadChat.parseFrom(bytes);
+            logger.info("[ReadChat] | cmd={},data={}", cmd, builder.toString());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
+            logger.error("[ReadChat] | cmd={}", cmd);
             return;
         }
         long mid = chatService.read(userInfo.getUid(), builder.getTargetId());

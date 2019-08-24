@@ -14,12 +14,17 @@ import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.friends.service.FriendService;
 import com.yuandian.server.logic.model.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 同意好友申请
  */
 @MessageAnnotation(cmd = MessageCmd.AGREE_FRIEND)
 public class AgreeApply extends AbstractTcpHandler {
+
+    private Logger logger = LoggerFactory.getLogger(AgreeApply.class);
+
     @Override
     public void handler(IoClient client, short cmd, byte[] bytes) {
         UserInfo userInfo = IoClientManager.getUserInfo(client);
@@ -27,9 +32,11 @@ public class AgreeApply extends AbstractTcpHandler {
         PAgreeApply pAgreeApply;
         try {
             pAgreeApply = PAgreeApply.parseFrom(bytes);
+            logger.info("[AgreeApply] | cmd={},data={}", cmd, pAgreeApply.toString());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
             userInfo.writeData(cmd, ErrorCode.SYS_PROTO_TYPE_ERROR);
+            logger.error("[AgreeApply] |cmd={}", cmd);
             return;
         }
         long targetUid = pAgreeApply.getTargetId();

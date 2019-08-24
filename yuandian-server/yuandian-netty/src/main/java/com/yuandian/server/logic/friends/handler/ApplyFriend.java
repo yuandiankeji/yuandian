@@ -27,12 +27,11 @@ public class ApplyFriend extends AbstractTcpHandler {
         PApplyFriend applyFriend = null;
         try {
             applyFriend = PApplyFriend.parseFrom(bytes);
-            logger.debug("cmd={},target={}", cmd, applyFriend.getTargetId());
+            logger.info("[ApplyFriend] | cmd={},target={}", cmd, applyFriend.getTargetId());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
-        }
-        if (applyFriend == null) {
-            userInfo.writeData(cmd, ErrorCode.USER_INFO_ERROR);
+            logger.error("[ApplyFriend] | cmd={}", cmd);
+            userInfo.writeData(cmd, ErrorCode.SYS_SERVER_ERROR);
             return;
         }
         long uid = userInfo.getUid();
