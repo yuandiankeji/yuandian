@@ -17,9 +17,8 @@ public class SpringBeanFactory {
     @Autowired
     private UserService userService;
     @Autowired
-    private RedisService redisChatService;
-    @Autowired
-    private RedisService redisGlobalService;
+    private RedisService redisService;
+
 
     public static void init() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext-bean.xml", "spring/applicationContext-spring.xml");
@@ -42,11 +41,8 @@ public class SpringBeanFactory {
         return userService;
     }
 
-    public RedisService getRedisChatService() {
-        return redisChatService;
+    public RedisService getRedisService() {
+        return redisService;
     }
 
-    public RedisService getRedisGlobalService() {
-        return redisGlobalService;
-    }
 }

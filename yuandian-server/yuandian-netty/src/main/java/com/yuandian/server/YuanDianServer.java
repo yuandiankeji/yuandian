@@ -1,12 +1,12 @@
 package com.yuandian.server;
 
 import com.yuandian.core.utils.CollectionUtil;
-import com.yuandian.server.config.RedisService;
 import com.yuandian.server.config.ServerConfig;
 import com.yuandian.server.config.ServerConfigManager;
 import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.factory.ThreadPoolFactory;
 import com.yuandian.server.core.net.IoServer;
+import com.yuandian.server.core.net.IoRpcServer;
 import com.yuandian.server.core.net.TcpMessageProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +16,9 @@ import org.slf4j.LoggerFactory;
  */
 public class YuanDianServer {
     private static Logger logger = LoggerFactory.getLogger(YuanDianServer.class);
+
+    private static IoServer ioServer;
+    private static IoRpcServer ioRpcServer;
 
     public static void main(String[] args) {
         run(args);
@@ -37,6 +40,7 @@ public class YuanDianServer {
             //TODO db
             //executor
             //server
+            stop();
         }));
     }
 
@@ -49,9 +53,19 @@ public class YuanDianServer {
 
     private static void initConnection(ServerConfig config) {
         try {
-            ThreadPoolFactory.getInstance().executeGeneral(new IoServer(config));
+            ThreadPoolFactory.getInstance().executeGeneral(ioServer = new IoServer(config.getIp(), (int) config.getPort()));
+            //ThreadPoolFactory.getInstance().executeGeneral(ioRpcServer = new IoRpcServer(config.getRpcIp(), (int) config.getRpcPort()));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void stop() {
+        if (ioServer != null) {
+            ioServer.stopServer();
+        }
+        if (ioRpcServer != null) {
+            ioRpcServer.stop();
         }
     }
 }

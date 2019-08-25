@@ -21,12 +21,19 @@ public interface Rediskey {
     //聊天好友列表
     String CHAT_USER_LIST = "h:chat:user:list:%s";
 
+    //用户信息
+    String USER_INFO = "h:user:info";
+
+    //好友列表
+    String USER_FRIEND_LIST = "h:friend:list:%s";
+
     //申请列表 目标人uid
-    String FRIEND_APPLY_LIST="h:apply:friend:list:%s";
+    String FRIEND_APPLY_LIST = "h:apply:friend:list:%s";
 
     //屏蔽好友列表
     String BAN_FRIEND_LIST="s:ban:friend:list:%s";
 
     //地图物品
     String MAP_GOODS = "map:goods:";
+    String BAN_FRIEND_LIST = "s:ban:friend:list:%s";
 }

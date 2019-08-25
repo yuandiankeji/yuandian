@@ -32,10 +32,11 @@ public class ChatServiceImpl implements ChatService {
         redisChatService.zAdd(key, chatPo.serialize(), chatPo.getMid());
         String user_list_key = String.format(Rediskey.CHAT_USER_LIST, chatPo.getUid());
         redisChatService.saddString(user_list_key, chatPo.getTargetId() + "");
-        if (!online) {
-            String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
-            redisChatService.incr(incrKey);
-        }
+        String user_list_key_friend = String.format(Rediskey.CHAT_USER_LIST, chatPo.getTargetId());
+        redisChatService.saddString(user_list_key_friend, chatPo.getUid() + "");
+        String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
+        redisChatService.incr(incrKey);
+
     }
 
     @Override

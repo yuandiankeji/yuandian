@@ -25,10 +25,13 @@ public class IoServer implements Runnable {
     NioEventLoopGroup bossGroup;
     NioEventLoopGroup workerGroup;
     ChannelFuture future;
-    ServerConfig config;
+    String ip;
+    long port;
 
-    public IoServer(ServerConfig config) {
-        this.config = config;
+    public IoServer(String ip, int port) {
+        this.ip = ip;
+        this.port = port;
+
     }
 
     public void startServer() throws Exception {
@@ -53,8 +56,8 @@ public class IoServer implements Runnable {
                                     new TcpServerHandler());
                         }
                     }).childOption(ChannelOption.AUTO_READ, true);
-            future = b.bind(config.getIp(), (int) config.getPort()).sync();
-            logger.debug("[IoServer] | start world success,ip={},port={}", config.getIp(), (int) config.getPort());
+            future = b.bind(this.ip, (int) this.port).sync();
+            logger.debug("[IoServer] | start world success,ip={},port={}", ip, port);
             future.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();

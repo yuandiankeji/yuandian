@@ -64,7 +64,7 @@ public class TcpMessageProcessor {
             try {
                 AbstractTcpHandler handler = (AbstractTcpHandler) clazz.newInstance();
 
-                logger.info("handler message cmd={}", cmd);
+                logger.info("[ProcessLogic] | handler message cmd={},data={}", cmd,data);
                 handler.handler(client, cmd, data);
             } catch (InstantiationException ignored) {
             } catch (IllegalAccessException e) {

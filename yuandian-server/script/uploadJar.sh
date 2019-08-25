@@ -1,8 +1,5 @@
 #!bin/bash
-cd $0
 cd ../
-ed
-shell (5)
 project_name='yuandian-netty/target/yuandian-netty-1.0-SNAPSHOT.jar'
 echo 'begin upload file'
 scp ${project_name}  yuandian:/root/
