@@ -26,4 +26,7 @@ public interface Rediskey {
 
     //屏蔽好友列表
     String BAN_FRIEND_LIST="s:ban:friend:list:%s";
+
+    //地图物品
+    String MAP_GOODS = "map:goods:";
 }

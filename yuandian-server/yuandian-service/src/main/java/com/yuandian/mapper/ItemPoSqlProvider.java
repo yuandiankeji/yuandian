@@ -13,72 +13,64 @@ import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
 import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
 import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
 
-import com.yuandian.entity.GoodsPo;
-import com.yuandian.entity.GoodsPoExample.Criteria;
-import com.yuandian.entity.GoodsPoExample.Criterion;
-import com.yuandian.entity.GoodsPoExample;
+import com.yuandian.entity.ItemPo;
+import com.yuandian.entity.ItemPoExample.Criteria;
+import com.yuandian.entity.ItemPoExample.Criterion;
+import com.yuandian.entity.ItemPoExample;
 import java.util.List;
 import java.util.Map;
 
-public class GoodsPoSqlProvider {
+public class ItemPoSqlProvider {
 
-    public String countByExample(GoodsPoExample example) {
+    public String countByExample(ItemPoExample example) {
         BEGIN();
         SELECT("count(*)");
-        FROM("goods");
+        FROM("item");
         applyWhere(example, false);
         return SQL();
     }
 
-    public String deleteByExample(GoodsPoExample example) {
+    public String deleteByExample(ItemPoExample example) {
         BEGIN();
-        DELETE_FROM("goods");
+        DELETE_FROM("item");
         applyWhere(example, false);
         return SQL();
     }
 
-    public String insertSelective(GoodsPo record) {
+    public String insertSelective(ItemPo record) {
         BEGIN();
-        INSERT_INTO("goods");
+        INSERT_INTO("item");
         
         if (record.getId() != null) {
             VALUES("id", "#{id,jdbcType=BIGINT}");
         }
         
-        if (record.getName() != null) {
-            VALUES("name", "#{name,jdbcType=VARCHAR}");
+        if (record.getUid() != null) {
+            VALUES("uid", "#{uid,jdbcType=BIGINT}");
         }
         
-        if (record.getSlogan() != null) {
-            VALUES("slogan", "#{slogan,jdbcType=VARCHAR}");
+        if (record.getGid() != null) {
+            VALUES("gid", "#{gid,jdbcType=BIGINT}");
         }
         
-        if (record.getStackable() != null) {
-            VALUES("stackable", "#{stackable,jdbcType=TINYINT}");
+        if (record.getNum() != null) {
+            VALUES("num", "#{num,jdbcType=BIGINT}");
         }
         
-        if (record.getThumPic() != null) {
-            VALUES("thum_pic", "#{thumPic,jdbcType=VARCHAR}");
-        }
-        
-
         return SQL();
     }
 
-    public String selectByExample(GoodsPoExample example) {
+    public String selectByExample(ItemPoExample example) {
         BEGIN();
         if (example != null && example.isDistinct()) {
             SELECT_DISTINCT("id");
         } else {
             SELECT("id");
         }
-        SELECT("name");
-        SELECT("slogan");
-        SELECT("stackable");
-        SELECT("thum_pic");
-        SELECT("ios_res");
-        SELECT("android_res");
-        FROM("goods");
+        SELECT("uid");
+        SELECT("gid");
+        SELECT("num");
+        FROM("item");
         applyWhere(example, false);
         
         if (example != null && example.getOrderByClause() != null) {
@@ -89,33 +81,27 @@ public class GoodsPoSqlProvider {
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
-        GoodsPo record = (GoodsPo) parameter.get("record");
-        GoodsPoExample example = (GoodsPoExample) parameter.get("example");
+        ItemPo record = (ItemPo) parameter.get("record");
+        ItemPoExample example = (ItemPoExample) parameter.get("example");
         
         BEGIN();
-        UPDATE("goods");
+        UPDATE("item");
         
         if (record.getId() != null) {
             SET("id = #{record.id,jdbcType=BIGINT}");
         }
         
-        if (record.getName() != null) {
-            SET("name = #{record.name,jdbcType=VARCHAR}");
+        if (record.getUid() != null) {
+            SET("uid = #{record.uid,jdbcType=BIGINT}");
         }
         
-        if (record.getSlogan() != null) {
-            SET("slogan = #{record.slogan,jdbcType=VARCHAR}");
+        if (record.getGid() != null) {
+            SET("gid = #{record.gid,jdbcType=BIGINT}");
         }
         
-        if (record.getStackable() != null) {
-            SET("stackable = #{record.stackable,jdbcType=TINYINT}");
+        if (record.getNum() != null) {
+            SET("num = #{record.num,jdbcType=BIGINT}");
         }
-        
-        if (record.getThumPic() != null) {
-            SET("thum_pic = #{record.thumPic,jdbcType=VARCHAR}");
-        }
-        
-
         
         applyWhere(example, true);
         return SQL();
@@ -123,49 +109,40 @@ public class GoodsPoSqlProvider {
 
     public String updateByExample(Map<String, Object> parameter) {
         BEGIN();
-        UPDATE("goods");
+        UPDATE("item");
         
         SET("id = #{record.id,jdbcType=BIGINT}");
-        SET("name = #{record.name,jdbcType=VARCHAR}");
-        SET("slogan = #{record.slogan,jdbcType=VARCHAR}");
-        SET("stackable = #{record.stackable,jdbcType=TINYINT}");
-        SET("thum_pic = #{record.thumPic,jdbcType=VARCHAR}");
-        SET("ios_res = #{record.iosRes,jdbcType=VARCHAR}");
-        SET("android_res = #{record.androidRes,jdbcType=VARCHAR}");
+        SET("uid = #{record.uid,jdbcType=BIGINT}");
+        SET("gid = #{record.gid,jdbcType=BIGINT}");
+        SET("num = #{record.num,jdbcType=BIGINT}");
         
-        GoodsPoExample example = (GoodsPoExample) parameter.get("example");
+        ItemPoExample example = (ItemPoExample) parameter.get("example");
         applyWhere(example, true);
         return SQL();
     }
 
-    public String updateByPrimaryKeySelective(GoodsPo record) {
+    public String updateByPrimaryKeySelective(ItemPo record) {
         BEGIN();
-        UPDATE("goods");
+        UPDATE("item");
         
-        if (record.getName() != null) {
-            SET("name = #{name,jdbcType=VARCHAR}");
+        if (record.getUid() != null) {
+            SET("uid = #{uid,jdbcType=BIGINT}");
         }
         
-        if (record.getSlogan() != null) {
-            SET("slogan = #{slogan,jdbcType=VARCHAR}");
+        if (record.getGid() != null) {
+            SET("gid = #{gid,jdbcType=BIGINT}");
         }
         
-        if (record.getStackable() != null) {
-            SET("stackable = #{stackable,jdbcType=TINYINT}");
+        if (record.getNum() != null) {
+            SET("num = #{num,jdbcType=BIGINT}");
         }
-        
-        if (record.getThumPic() != null) {
-            SET("thum_pic = #{thumPic,jdbcType=VARCHAR}");
-        }
-        
-
         
         WHERE("id = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }
 
-    protected void applyWhere(GoodsPoExample example, boolean includeExamplePhrase) {
+    protected void applyWhere(ItemPoExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }

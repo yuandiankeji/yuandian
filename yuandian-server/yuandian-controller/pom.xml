@@ -49,6 +49,11 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.32</version>
         </dependency>
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>1.1.2</version>
+        </dependency>
     </dependencies>
 
 
