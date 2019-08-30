@@ -13,7 +13,6 @@ import com.yuandian.server.logic.friends.service.FriendService;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.model.entity.UserPo;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,10 +21,10 @@ import java.util.List;
  */
 public class ObjectPoUtils {
 
-    public static PUserBaseInfos getPuserBaseInfos(long uid, List<UserPo> userPos) {
+    public static PUserBaseInfos getPuserBaseInfos(long uid,List<UserPo> userPos) {
         PUserBaseInfos.Builder pUserBaseInfos = PUserBaseInfos.newBuilder();
         userPos.forEach((userPo) -> {
-            PUserBaseInfo builder = getPUserBaseInfo(uid, userPo);
+            PUserBaseInfo builder = getPUserBaseInfo(uid,userPo);
             pUserBaseInfos.addBaseInfos(builder);
         });
         return pUserBaseInfos.build();
@@ -60,7 +59,6 @@ public class ObjectPoUtils {
         PChatUserListInfos.Builder infos = PChatUserListInfos.newBuilder();
         RedisService redisChatService = SpringBeanFactory.getInstance().getRedisService();
         ChatService chatService = SpringBeanFactory.getInstance().getChatService();
-        List<PChatUserListInfo.Builder> builderList = new ArrayList<>();
         userPos.forEach((userPo) -> {
             String notReadNumStr = redisChatService.getString(RedisKeyUtils.getNotReadChatNum(uid, userPo.getUid()));
             int num = 0;
@@ -68,7 +66,7 @@ public class ObjectPoUtils {
                 num = Integer.parseInt(notReadNumStr);
             }
             PChatUserListInfo.Builder pchat = PChatUserListInfo.newBuilder();
-            PUserBaseInfo userBaseInfo = getPUserBaseInfo(uid, userPo);
+            PUserBaseInfo userBaseInfo = getPUserBaseInfo(uid,userPo);
             pchat.setUserInfo(userBaseInfo);
             ChatPo chatPo = chatService.getLastChatInfo(uid, userPo.getUid());
             String message = "";
@@ -81,13 +79,10 @@ public class ObjectPoUtils {
             pchat.setMessage(message);
             pchat.setTime(cTime);
             pchat.setUid(uid);
-            builderList.add(pchat);
+            infos.addList(pchat);
 
         });
-        builderList.sort(Comparator.comparing(PChatUserListInfo.Builder::getTime));
-        for (PChatUserListInfo.Builder pchat : builderList) {
-            infos.addList(pchat);
-        }
+        infos.getListList().sort(Comparator.comparing(PChatUserListInfo::getTime));
         return infos.build();
 
     }
