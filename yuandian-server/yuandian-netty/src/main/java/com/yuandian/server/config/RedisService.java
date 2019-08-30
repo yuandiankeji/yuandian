@@ -206,11 +206,21 @@ public class RedisService {
     }
 
     /**
+     * @param key
+     * @param field
+     * @return
+     * @throws Exception
+     */
+    public String hget(String key, int field) throws Exception {
+        return getHgetString(key, "" + field);
+    }
+
+    /**
      * 删除key
      *
      * @param key
      */
-    public boolean deleteHField(String key, String field) {
+    public boolean hdel(String key, String field) {
         Jedis jedis = null;
         boolean success = true;
         try {
@@ -223,6 +233,10 @@ public class RedisService {
             releaseRedisSource(success, jedis);
         }
         return success;
+    }
+
+    public boolean hdel(String key, long field) {
+        return hdel(key, "" + field);
     }
 
 
