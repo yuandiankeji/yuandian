@@ -35,6 +35,10 @@ message PDeleteChat {
      int64 targetId = 1;
      int64 mId = 2;
 }
+//cmd= DELETE_CHAT_ALL_RECORD 清理所有聊天记录
+message PDeleteAllChat {
+     int64 targetId = 1;
+}
 
 //cmd=READ_CHAT 阅读聊天
 message PReadChat {

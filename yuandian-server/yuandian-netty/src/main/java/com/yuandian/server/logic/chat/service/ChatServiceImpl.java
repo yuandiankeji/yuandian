@@ -63,6 +63,12 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public void delete(long uid, long targetId) {
+        String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
+        redisChatService.deleteKey(key);
+    }
+
+    @Override
     public long read(long uid, long targetId) {
         String key = RedisKeyUtils.getNotReadChatNum(uid, targetId);
         redisChatService.setString(key, "0");

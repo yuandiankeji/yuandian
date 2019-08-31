@@ -2,9 +2,7 @@ package com.yuandian.server.config;
 
 import com.alibaba.fastjson.JSON;
 import com.yuandian.core.common.RedisCache;
-import com.yuandian.core.utils.ZDateUtils;
 import com.yuandian.core.utils.ZStringUtil;
-import com.yuandian.server.core.base.CacheBase;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

@@ -45,6 +45,10 @@ public final class MessageCmd {
      * 推出登陆
      */
     public static final int LOGOUT = REQUEST_BASE + 9;
+    /**
+     * 删除所有消息
+     */
+    public static final int DELETE_CHAT_ALL_RECORD = REQUEST_BASE + 10;
 
 
     /**
