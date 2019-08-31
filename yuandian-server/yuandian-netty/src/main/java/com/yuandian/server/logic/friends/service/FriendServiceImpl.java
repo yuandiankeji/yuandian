@@ -105,7 +105,7 @@ public class FriendServiceImpl implements FriendService {
         applyPo.setTargetId(uid);
         applyPo.setOption(ApplyConst.DEFAULT_OPTION.getCode());
         applyPo.setcTime(ZDateUtils.getNow());
-        redisService.hset(applyListKey, uid + "", applyPo.serialize());
+        redisService.hsetFromObject(applyListKey, uid, applyPo);
         return 0;
     }
 
@@ -130,12 +130,12 @@ public class FriendServiceImpl implements FriendService {
             applyPo.setTargetId(targetId);
             applyPo.setcTime(ZDateUtils.getNow());
             applyPo.setOption(option);
-            redisService.hset(applyListKey, filed, applyPo.serialize());
+            redisService.hsetFromObject(applyListKey, filed, applyPo);
         } else {
             ApplyPo apply = this.getApplyPo(uid, targetId);
             if (apply != null) {
                 apply.setOption(option);
-                redisService.hset(applyListKey, filed, apply.serialize());
+                redisService.hsetFromObject(applyListKey, filed, apply);
             }
         }
         return false;
@@ -153,8 +153,7 @@ public class FriendServiceImpl implements FriendService {
         Map<String, String> dataMap = redisService.hgetAll(applyListKey);
         List<ApplyPo> applyPoList = new ArrayList<>();
         dataMap.forEach((targetUid, applyPoStr) -> {
-            ApplyPo applyPo = new ApplyPo();
-            applyPo.deserialize(applyPoStr);
+            ApplyPo applyPo = JSON.parseObject(applyPoStr, ApplyPo.class);
             applyPoList.add(applyPo);
         });
         return applyPoList;

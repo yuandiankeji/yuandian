@@ -100,3 +100,7 @@ message PRemoveBanBlack {
 message PGetUserInfo {
      int64 targetId = 1;
 }
+//cmd = LOGOUT  用户下线
+message PUserLogout{
+
+}

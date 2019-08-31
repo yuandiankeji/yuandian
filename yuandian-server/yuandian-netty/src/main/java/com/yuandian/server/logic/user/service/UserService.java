@@ -12,4 +12,6 @@ public interface UserService {
 
     public UserPo getUserInfo(long uid);
 
+    public void logout(long uid);
+
 }

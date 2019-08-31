@@ -71,30 +71,6 @@ public class ChatPo  extends RedisCache {
     public void setCtime(long ctime) {
         this.ctime = ctime;
     }
-
-    @Override
-    public String serialize() {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    @Override
-    public ChatPo deserialize(String json) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.readValue(json, ChatPo.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     @Override
     public String uniqueKey() {
         return null;

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.yuandian.core.common.Rediskey;
 import com.yuandian.core.utils.ZStringUtil;
 import com.yuandian.server.config.RedisService;
+import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.server.logic.mapper.UserPoMapper;
 import com.yuandian.server.logic.model.UserInfo;
 import com.yuandian.server.logic.model.entity.UserPo;
@@ -43,5 +44,10 @@ public class UserServiceImpl implements UserService {
             userInfo = JSON.parseObject(info, UserPo.class);
         }
         return userInfo;
+    }
+
+    @Override
+    public void logout(long uid) {
+        UserPo userInfo = this.getUserInfo(uid);
     }
 }

@@ -1,5 +1,6 @@
 package com.yuandian.server.logic.chat.service;
 
+import com.alibaba.fastjson.JSON;
 import com.yuandian.core.common.*;
 import com.yuandian.core.utils.CollectionUtil;
 import com.yuandian.server.config.RedisService;
@@ -29,11 +30,11 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void saveChat(ChatPo chatPo, boolean online) {
         String key = RedisKeyUtils.getChatInfoListKey(chatPo.getUid(), chatPo.getTargetId());
-        redisChatService.zAdd(key, chatPo.serialize(), chatPo.getMid());
+        redisChatService.zAdd(key, JSON.toJSONString(chatPo), chatPo.getMid());
         String user_list_key = String.format(Rediskey.CHAT_USER_LIST, chatPo.getUid());
-        redisChatService.saddString(user_list_key, chatPo.getTargetId() + "");
+        redisChatService.saddString(user_list_key, chatPo.getTargetId());
         String user_list_key_friend = String.format(Rediskey.CHAT_USER_LIST, chatPo.getTargetId());
-        redisChatService.saddString(user_list_key_friend, chatPo.getUid() + "");
+        redisChatService.saddString(user_list_key_friend, chatPo.getUid());
         String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
         redisChatService.incr(incrKey);
 
@@ -45,8 +46,7 @@ public class ChatServiceImpl implements ChatService {
         Set<String> data = redisChatService.zrevrangeByScore(key, maxMid, minMid, limit);
         List<ChatPo> list = new ArrayList<>();
         for (String e : data) {
-            ChatPo po = new ChatPo();
-            po = po.deserialize(e);
+            ChatPo po = JSON.parseObject(e, ChatPo.class);
             if (po.getMid() < maxMid) {
                 list.add(po);
             }
@@ -59,6 +59,7 @@ public class ChatServiceImpl implements ChatService {
     public void delete(long uid, long targetId, long mid) {
         String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
         redisChatService.zremRangeByScore(key, mid, mid);
+
     }
 
     @Override
@@ -96,7 +97,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatPo getLastChatInfo(long uid, Long targetId) {
         String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
-        Set<ChatPo> lastChatStr = redisChatService.zrange(key, -1, -1, new ChatPo());
+        Set<ChatPo> lastChatStr = redisChatService.zrange(key, -1, -1, ChatPo.class);
         if (CollectionUtil.isEmpty(lastChatStr)) {
             return null;
         }
@@ -115,7 +116,7 @@ public class ChatServiceImpl implements ChatService {
     public ResultObject<Integer> removeChatUser(long uid, long targetId) {
         String user_list_key = String.format(Rediskey.CHAT_USER_LIST, uid);
         redisChatService.sremString(user_list_key, targetId + "");
-        return new ResultObject<Integer>(ErrorCode.SYS_SUCCESS, 1);
+        return new ResultObject<>(ErrorCode.SYS_SUCCESS, 1);
     }
 
 
