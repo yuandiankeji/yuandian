@@ -54,15 +54,15 @@ message PLogout {
 
 }
 
-//cmd=APPLY_FRIEND 申请好友
+//cmd=APPLY_FRIEND 申请好友 return PResultInfoEx
 message PApplyFriend {
      int64 targetId = 1;
 }
-//cmd=AGREE_FRIEND  同意好友申请
+//cmd=AGREE_FRIEND  同意好友申请 return PResultInfoEx
 message PAgreeApply {
      int64 targetId = 1;
 }
-//cmd=REFUSE_FRIEND 拒绝好友
+//cmd=REFUSE_FRIEND 拒绝好友 return PResultInfoEx
 message PRefuseApply {
      int64 targetId = 1;
 }

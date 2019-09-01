@@ -2,6 +2,7 @@ package com.yuandian.server.logic.friends.handler;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.yuandian.core.common.ErrorCode;
+import com.yuandian.data.common.PResultInfoEx;
 import com.yuandian.data.message.PDeleteFriend;
 import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.factory.SpringBeanFactory;
@@ -36,7 +37,9 @@ public class DeleteFriend extends AbstractTcpHandler {
         }
         SpringBeanFactory.getInstance().getFriendService().deleteFriend(uid, pDeleteFriend.getTargetId());
 
-        userInfo.writeData(cmd, ErrorCode.SYS_SUCCESS);
+        PResultInfoEx.Builder builder = PResultInfoEx.newBuilder();
+        builder.setTargetId(pDeleteFriend.getTargetId());
+        userInfo.writeData(cmd, builder.build().toByteArray());
 
     }
 }

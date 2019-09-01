@@ -2,7 +2,6 @@ package com.yuandian.server.logic.chat.handler;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.yuandian.data.message.PReadChat;
-import com.yuandian.data.push.PushChatRead;
 import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.factory.SpringBeanFactory;
 import com.yuandian.server.core.net.IoClient;
@@ -36,12 +35,7 @@ public class ReadChat extends AbstractTcpHandler {
             logger.error("[ReadChat] | cmd={}", cmd);
             return;
         }
-        long mid = chatService.read(userInfo.getUid(), builder.getTargetId());
-        UserInfo targetUserInfo = IoClientManager.getUserInfo(builder.getTargetId());
-        PushChatRead.Builder pb = PushChatRead.newBuilder();
-        pb.setTargetId(userInfo.getUid());
-        pb.setChatId(mid);
-        targetUserInfo.writeData(MessageCmd.PushMessageCmd.PUSH_CHAT, pb.build().toByteArray());
+        chatService.read(userInfo.getUid(), builder.getTargetId());
         userInfo.writeData(cmd);
     }
 }

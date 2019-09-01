@@ -3,6 +3,7 @@ package com.yuandian.server.logic.friends.handler;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.common.MessageCmd;
+import com.yuandian.data.common.PResultInfoEx;
 import com.yuandian.data.message.PAddToBanBlack;
 import com.yuandian.data.message.PRemoveBanBlack;
 import com.yuandian.server.core.annotation.MessageAnnotation;
@@ -39,7 +40,9 @@ public class RemoveBanBlack extends AbstractTcpHandler {
         long target = pAddToBanBlack.getTargetId();
         FriendService friendService = SpringBeanFactory.getInstance().getFriendService();
         friendService.removeBlack(userInfo.getUid(), target);
-        userInfo.writeData(cmd);
+        PResultInfoEx.Builder builder = PResultInfoEx.newBuilder();
+        builder.setTargetId(target);
+        userInfo.writeData(cmd, builder.build().toByteArray());
 
     }
 }

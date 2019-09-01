@@ -4,6 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.core.common.ResultObject;
+import com.yuandian.data.common.PResultInfoEx;
 import com.yuandian.data.message.PRefuseApply;
 import com.yuandian.server.core.annotation.MessageAnnotation;
 import com.yuandian.server.core.factory.SpringBeanFactory;
@@ -38,7 +39,9 @@ public class RefuseApply extends AbstractTcpHandler {
         long targetId = pRefuseApply.getTargetId();
         ResultObject<Integer> resultObject =
                 SpringBeanFactory.getInstance().getFriendService().refuseApply(uid, targetId);
-        userInfo.writeData(cmd);
+        PResultInfoEx.Builder builder = PResultInfoEx.newBuilder();
+        builder.setTargetId(targetId);
+        userInfo.writeData(cmd, builder.build().toByteArray());
 
     }
 }

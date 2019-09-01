@@ -37,6 +37,5 @@ public class TestHandler extends AbstractRespHandler {
 //        chat.setExtra(false);
         SessionManager.getSingleton().getClient().writeData((short) 999,chat.build().toByteArray());
 
-
     }
 }

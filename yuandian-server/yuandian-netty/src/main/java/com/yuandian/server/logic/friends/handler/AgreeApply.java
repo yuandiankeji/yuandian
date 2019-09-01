@@ -4,6 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.core.common.ResultObject;
+import com.yuandian.data.common.PResultInfoEx;
 import com.yuandian.data.message.PAgreeApply;
 import com.yuandian.data.push.PushFriendAgree;
 import com.yuandian.server.core.annotation.MessageAnnotation;
@@ -51,6 +52,8 @@ public class AgreeApply extends AbstractTcpHandler {
         push.setTargetId(uid);
         UserInfo targetUser = IoClientManager.getUserInfo(targetUid);
         targetUser.writeData(MessageCmd.PushMessageCmd.PUSH_APPLY_AGREE, push.build().toByteArray());
-        userInfo.writeData(cmd, result.getCode());
+        PResultInfoEx.Builder builder = PResultInfoEx.newBuilder();
+        builder.setTargetId(targetUid);
+        userInfo.writeData(cmd, builder.build().toByteArray());
     }
 }

@@ -4,22 +4,22 @@ option java_package = "com.yuandian.data.common";
 option java_multiple_files = true;
 
 message PUserInfo {
-     int64 uid = 1;
-     string name = 2;
-     string openid = 3;
+    int64 uid = 1;
+    string name = 2;
+    string openid = 3;
 }
 
 //用户基础信息
 message PUserBaseInfo {
-     int64 uid = 1;
-     string account = 2;
-     string sex = 3;
-     string headUrl = 4;
-     string nickName = 5;
-     string phoneNum = 6;
-     string signature = 7;
-     bool isFriends = 8;
-     bool ban = 9;
+    int64 uid = 1;
+    string account = 2;
+    string sex = 3;
+    string headUrl = 4;
+    string nickName = 5;
+    string phoneNum = 6;
+    string signature = 7;
+    bool isFriends = 8;
+    bool ban = 9;
 
 }
 
@@ -28,17 +28,17 @@ message PUserBaseInfos {
 }
 
 message PResultInfo {
-     int64 cmd = 1;
-     int64 code = 2;
-     string message = 3;
+    int64 cmd = 1;
+    int64 code = 2;
+    string message = 3;
 }
 
 message PChatUserListInfo {
-     int64 uid = 1;
-     int32 noReadNum = 2;
-     int64 time = 3;
-     string message = 4;
-     PUserBaseInfo userInfo = 5;
+    int64 uid = 1;
+    int32 noReadNum = 2;
+    int64 time = 3;
+    string message = 4;
+    PUserBaseInfo userInfo = 5;
 }
 
 message PChatUserListInfos {
@@ -47,25 +47,24 @@ message PChatUserListInfos {
 
 // 聊天消息体
 message PChatInfo {
-     int64 uid = 1;
-     int64 targetUid = 2;
-     int64 mid = 3;
-     int32 type = 4; //1文字，2表情，3图片，。。。。后面再添加
-     string context = 5;
-     int64 isRead = 6;
-     int64 cTime = 7;
+    int64 uid = 1;
+    int64 targetUid = 2;
+    int64 mid = 3;
+    int32 type = 4; //1文字，2表情，3图片，。。。。后面再添加
+    string context = 5;
+    int64 isRead = 6;
+    int64 cTime = 7;
 }
 message PChatInfos {
     repeated PChatInfo chatInfo = 1;
 }
 
-
 //申请列表
 message PApplyInfo {
-     int32 status=1;//0,申请中，1已同意，2，一拒绝
-     int64 targetUid = 2;
-     int64 applyTime = 3;
-     PUserBaseInfo userInfo = 4;
+    int32 status = 1; //0,申请中，1已同意，2，一拒绝
+    int64 targetUid = 2;
+    int64 applyTime = 3;
+    PUserBaseInfo userInfo = 4;
 }
 
 message PApplyInfos {
@@ -74,16 +73,20 @@ message PApplyInfos {
 
 //好友信息列表
 message PFriendInfo {
-     PUserBaseInfo userInfo = 1;
-     int32 type = 2;
-     int32 option = 3;
+    PUserBaseInfo userInfo = 1;
+    int32 type = 2;
+    int32 option = 3;
 }
 
 //黑名单列表
 message PBlackListInfo {
-     int64 uid = 1;
+    int64 uid = 1;
 }
 
 message PBlackListInfos {
     repeated int64 list = 1;
+}
+message PResultInfoEx {
+    PResultInfo info = 1;
+    int64 targetId = 2;
 }

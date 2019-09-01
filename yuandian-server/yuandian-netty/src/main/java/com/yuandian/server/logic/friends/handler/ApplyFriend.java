@@ -1,6 +1,8 @@
 package com.yuandian.server.logic.friends.handler;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.yuandian.data.common.PBlackListInfos;
+import com.yuandian.data.common.PResultInfoEx;
 import com.yuandian.data.message.PApplyFriend;
 import com.yuandian.data.push.PushFriendApply;
 import com.yuandian.server.core.annotation.MessageAnnotation;
@@ -46,7 +48,8 @@ public class ApplyFriend extends AbstractTcpHandler {
         PushFriendApply.Builder push = PushFriendApply.newBuilder();
         push.setTargetId(uid);
         targetUserInfo.writeData(MessageCmd.PushMessageCmd.PUSH_APPLY_FRIEND, push.build().toByteArray());
-
-        userInfo.writeData(cmd);
+        PResultInfoEx.Builder builder = PResultInfoEx.newBuilder();
+        builder.setTargetId(targetId);
+        userInfo.writeData(cmd, builder.build().toByteArray());
     }
 }
