@@ -5,23 +5,21 @@ import "common.proto";
 option java_multiple_files = true;
 option java_package = "com.yuandian.data.push";
 
-//cmd=10000
+//cmd=PUSH_CHAT 聊天消息推送
 message PushChatMessage {
      PChatInfo chatInfo = 1;
 }
 
-//cmd =10001
-message PushChatRead {
-     int64 targetId = 1;
-     int64 chatId = 2;
-}
-
-//cmd=10002 好友申请通知
+//cmd=PUSH_APPLY_FRIEND 好友申请通知
 message PushFriendApply {
      int64 targetId = 1;
 }
 
-//cmd =10003 好友同意通知
+//cmd =PUSH_APPLY_AGREE 好友同意通知
 message PushFriendAgree {
      int64 targetId = 1;
+}
+//cmd =PUSH_DELETE_FRIEND 删除好友推送
+message PushDeleteFriend{
+     int64 targetId =1;
 }

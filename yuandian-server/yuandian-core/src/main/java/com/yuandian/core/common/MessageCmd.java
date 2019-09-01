@@ -111,6 +111,11 @@ public final class MessageCmd {
          * 好友申请同意推送
          */
         public static final short PUSH_APPLY_AGREE = PUSH_BASE + 3;
+
+        /**
+         * s删除好友
+         */
+        public static final short PUSH_DELETE_FRIEND = PUSH_BASE + 4;
     }
 
     /**
