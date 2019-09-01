@@ -65,6 +65,7 @@ message PApplyInfo {
      int32 status=1;//0,申请中，1已同意，2，一拒绝
      int64 targetUid = 2;
      int64 applyTime = 3;
+     PUserBaseInfo userInfo = 4;
 }
 
 message PApplyInfos {
