@@ -17,7 +17,7 @@ public class NetConnection implements Runnable {
     private int port;
     private String ip;
 
-    TcpClientHandler handler;
+    private TcpClientHandler handler;
 
     public NetConnection(int port, String ip) {
         this.port = port;

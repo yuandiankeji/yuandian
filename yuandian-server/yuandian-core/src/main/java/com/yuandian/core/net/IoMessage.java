@@ -4,12 +4,12 @@ package com.yuandian.core.net;
  * @author twjitm 2019/4/15/22:21
  */
 public class IoMessage {
-    int head;
-    int version;
-    int cmd;
-    int status;
-    int length;
-    byte[] bytes;
+    private int head;
+    private int version;
+    private int cmd;
+    private int status;
+    private int length;
+    private byte[] bytes;
 
     public IoMessage() {
     }
