@@ -33,6 +33,7 @@ public class GetChatUserList extends AbstractTcpHandler {
         PGetChatUserList pGetChatUserList = null;
         try {
             pGetChatUserList = PGetChatUserList.parseFrom(bytes);
+            logger.info("[GetChatUserList] | cmd={},data={}", cmd, pGetChatUserList.toString());
         } catch (InvalidProtocolBufferException e) {
             userInfo.writeData(cmd, ErrorCode.SYS_PROTO_TYPE_ERROR);
             e.printStackTrace();
@@ -41,8 +42,7 @@ public class GetChatUserList extends AbstractTcpHandler {
         long userId = userInfo.getUid();
         ChatService chatService = SpringBeanFactory.getInstance().getChatService();
         List<UserPo> userPOList = chatService.getChatUserInfo(uid);
-        PChatUserListInfos chatUserList = ObjectPoUtils.getPChatUserListInfos(userId,userPOList);
+        PChatUserListInfos chatUserList = ObjectPoUtils.getPChatUserListInfos(userId, userPOList);
         userInfo.writeData(cmd, chatUserList.toByteArray());
-
     }
 }

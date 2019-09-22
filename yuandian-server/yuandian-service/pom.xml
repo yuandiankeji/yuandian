@@ -56,6 +56,12 @@
             <artifactId>okhttp</artifactId>
             <version>3.8.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.yuandian</groupId>
+            <artifactId>yuandian-data</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

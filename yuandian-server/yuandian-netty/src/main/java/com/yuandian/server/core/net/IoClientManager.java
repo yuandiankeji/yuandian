@@ -54,11 +54,12 @@ public class IoClientManager {
             userInfo.setUid(uid);
             userInfo.setDevice(userPo.getAccount());
             userInfo.setOpenId(userPo.getAccount());
+            logger.info("[IoClient]| user not online ,load info from db");
         }
         return userInfo;
     }
 
-    public static void remove(Channel channel) {
+    public static synchronized void remove(Channel channel) {
         if (channel != null) {
             Attribute<Long> attr = channel.attr(SESSION_CLIENT_ID);
             if (attr != null) {

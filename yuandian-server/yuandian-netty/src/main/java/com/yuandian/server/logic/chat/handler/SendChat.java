@@ -16,18 +16,26 @@ import com.yuandian.server.logic.friends.service.FriendService;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.server.logic.model.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * 发送聊天消息
+ *
  * @author twjitm 2019/4/16/23:49
  */
 @MessageAnnotation(cmd = MessageCmd.SEND_CHAT)
 public class SendChat extends AbstractTcpHandler {
+
+    private Logger logger = LoggerFactory.getLogger(SendChat.class);
+
     @Override
     public void handler(IoClient client, short cmd, byte[] bytes) {
         //服务器收到客户端发送过来的消息
+        UserInfo userInfo = IoClientManager.getUserInfo(client);
         try {
             PSendChat pSendChat = PSendChat.parseFrom(bytes);
-            UserInfo userInfo = IoClientManager.getUserInfo(client);
+
             long uid = userInfo.getUid();
             PChatInfo pChat = pSendChat.getChat();
             long toUid = pChat.getTargetUid();
@@ -70,8 +78,11 @@ public class SendChat extends AbstractTcpHandler {
 
             userInfo.writeData(cmd, builder.build().toByteArray());
 
+            logger.info("[SendChat] | cmd={},data={}", cmd, pSendChat.toString());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
+            logger.error("[SendChat] | cmd={}", cmd);
+            userInfo.writeData(ErrorCode.SYS_PROTO_TYPE_ERROR);
         }
 
     }

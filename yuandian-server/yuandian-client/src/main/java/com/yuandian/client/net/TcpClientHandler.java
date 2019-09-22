@@ -1,6 +1,7 @@
 package com.yuandian.client.net;
 
 import com.yuandian.client.handler.AbstractRespHandler;
+import com.yuandian.data.message.PAuth;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -41,10 +42,10 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 //        builder.setDeviceId("111");
 //        builder.setToken("1212");
 //        byte[] bytes = builder.build().toByteArray();
-//
-//        SessionManager.getSingleton().getClient().writeData((short) 1002,bytes);
+//        SessionManager.getSingleton().getClient().writeData((short) 999,bytes);
 
         System.out.println("网络建立完成，可以进行数据传输");
+
     }
 
     /**

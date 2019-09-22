@@ -20,7 +20,8 @@ public enum ResultStatus {
     USER_EXIST(-1007, "已经存在此手机号的用户"),
     OLD_PWD_ERROR(-1009, "老密码输入错误"),
     CANNOT_NULL(-1010, "内容不能为空"),
-    GOODS_NOT_FOUND(-1011, "不存在该物品");
+    GOODS_NOT_FOUND(-1011, "不存在该物品"),
+    MAP_GOODS_NOT_EXIST(-1012, "该位置不存在此物品");
 
     /**
      * 返回码

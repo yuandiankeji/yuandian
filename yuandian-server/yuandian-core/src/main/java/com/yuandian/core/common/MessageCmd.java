@@ -4,6 +4,7 @@ package com.yuandian.core.common;
  * @author twjitm 2019/4/6/21:06
  */
 public final class MessageCmd {
+    public static final int TEST_PROTO = 999;
     /**
      * 请求消息号
      */
@@ -44,6 +45,10 @@ public final class MessageCmd {
      * 推出登陆
      */
     public static final int LOGOUT = REQUEST_BASE + 9;
+    /**
+     * 删除所有消息
+     */
+    public static final int DELETE_CHAT_ALL_RECORD = REQUEST_BASE + 10;
 
 
     /**
@@ -106,6 +111,11 @@ public final class MessageCmd {
          * 好友申请同意推送
          */
         public static final short PUSH_APPLY_AGREE = PUSH_BASE + 3;
+
+        /**
+         * s删除好友
+         */
+        public static final short PUSH_DELETE_FRIEND = PUSH_BASE + 4;
     }
 
     /**

@@ -26,6 +26,7 @@ public class RedisKeyUtils {
 
     /**
      * 当前人1-有多少条人2的未读消息
+     *
      * @param uid
      * @param targetId
      * @return
@@ -52,5 +53,15 @@ public class RedisKeyUtils {
      */
     public static String getBlackListKey(long uid) {
         return String.format(Rediskey.BAN_FRIEND_LIST, uid);
+    }
+
+    /**
+     * 好友列表
+     *
+     * @param uid
+     * @return
+     */
+    public static String getFriendListKey(long uid) {
+        return String.format(Rediskey.USER_FRIEND_LIST, uid);
     }
 }

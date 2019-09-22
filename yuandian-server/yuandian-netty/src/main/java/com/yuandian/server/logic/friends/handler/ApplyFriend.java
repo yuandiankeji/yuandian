@@ -1,6 +1,8 @@
 package com.yuandian.server.logic.friends.handler;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.yuandian.data.common.PBlackListInfos;
+import com.yuandian.data.common.PResultInfoEx;
 import com.yuandian.data.message.PApplyFriend;
 import com.yuandian.data.push.PushFriendApply;
 import com.yuandian.server.core.annotation.MessageAnnotation;
@@ -27,12 +29,11 @@ public class ApplyFriend extends AbstractTcpHandler {
         PApplyFriend applyFriend = null;
         try {
             applyFriend = PApplyFriend.parseFrom(bytes);
-            logger.debug("cmd={},target={}", cmd, applyFriend.getTargetId());
+            logger.info("[ApplyFriend] | cmd={},target={}", cmd, applyFriend.getTargetId());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
-        }
-        if (applyFriend == null) {
-            userInfo.writeData(cmd, ErrorCode.USER_INFO_ERROR);
+            logger.error("[ApplyFriend] | cmd={}", cmd);
+            userInfo.writeData(cmd, ErrorCode.SYS_SERVER_ERROR);
             return;
         }
         long uid = userInfo.getUid();
@@ -47,7 +48,8 @@ public class ApplyFriend extends AbstractTcpHandler {
         PushFriendApply.Builder push = PushFriendApply.newBuilder();
         push.setTargetId(uid);
         targetUserInfo.writeData(MessageCmd.PushMessageCmd.PUSH_APPLY_FRIEND, push.build().toByteArray());
-
-        userInfo.writeData(cmd);
+        PResultInfoEx.Builder builder = PResultInfoEx.newBuilder();
+        builder.setTargetId(targetId);
+        userInfo.writeData(cmd, builder.build().toByteArray());
     }
 }

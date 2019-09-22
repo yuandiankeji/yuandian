@@ -1,7 +1,8 @@
 package com.yuandian.server.config;
 
 import com.alibaba.fastjson.JSON;
-import com.yuandian.server.core.base.CacheBase;
+import com.yuandian.core.common.RedisCache;
+import com.yuandian.core.utils.ZStringUtil;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -204,11 +205,21 @@ public class RedisService {
     }
 
     /**
+     * @param key
+     * @param field
+     * @return
+     * @throws Exception
+     */
+    public String hget(String key, int field) throws Exception {
+        return getHgetString(key, "" + field);
+    }
+
+    /**
      * 删除key
      *
      * @param key
      */
-    public boolean deleteHField(String key, String field) {
+    public boolean hdel(String key, String field) {
         Jedis jedis = null;
         boolean success = true;
         try {
@@ -221,6 +232,10 @@ public class RedisService {
             releaseRedisSource(success, jedis);
         }
         return success;
+    }
+
+    public boolean hdel(String key, long field) {
+        return hdel(key, "" + field);
     }
 
 
@@ -480,7 +495,7 @@ public class RedisService {
 
 
     public void hset(String key, String field, String value) {
-        this.hsetString(key, field, value, 0);
+        this.hsetString(key, field, value, -1);
     }
 
     public void hsetString(String key, String field, String value, int seconds) {
@@ -550,13 +565,17 @@ public class RedisService {
         return result;
     }
 
-    public <T> void hsetFromObject(String key, CacheBase cacheBase) {
-        String filed = cacheBase.filedKey();
-        String data = JSON.toJSONString(cacheBase);
-        if (filed == null) {
-            return;
+    public <T> T hgetFromObject(String key, String field, Class<T> clazz) {
+        String data = this.hget(key, field);
+        if (ZStringUtil.isEmptyStr(data)) {
+            return null;
         }
-        this.hset(key, filed, data);
+        return JSON.parseObject(data, clazz);
+    }
+
+    public void hsetFromObject(String key, Object field, RedisCache cache) {
+        String data = JSON.toJSONString(cache);
+        this.hset(key, field.toString(), data);
     }
 
     public Map<String, String> hgetAll(String key) {
@@ -847,6 +866,10 @@ public class RedisService {
             }
         }
         return -1;
+    }
+
+    public long saddString(String key, long value) {
+        return this.saddString(key, value + "");
     }
 
     public void saddStrings(String key, String... values) {
@@ -1715,6 +1738,22 @@ public class RedisService {
             }
         }
         return Collections.emptySet();
+    }
+
+    /**
+     * @param key
+     * @param beginIndex
+     * @param endIndex
+     * @return
+     */
+    public <T> Set<T> zrange(String key, int beginIndex, int endIndex, Class<T> clazz) {
+        Set<String> list = this.zRange(key, beginIndex, endIndex);
+        Set<T> set = new HashSet<>(Collections.emptySet());
+        for (String data : list) {
+            T po =JSON.parseObject(data, clazz);
+            set.add(po);
+        }
+        return set;
     }
 
 

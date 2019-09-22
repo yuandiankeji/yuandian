@@ -2,6 +2,7 @@ package com.yuandian.server.core.net;
 
 import com.yuandian.core.utils.ClassLoadUtil;
 import com.yuandian.server.core.annotation.MessageAnnotation;
+import com.yuandian.server.core.factory.ThreadPoolFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +30,7 @@ public class TcpMessageProcessor {
 
     public void init() {
         //@TODO  Thread manager
+        //ThreadPoolFactory.getInstance().
         executorService = Executors.newSingleThreadExecutor();
 
         List<Class> classList = ClassLoadUtil.getSubClasses(AbstractTcpHandler.class, "com.yuandian.server.logic");
@@ -64,7 +66,7 @@ public class TcpMessageProcessor {
             try {
                 AbstractTcpHandler handler = (AbstractTcpHandler) clazz.newInstance();
 
-                logger.info("handler message cmd={}", cmd);
+                logger.info("[ProcessLogic] | handler message cmd={},data={}", cmd,data);
                 handler.handler(client, cmd, data);
             } catch (InstantiationException ignored) {
             } catch (IllegalAccessException e) {

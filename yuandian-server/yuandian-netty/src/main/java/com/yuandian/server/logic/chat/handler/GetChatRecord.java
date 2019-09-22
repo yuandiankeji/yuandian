@@ -14,15 +14,20 @@ import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.model.entity.ChatPo;
 import com.yuandian.server.logic.chat.service.ChatService;
 import com.yuandian.server.logic.model.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @MessageAnnotation(cmd = MessageCmd.GET_CHAT_RECORD)
 public class GetChatRecord extends AbstractTcpHandler {
+    Logger logger = LoggerFactory.getLogger(GetChatRecord.class);
+
     @Override
     public void handler(IoClient client, short cmd, byte[] bytes) {
         try {
             PGetChatRecord getChatRecord = PGetChatRecord.parseFrom(bytes);
+            logger.info("[GetChatRecord] | cmd={},data={}", cmd, getChatRecord.toString());
             UserInfo userInfo = IoClientManager.getUserInfo(client);
             long targetId = getChatRecord.getTargetId();
             long limit = getChatRecord.getLimit();
@@ -49,6 +54,7 @@ public class GetChatRecord extends AbstractTcpHandler {
             userInfo.writeData(cmd, pbs.build().toByteArray());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
+            logger.error("[GetChatRecord] | cmd={}", cmd);
         }
 
     }
