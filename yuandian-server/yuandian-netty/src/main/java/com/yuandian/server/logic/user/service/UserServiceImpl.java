@@ -12,7 +12,27 @@ public class UserServiceImpl implements UserService {
     UserPoMapper userPoMapper;
 
     @Override
+    public long register(UserPo userPo) {
+        return 0;
+    }
+
+    @Override
+    public boolean login() {
+        return false;
+    }
+
+    @Override
+    public boolean logout() {
+        return false;
+    }
+
+    @Override
     public UserPo getUserInfo(long uid) {
         return userPoMapper.selectByPrimaryKey(uid);
+    }
+
+    @Override
+    public long update(UserPo po) {
+        return 0;
     }
 }

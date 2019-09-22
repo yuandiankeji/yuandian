@@ -4,13 +4,11 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.yuandian.data.common.PUserInfo;
 import com.yuandian.data.message.PAuth;
 import com.yuandian.server.core.annotation.MessageAnnotation;
-import com.yuandian.core.common.ErrorCode;
 import com.yuandian.server.core.net.IoClient;
 import com.yuandian.server.core.net.IoClientManager;
 import com.yuandian.core.common.MessageCmd;
 import com.yuandian.server.core.net.AbstractTcpHandler;
 import com.yuandian.server.logic.model.UserInfo;
-import com.yuandian.server.logic.user.service.UserService;
 
 /**
  * 认证
