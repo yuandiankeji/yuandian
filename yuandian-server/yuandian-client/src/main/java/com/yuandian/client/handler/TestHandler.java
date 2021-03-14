@@ -3,9 +3,6 @@ package com.yuandian.client.handler;
 import com.yuandian.client.net.IoMessage;
 import com.yuandian.client.net.SessionManager;
 import com.yuandian.data.common.PChatInfo;
-import com.yuandian.data.message.PAddToBanBlack;
-import com.yuandian.data.message.PGetChatRecord;
-import com.yuandian.data.message.PGetChatUserList;
 import com.yuandian.data.message.PSendChat;
 
 //import com.yuandian.data.message.PAuth;
@@ -38,8 +35,7 @@ public class TestHandler extends AbstractRespHandler {
 //        chat.setFootMId(0);
 //        chat.setLimit(System.currentTimeMillis());
 //        chat.setExtra(false);
-        SessionManager.getSingleton().getClient().writeData((short) 1004,chat.build().toByteArray());
-
+        SessionManager.getSingleton().getClient().writeData((short) 999,chat.build().toByteArray());
 
     }
 }

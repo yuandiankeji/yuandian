@@ -31,9 +31,13 @@ public interface GoodsPoMapper {
 
     @Insert({
         "insert into goods (id, name, ",
-        "slogan)",
+        "slogan, stackable, ",
+        "thum_pic, ios_res, ",
+        "android_res)",
         "values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, ",
-        "#{slogan,jdbcType=VARCHAR})"
+        "#{slogan,jdbcType=VARCHAR}, #{stackable,jdbcType=TINYINT}, ",
+        "#{thumPic,jdbcType=VARCHAR}, #{iosRes,jdbcType=VARCHAR}, ",
+        "#{androidRes,jdbcType=VARCHAR})"
     })
     int insert(GoodsPo record);
 
@@ -44,20 +48,28 @@ public interface GoodsPoMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="slogan", property="slogan", jdbcType=JdbcType.VARCHAR)
+        @Result(column="slogan", property="slogan", jdbcType=JdbcType.VARCHAR),
+        @Result(column="stackable", property="stackable", jdbcType=JdbcType.TINYINT),
+        @Result(column="thum_pic", property="thumPic", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ios_res", property="iosRes", jdbcType=JdbcType.VARCHAR),
+        @Result(column="android_res", property="androidRes", jdbcType=JdbcType.VARCHAR)
     })
     List<GoodsPo> selectByExample(GoodsPoExample example);
 
     @Select({
         "select",
-        "id, name, slogan",
+        "id, name, slogan, stackable, thum_pic, ios_res, android_res",
         "from goods",
         "where id = #{id,jdbcType=BIGINT}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="slogan", property="slogan", jdbcType=JdbcType.VARCHAR)
+        @Result(column="slogan", property="slogan", jdbcType=JdbcType.VARCHAR),
+        @Result(column="stackable", property="stackable", jdbcType=JdbcType.TINYINT),
+        @Result(column="thum_pic", property="thumPic", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ios_res", property="iosRes", jdbcType=JdbcType.VARCHAR),
+        @Result(column="android_res", property="androidRes", jdbcType=JdbcType.VARCHAR)
     })
     GoodsPo selectByPrimaryKey(Long id);
 
@@ -73,7 +85,11 @@ public interface GoodsPoMapper {
     @Update({
         "update goods",
         "set name = #{name,jdbcType=VARCHAR},",
-          "slogan = #{slogan,jdbcType=VARCHAR}",
+          "slogan = #{slogan,jdbcType=VARCHAR},",
+          "stackable = #{stackable,jdbcType=TINYINT},",
+          "thum_pic = #{thumPic,jdbcType=VARCHAR},",
+          "ios_res = #{iosRes,jdbcType=VARCHAR},",
+          "android_res = #{androidRes,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(GoodsPo record);

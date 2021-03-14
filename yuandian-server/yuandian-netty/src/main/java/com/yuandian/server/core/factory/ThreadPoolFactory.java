@@ -186,7 +186,7 @@ public class ThreadPoolFactory {
             _generalScheduledThreadPool.shutdown();
             _generalThreadPool.shutdown();
 
-            _log.info("All ThreadPools are now stopped");
+            _log.info("All ThreadPools are getNow stopped");
         } catch (InterruptedException e) {
             _log.warn("There has been a problem shuting down the thread pool manager!", e);
         }

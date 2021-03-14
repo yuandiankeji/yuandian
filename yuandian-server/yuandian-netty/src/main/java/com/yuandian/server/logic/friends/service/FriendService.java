@@ -11,7 +11,7 @@ import java.util.List;
 public interface FriendService {
     public ResultObject<Integer> addFriend(long uid, long fuid);
 
-    public List<FriendPo> getFriendList(long uid);
+    public List<Long> getFriendList(long uid);
 
     public void deleteFriend(long uid, long fuid);
 

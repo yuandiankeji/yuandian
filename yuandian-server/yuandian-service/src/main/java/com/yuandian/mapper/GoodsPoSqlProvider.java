@@ -53,6 +53,15 @@ public class GoodsPoSqlProvider {
             VALUES("slogan", "#{slogan,jdbcType=VARCHAR}");
         }
         
+        if (record.getStackable() != null) {
+            VALUES("stackable", "#{stackable,jdbcType=TINYINT}");
+        }
+        
+        if (record.getThumPic() != null) {
+            VALUES("thum_pic", "#{thumPic,jdbcType=VARCHAR}");
+        }
+        
+
         return SQL();
     }
 
@@ -65,6 +74,10 @@ public class GoodsPoSqlProvider {
         }
         SELECT("name");
         SELECT("slogan");
+        SELECT("stackable");
+        SELECT("thum_pic");
+        SELECT("ios_res");
+        SELECT("android_res");
         FROM("goods");
         applyWhere(example, false);
         
@@ -94,6 +107,16 @@ public class GoodsPoSqlProvider {
             SET("slogan = #{record.slogan,jdbcType=VARCHAR}");
         }
         
+        if (record.getStackable() != null) {
+            SET("stackable = #{record.stackable,jdbcType=TINYINT}");
+        }
+        
+        if (record.getThumPic() != null) {
+            SET("thum_pic = #{record.thumPic,jdbcType=VARCHAR}");
+        }
+        
+
+        
         applyWhere(example, true);
         return SQL();
     }
@@ -105,6 +128,10 @@ public class GoodsPoSqlProvider {
         SET("id = #{record.id,jdbcType=BIGINT}");
         SET("name = #{record.name,jdbcType=VARCHAR}");
         SET("slogan = #{record.slogan,jdbcType=VARCHAR}");
+        SET("stackable = #{record.stackable,jdbcType=TINYINT}");
+        SET("thum_pic = #{record.thumPic,jdbcType=VARCHAR}");
+        SET("ios_res = #{record.iosRes,jdbcType=VARCHAR}");
+        SET("android_res = #{record.androidRes,jdbcType=VARCHAR}");
         
         GoodsPoExample example = (GoodsPoExample) parameter.get("example");
         applyWhere(example, true);
@@ -122,6 +149,16 @@ public class GoodsPoSqlProvider {
         if (record.getSlogan() != null) {
             SET("slogan = #{slogan,jdbcType=VARCHAR}");
         }
+        
+        if (record.getStackable() != null) {
+            SET("stackable = #{stackable,jdbcType=TINYINT}");
+        }
+        
+        if (record.getThumPic() != null) {
+            SET("thum_pic = #{thumPic,jdbcType=VARCHAR}");
+        }
+        
+
         
         WHERE("id = #{id,jdbcType=BIGINT}");
         

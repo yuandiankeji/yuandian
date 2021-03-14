@@ -4,11 +4,10 @@ package com.yuandian.server.logic.model.entity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuandian.core.common.RedisCache;
-import com.yuandian.server.core.base.CacheBase;
 
 import java.io.IOException;
 
-public class ChatPo  extends CacheBase implements RedisCache {
+public class ChatPo  extends RedisCache {
     private long uid;
     private long targetId;
     private int type;
@@ -72,32 +71,9 @@ public class ChatPo  extends CacheBase implements RedisCache {
     public void setCtime(long ctime) {
         this.ctime = ctime;
     }
-
     @Override
-    public String serialize() {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
+    public String uniqueKey() {
         return null;
     }
 
-    @Override
-    public Object deserialize(String json) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.readValue(json, ChatPo.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public String filedKey() {
-        return mid + "";
-    }
 }

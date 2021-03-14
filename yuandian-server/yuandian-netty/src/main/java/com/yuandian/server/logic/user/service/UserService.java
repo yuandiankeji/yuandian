@@ -10,6 +10,14 @@ import javax.annotation.Resource;
  */
 public interface UserService {
 
+    public long register(UserPo userPo);
+
+    public boolean login();
+
+    public boolean logout();
+
     public UserPo getUserInfo(long uid);
+
+    public long update(UserPo po);
 
 }

@@ -303,6 +303,276 @@ public class GoodsPoExample {
             addCriterion("slogan not between", value1, value2, "slogan");
             return (Criteria) this;
         }
+
+        public Criteria andStackableIsNull() {
+            addCriterion("stackable is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableIsNotNull() {
+            addCriterion("stackable is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableEqualTo(Byte value) {
+            addCriterion("stackable =", value, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableNotEqualTo(Byte value) {
+            addCriterion("stackable <>", value, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableGreaterThan(Byte value) {
+            addCriterion("stackable >", value, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableGreaterThanOrEqualTo(Byte value) {
+            addCriterion("stackable >=", value, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableLessThan(Byte value) {
+            addCriterion("stackable <", value, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableLessThanOrEqualTo(Byte value) {
+            addCriterion("stackable <=", value, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableIn(List<Byte> values) {
+            addCriterion("stackable in", values, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableNotIn(List<Byte> values) {
+            addCriterion("stackable not in", values, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableBetween(Byte value1, Byte value2) {
+            addCriterion("stackable between", value1, value2, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andStackableNotBetween(Byte value1, Byte value2) {
+            addCriterion("stackable not between", value1, value2, "stackable");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicIsNull() {
+            addCriterion("thum_pic is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicIsNotNull() {
+            addCriterion("thum_pic is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicEqualTo(String value) {
+            addCriterion("thum_pic =", value, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicNotEqualTo(String value) {
+            addCriterion("thum_pic <>", value, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicGreaterThan(String value) {
+            addCriterion("thum_pic >", value, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicGreaterThanOrEqualTo(String value) {
+            addCriterion("thum_pic >=", value, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicLessThan(String value) {
+            addCriterion("thum_pic <", value, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicLessThanOrEqualTo(String value) {
+            addCriterion("thum_pic <=", value, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicLike(String value) {
+            addCriterion("thum_pic like", value, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicNotLike(String value) {
+            addCriterion("thum_pic not like", value, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicIn(List<String> values) {
+            addCriterion("thum_pic in", values, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicNotIn(List<String> values) {
+            addCriterion("thum_pic not in", values, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicBetween(String value1, String value2) {
+            addCriterion("thum_pic between", value1, value2, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumPicNotBetween(String value1, String value2) {
+            addCriterion("thum_pic not between", value1, value2, "thumPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResIsNull() {
+            addCriterion("ios_res is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResIsNotNull() {
+            addCriterion("ios_res is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResEqualTo(String value) {
+            addCriterion("ios_res =", value, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResNotEqualTo(String value) {
+            addCriterion("ios_res <>", value, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResGreaterThan(String value) {
+            addCriterion("ios_res >", value, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResGreaterThanOrEqualTo(String value) {
+            addCriterion("ios_res >=", value, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResLessThan(String value) {
+            addCriterion("ios_res <", value, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResLessThanOrEqualTo(String value) {
+            addCriterion("ios_res <=", value, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResLike(String value) {
+            addCriterion("ios_res like", value, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResNotLike(String value) {
+            addCriterion("ios_res not like", value, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResIn(List<String> values) {
+            addCriterion("ios_res in", values, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResNotIn(List<String> values) {
+            addCriterion("ios_res not in", values, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResBetween(String value1, String value2) {
+            addCriterion("ios_res between", value1, value2, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosResNotBetween(String value1, String value2) {
+            addCriterion("ios_res not between", value1, value2, "iosRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResIsNull() {
+            addCriterion("android_res is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResIsNotNull() {
+            addCriterion("android_res is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResEqualTo(String value) {
+            addCriterion("android_res =", value, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResNotEqualTo(String value) {
+            addCriterion("android_res <>", value, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResGreaterThan(String value) {
+            addCriterion("android_res >", value, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResGreaterThanOrEqualTo(String value) {
+            addCriterion("android_res >=", value, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResLessThan(String value) {
+            addCriterion("android_res <", value, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResLessThanOrEqualTo(String value) {
+            addCriterion("android_res <=", value, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResLike(String value) {
+            addCriterion("android_res like", value, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResNotLike(String value) {
+            addCriterion("android_res not like", value, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResIn(List<String> values) {
+            addCriterion("android_res in", values, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResNotIn(List<String> values) {
+            addCriterion("android_res not in", values, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResBetween(String value1, String value2) {
+            addCriterion("android_res between", value1, value2, "androidRes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidResNotBetween(String value1, String value2) {
+            addCriterion("android_res not between", value1, value2, "androidRes");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

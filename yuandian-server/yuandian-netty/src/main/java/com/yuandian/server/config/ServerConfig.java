@@ -10,6 +10,7 @@ public class ServerConfig {
     private String number;
     private long port;
     private long rpcPort;
+    private String rpcIp;
 
     public String getIp() {
         return ip;
@@ -43,10 +44,19 @@ public class ServerConfig {
         this.rpcPort = rpcPort;
     }
 
+    public String getRpcIp() {
+        return rpcIp;
+    }
+
+    public void setRpcIp(String rpcIp) {
+        this.rpcIp = rpcIp;
+    }
+
     public void load(Properties properties) {
         this.ip = properties.getProperty("server.ip");
         this.number = properties.getProperty("sever.id");
         this.port = Integer.parseInt(properties.getProperty("server.port"));
         this.rpcPort = Integer.parseInt(properties.getProperty("server.rpc.port"));
+        this.rpcIp= properties.getProperty("server.rpc.ip");
     }
 }

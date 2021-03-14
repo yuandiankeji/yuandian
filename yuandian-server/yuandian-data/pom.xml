@@ -20,11 +20,21 @@
         </extensions>
 
         <plugins>
+
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.5.1</version>
                 <extensions>true</extensions>
+                <configuration>
+                    <protocArtifact>com.google.protobuf:protoc:3.6.1:exe:${os.detected.classifier}</protocArtifact>
+                    <clearOutputDirectory>false</clearOutputDirectory>
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.23.0:exe:${os.detected.classifier}
+                    </pluginArtifact><pluginId>grpc-java</pluginId>
+
+                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                </configuration>
+
                 <executions>
                     <execution>
                         <id>protobuf-compile-java</id>
@@ -32,12 +42,12 @@
                             <goal>compile</goal>
                             <goal>test-compile</goal>
                         </goals>
-                        <configuration>
-                            <protocArtifact>com.google.protobuf:protoc:2.6.1:exe:${os.detected.classifier}
-                            </protocArtifact>
-                            <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-                            <clearOutputDirectory>true</clearOutputDirectory>
-                        </configuration>
+<!--                        <configuration>-->
+<!--                            <protocArtifact>com.google.protobuf:protoc:2.6.1:exe:${os.detected.classifier}-->
+<!--                            </protocArtifact>-->
+<!--                            <outputDirectory>${project.basedir}/src/main/java</outputDirectory>-->
+<!--                            <clearOutputDirectory>true</clearOutputDirectory>-->
+<!--                        </configuration>-->
                     </execution>
                 </executions>
             </plugin>

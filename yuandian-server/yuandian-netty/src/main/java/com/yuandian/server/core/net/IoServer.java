@@ -22,13 +22,16 @@ public class IoServer implements Runnable {
 
     private static Logger logger = LoggerFactory.getLogger(IoServer.class);
 
-    NioEventLoopGroup bossGroup;
-    NioEventLoopGroup workerGroup;
-    ChannelFuture future;
-    ServerConfig config;
+    private NioEventLoopGroup bossGroup;
+    private NioEventLoopGroup workerGroup;
+    private ChannelFuture future;
+    private String ip;
+    private long port;
 
-    public IoServer(ServerConfig config) {
-        this.config = config;
+    public IoServer(String ip, int port) {
+        this.ip = ip;
+        this.port = port;
+
     }
 
     public void startServer() throws Exception {
@@ -38,8 +41,6 @@ public class IoServer implements Runnable {
 
         ServerBootstrap b = new ServerBootstrap();
         try {
-            //ch.pipeline().addLast("frame", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 2, 4, 0, 0));
-
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 512)
@@ -53,8 +54,8 @@ public class IoServer implements Runnable {
                                     new TcpServerHandler());
                         }
                     }).childOption(ChannelOption.AUTO_READ, true);
-            future = b.bind(config.getIp(), (int) config.getPort()).sync();
-            logger.debug("[IoServer] | start world success,ip={},port={}", config.getIp(), (int) config.getPort());
+            future = b.bind(this.ip, (int) this.port).sync();
+            logger.debug("[IoServer] | start world success,ip={},port={}", ip, port);
             future.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();

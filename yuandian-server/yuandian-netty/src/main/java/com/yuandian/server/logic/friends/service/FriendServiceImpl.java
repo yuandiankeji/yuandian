@@ -1,9 +1,11 @@
 package com.yuandian.server.logic.friends.service;
 
+import com.alibaba.fastjson.JSON;
 import com.yuandian.core.common.ErrorCode;
 import com.yuandian.core.common.RedisKeyUtils;
 import com.yuandian.core.common.ResultObject;
 import com.yuandian.core.utils.ZDateUtils;
+import com.yuandian.core.utils.ZStringUtil;
 import com.yuandian.server.config.RedisService;
 import com.yuandian.server.core.consts.ApplyConst;
 import com.yuandian.server.logic.mapper.FriendPoMapper;
@@ -20,9 +22,7 @@ public class FriendServiceImpl implements FriendService {
     @Autowired
     FriendPoMapper friendMapper;
     @Autowired
-    RedisService redisChatService;
-    @Autowired
-    RedisService redisGlobalService;
+    RedisService redisService;
 
     @Override
     public ResultObject<Integer> addFriend(long uid, long fuid) {
@@ -33,44 +33,70 @@ public class FriendServiceImpl implements FriendService {
         FriendPo friend = new FriendPo(uid, fuid);
         friend.setUid(uid);
         friend.setFuid(fuid);
-        friend.setcTime(ZDateUtils.now());
+        friend.setcTime(new Date());
         friend.setGroupId(1L);
         friendMapper.insert(friend);
+        String friendKey = RedisKeyUtils.getFriendListKey(uid);
+        redisService.hset(friendKey, uid + "", JSON.toJSONString(friend));
         return new ResultObject<>(ErrorCode.SYS_SUCCESS, 1);
     }
 
     @Override
-    public List<FriendPo> getFriendList(long uid) {
-        return friendMapper.getFriends(uid);
+    public List<Long> getFriendList(long uid) {
+        List<FriendPo> list = friendMapper.getFriends(uid);
+        Set<Long> friendSet = new HashSet<>();
+        list.forEach(friendPo -> {
+            if (friendPo.getUid() != uid) {
+                friendSet.add(friendPo.getUid());
+            }
+            if (friendPo.getFuid() != uid) {
+                friendSet.add(friendPo.getFuid());
+            }
+        });
+        return new ArrayList<>(friendSet);
     }
 
     @Override
     public void deleteFriend(long uid, long fuid) {
+        String key = RedisKeyUtils.getFriendListKey(uid);
+        redisService.hdel(key, fuid + "");
+        String fkey = RedisKeyUtils.getFriendListKey(fuid);
+        redisService.hdel(fkey, uid + "");
         friendMapper.deleteByPrimaryKey(new FriendPoKey(uid, fuid));
+
     }
 
     @Override
     public boolean isFriend(long uid, long fuid) {
         FriendPo friend = this.getFriend(uid, fuid);
+        if (friend == null) {
+            friend = this.getFriend(fuid, uid);
+        }
         return friend != null;
     }
 
     @Override
     public FriendPo getFriend(long uid, long fuid) {
 
-        List<FriendPo> list = this.getFriendList(uid);
-        for (FriendPo po : list) {
-            if (po.getFuid() == fuid) {
-                return po;
+        String friendKey = RedisKeyUtils.getFriendListKey(uid);
+        String friendStr = redisService.hget(friendKey, fuid + "");
+        FriendPo po;
+        if (ZStringUtil.isEmptyStr(friendStr)) {
+            po = friendMapper.selectByPrimaryKey(new FriendPoKey(uid, fuid));
+            if (po != null) {
+                redisService.hset(friendKey, fuid + "", JSON.toJSONString(po));
             }
+        } else {
+            po = JSON.parseObject(friendStr, FriendPo.class);
         }
-        return null;
+
+        return po;
     }
 
     @Override
     public int apply(long uid, long targetId) {
         String applyListKey = RedisKeyUtils.getFriendApplyListKey(targetId);
-        boolean exists = redisChatService.hexists(applyListKey, targetId + "");
+        boolean exists = redisService.hexists(applyListKey, targetId + "");
         if (exists) {
             return -1;
         }
@@ -78,8 +104,8 @@ public class FriendServiceImpl implements FriendService {
         applyPo.setUid(targetId);
         applyPo.setTargetId(uid);
         applyPo.setOption(ApplyConst.DEFAULT_OPTION.getCode());
-        applyPo.setcTime(ZDateUtils.now().getTime());
-        redisChatService.hset(applyListKey, uid + "", applyPo.serialize());
+        applyPo.setcTime(ZDateUtils.getNow());
+        redisService.hsetFromObject(applyListKey, uid, applyPo);
         return 0;
     }
 
@@ -95,21 +121,21 @@ public class FriendServiceImpl implements FriendService {
     public boolean applyOption(long uid, long targetId, int option) {
         String applyListKey = RedisKeyUtils.getFriendApplyListKey(uid);
         String filed = targetId + "";
-        if (redisChatService.hexists(applyListKey, filed)) {
+        if (redisService.hexists(applyListKey, filed)) {
             return false;
         }
         if (option == ApplyConst.DEFAULT_OPTION.getCode()) {
             ApplyPo applyPo = new ApplyPo();
             applyPo.setUid(uid);
             applyPo.setTargetId(targetId);
-            applyPo.setcTime(ZDateUtils.now().getTime());
+            applyPo.setcTime(ZDateUtils.getNow());
             applyPo.setOption(option);
-            redisChatService.hset(applyListKey, filed, applyPo.serialize());
+            redisService.hsetFromObject(applyListKey, filed, applyPo);
         } else {
             ApplyPo apply = this.getApplyPo(uid, targetId);
             if (apply != null) {
                 apply.setOption(option);
-                redisChatService.hset(applyListKey, filed, apply.serialize());
+                redisService.hsetFromObject(applyListKey, filed, apply);
             }
         }
         return false;
@@ -124,11 +150,10 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public List<ApplyPo> getApplyList(long uid) {
         String applyListKey = RedisKeyUtils.getFriendApplyListKey(uid);
-        Map<String, String> dataMap = redisChatService.hgetAll(applyListKey);
+        Map<String, String> dataMap = redisService.hgetAll(applyListKey);
         List<ApplyPo> applyPoList = new ArrayList<>();
         dataMap.forEach((targetUid, applyPoStr) -> {
-            ApplyPo applyPo = new ApplyPo();
-            applyPo.deserialize(applyPoStr);
+            ApplyPo applyPo = JSON.parseObject(applyPoStr, ApplyPo.class);
             applyPoList.add(applyPo);
         });
         return applyPoList;
@@ -159,7 +184,7 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public List<Long> getBlacklist(long uid) {
         String key = RedisKeyUtils.getBlackListKey(uid);
-        Set<String> set = redisChatService.smembersString(key);
+        Set<String> set = redisService.smembersString(key);
         List<Long> blackList = new ArrayList<>();
         set.forEach(targetId -> blackList.add(Long.parseLong(targetId)));
         return blackList;
@@ -168,7 +193,7 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public List<Long> addBlackList(long uid, long targetId) {
         String key = RedisKeyUtils.getBlackListKey(uid);
-        redisChatService.saddString(key, targetId + "");
+        redisService.saddString(key, targetId + "");
         this.applyOption(uid, targetId, ApplyConst.BLACK_APPLY.getCode());
         return getBlacklist(uid);
     }
@@ -176,9 +201,9 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public void removeBlack(long uid, long targetUid) {
         String key = RedisKeyUtils.getBlackListKey(uid);
-        redisChatService.sremString(key, targetUid + "");
+        redisService.sremString(key, targetUid + "");
         String applyKey = RedisKeyUtils.getFriendApplyListKey(uid);
-        redisChatService.hdel(applyKey, targetUid + "");
+        redisService.hdel(applyKey, targetUid + "");
     }
 
     @Override

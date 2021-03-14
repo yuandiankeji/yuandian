@@ -1,7 +1,7 @@
 package com.yuandian.server.logic.chat.service;
 
-import com.yuandian.core.common.RedisKeyUtils;
-import com.yuandian.core.common.Rediskey;
+import com.alibaba.fastjson.JSON;
+import com.yuandian.core.common.*;
 import com.yuandian.core.utils.CollectionUtil;
 import com.yuandian.server.config.RedisService;
 import com.yuandian.server.logic.model.entity.ChatPo;
@@ -13,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -31,25 +30,28 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void saveChat(ChatPo chatPo, boolean online) {
         String key = RedisKeyUtils.getChatInfoListKey(chatPo.getUid(), chatPo.getTargetId());
-        redisChatService.zAdd(key, chatPo.serialize(), chatPo.getMid());
+        redisChatService.zAdd(key, JSON.toJSONString(chatPo), chatPo.getMid());
         String user_list_key = String.format(Rediskey.CHAT_USER_LIST, chatPo.getUid());
-        redisChatService.saddString(user_list_key, chatPo.getTargetId() + "");
-        if (!online) {
-            String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
-            redisChatService.incr(incrKey);
-        }
+        redisChatService.saddString(user_list_key, chatPo.getTargetId());
+        String user_list_key_friend = String.format(Rediskey.CHAT_USER_LIST, chatPo.getTargetId());
+        redisChatService.saddString(user_list_key_friend, chatPo.getUid());
+        String incrKey = RedisKeyUtils.getNotReadChatNum(chatPo.getTargetId(), chatPo.getUid());
+        redisChatService.incr(incrKey);
+
     }
 
     @Override
     public List<ChatPo> getChatInfo(long uid, long targetId, long minMid, long maxMid, int limit) {
         String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
-        Set<String> data = redisChatService.zrangeByScore(key, minMid, maxMid, limit);
+        Set<String> data = redisChatService.zrevrangeByScore(key, maxMid, minMid, limit);
         List<ChatPo> list = new ArrayList<>();
         for (String e : data) {
-            ChatPo po = new ChatPo();
-            po = (ChatPo) po.deserialize(e);
-            list.add(po);
+            ChatPo po = JSON.parseObject(e, ChatPo.class);
+            if (po.getMid() < maxMid) {
+                list.add(po);
+            }
         }
+        list.sort(Comparator.comparing(ChatPo::getCtime));
         return list;
     }
 
@@ -57,6 +59,13 @@ public class ChatServiceImpl implements ChatService {
     public void delete(long uid, long targetId, long mid) {
         String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
         redisChatService.zremRangeByScore(key, mid, mid);
+
+    }
+
+    @Override
+    public void delete(long uid, long targetId) {
+        String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
+        redisChatService.deleteKey(key);
     }
 
     @Override
@@ -93,11 +102,27 @@ public class ChatServiceImpl implements ChatService {
      */
     @Override
     public ChatPo getLastChatInfo(long uid, Long targetId) {
-        List<ChatPo> chatPos = this.getChatInfo(uid, targetId, 0, -1, 1);
-        if (!CollectionUtil.isEmpty(chatPos)) {
-            return chatPos.get(chatPos.size() - 1);
+        String key = RedisKeyUtils.getChatInfoListKey(uid, targetId);
+        Set<ChatPo> lastChatStr = redisChatService.zrange(key, -1, -1, ChatPo.class);
+        if (CollectionUtil.isEmpty(lastChatStr)) {
+            return null;
         }
-        return null;
+        ArrayList<ChatPo> list = new ArrayList<>(lastChatStr);
+        return list.get(0);
+    }
+
+    /**
+     * 移除聊天好友
+     *
+     * @param uid
+     * @param targetId
+     * @return
+     */
+    @Override
+    public ResultObject<Integer> removeChatUser(long uid, long targetId) {
+        String user_list_key = String.format(Rediskey.CHAT_USER_LIST, uid);
+        redisChatService.sremString(user_list_key, targetId + "");
+        return new ResultObject<>(ErrorCode.SYS_SUCCESS, 1);
     }
 
 
