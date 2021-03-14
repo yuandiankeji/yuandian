@@ -25,16 +25,15 @@ public class TcpMessageProcessor {
 
     public Logger logger = LoggerFactory.getLogger(TcpMessageProcessor.class);
 
-    private Map<Short, Class> handlerMap = new ConcurrentHashMap<>();
+    private Map<Short, Class<AbstractTcpHandler>> handlerMap = new ConcurrentHashMap<>();
 
     public void init() {
         //@TODO  Thread manager
         executorService = Executors.newSingleThreadExecutor();
 
         List<Class> classList = ClassLoadUtil.getSubClasses(AbstractTcpHandler.class, "com.yuandian.server.logic");
-        for (Class clazz : classList) {
-            MessageAnnotation messageAnnotation = (MessageAnnotation
-                    ) clazz.getAnnotation(MessageAnnotation.class);
+        for (Class<AbstractTcpHandler> clazz : classList) {
+            MessageAnnotation messageAnnotation = clazz.getAnnotation(MessageAnnotation.class);
             if (messageAnnotation != null) {
                 handlerMap.put(messageAnnotation.cmd(), clazz);
             }
@@ -60,9 +59,9 @@ public class TcpMessageProcessor {
 
         @Override
         public void run() {
-            Class clazz = handlerMap.get(cmd);
+            Class<AbstractTcpHandler> clazz = handlerMap.get(cmd);
             try {
-                AbstractTcpHandler handler = (AbstractTcpHandler) clazz.newInstance();
+                AbstractTcpHandler handler = clazz.newInstance();
 
                 logger.info("handler message cmd={}", cmd);
                 handler.handler(client, cmd, data);
